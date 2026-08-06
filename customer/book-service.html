@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+
+<meta charset="UTF-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<title>
+Book Service | Servora
+</title>
+
+
+
+<link rel="stylesheet"
+href="css/style.css">
+
+
+</head>
+
+
+
+<body>
+
+
+
+
+<header class="navbar">
+
+
+<div class="logo">
+
+
+<h2>
+Servora
+</h2>
+
+
+</div>
+
+
+
+
+
+<nav>
+
+
+<a href="customer/dashboard.html">
+Dashboard
+</a>
+
+
+<a href="my-vehicles.html">
+My Vehicles
+</a>
+
+
+<a href="bookings.html">
+Bookings
+</a>
+
+
+<a href="profile.html">
+Profile
+</a>
+
+
+</nav>
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+<section class="booking-section">
+
+
+
+<div class="booking-container">
+
+
+
+<div class="booking-box">
+
+
+
+<h1>
+Book Vehicle Service
+</h1>
+
+
+
+<p>
+Select your vehicle and schedule service.
+</p>
+
+
+
+
+
+
+<form id="bookingForm">
+
+
+
+
+
+<label>
+
+Select Vehicle
+
+</label>
+
+
+
+
+<select 
+id="vehicleSelect"
+required>
+
+
+<option value="">
+
+Loading vehicles...
+
+</option>
+
+
+</select>
+
+
+
+
+
+
+
+
+
+<label>
+
+Service Type
+
+</label>
+
+
+
+
+
+<select 
+id="serviceType"
+required>
+
+
+
+<option value="">
+
+Choose Service
+
+</option>
+
+
+
+<option value="General Service">
+
+General Service
+
+</option>
+
+
+
+<option value="Engine Repair">
+
+Engine Repair
+
+</option>
+
+
+
+<option value="Oil Change">
+
+Oil Change
+
+</option>
+
+
+
+<option value="Car Cleaning">
+
+Car Cleaning
+
+</option>
+
+
+
+<option value="Emergency Repair">
+
+Emergency Repair
+
+</option>
+
+
+
+</select>
+
+
+
+
+
+
+
+
+
+<label>
+
+Problem Description
+
+</label>
+
+
+
+
+<textarea
+
+id="problemDescription"
+
+placeholder="Describe vehicle problem"
+
+required>
+
+</textarea>
+
+
+
+
+
+
+
+
+
+<label>
+
+Preferred Date
+
+</label>
+
+
+
+
+<input
+
+type="date"
+
+id="bookingDate"
+
+required>
+
+
+
+
+
+
+
+
+
+<button 
+
+type="submit">
+
+Confirm Booking
+
+</button>
+
+
+
+
+
+
+<p id="message">
+
+</p>
+
+
+
+
+
+
+
+</form>
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<footer class="footer">
+
+
+<div class="footer-bottom">
+
+
+<p>
+
+© 2026 Servora. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+
+</footer>
+
+<script type="module">
+
+
+import {
+
+    auth,
+
+    db
+
+}
+
+from "./js/firebase-config.js";
+
+
+
+
+
+import {
+
+    onAuthStateChanged
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+
+
+import {
+
+    ref,
+
+    get,
+
+    push,
+
+    set,
+
+    serverTimestamp
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+
+
+
+let currentUser = null;
+
+
+let selectedVehicle = null;
+
+
+let vehicles = {};
+
+
+
+
+
+
+
+
+const vehicleSelect =
+
+document.getElementById("vehicleSelect");
+
+
+
+const bookingForm =
+
+document.getElementById("bookingForm");
+
+
+
+const message =
+
+document.getElementById("message");
+
+
+
+
+
+
+
+
+
+// ================================
+// CHECK USER LOGIN
+// ================================
+
+
+
+onAuthStateChanged(auth,(user)=>{
+
+
+if(user){
+
+
+currentUser = user;
+
+
+loadVehicles();
+
+
+
+}
+
+else{
+
+
+window.location.href="login.html";
+
+
+}
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+// ================================
+// LOAD USER VEHICLES
+// ================================
+
+
+
+async function loadVehicles(){
+
+
+
+try{
+
+
+
+const vehiclesRef =
+
+ref(
+
+db,
+
+"vehicles"
+
+);
+
+
+
+
+
+const snapshot =
+
+await get(vehiclesRef);
+
+
+
+
+
+
+vehicleSelect.innerHTML = `
+
+<option value="">
+
+Select Vehicle
+
+</option>
+
+`;
+
+
+
+
+
+
+if(snapshot.exists()){
+
+
+
+
+
+vehicles = snapshot.val();
+
+
+
+
+
+
+Object.keys(vehicles).forEach((id)=>{
+
+
+
+const vehicle =
+
+vehicles[id];
+
+
+
+
+
+
+if(vehicle.userId === currentUser.uid){
+
+
+
+vehicleSelect.innerHTML += `
+
+
+<option value="${id}">
+
+
+${vehicle.vehicleName}
+
+-
+
+${vehicle.vehicleNumber}
+
+
+</option>
+
+
+`;
+
+
+
+}
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+}
+
+catch(error){
+
+
+
+console.error(
+
+"Vehicle Loading Error:",
+
+error
+
+);
+
+
+
+vehicleSelect.innerHTML = `
+
+<option>
+
+Unable to load vehicles
+
+</option>
+
+`;
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// ================================
+// SELECT VEHICLE
+// ================================
+
+
+
+vehicleSelect.addEventListener(
+
+"change",
+
+(e)=>{
+
+
+
+const vehicleId = e.target.value;
+
+
+
+
+if(vehicleId && vehicles[vehicleId]){
+
+
+selectedVehicle = vehicles[vehicleId];
+
+
+}
+
+else{
+
+
+selectedVehicle = null;
+
+
+}
+
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+
+
+
+// ================================
+// CREATE BOOKING
+// ================================
+
+
+
+bookingForm.addEventListener(
+
+"submit",
+
+async(e)=>{
+
+
+e.preventDefault();
+
+
+
+
+
+if(!selectedVehicle){
+
+
+
+message.innerHTML =
+
+"Please select your vehicle.";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+try{
+
+
+
+
+
+const bookingRef =
+
+push(
+
+ref(db,"bookings")
+
+);
+
+
+
+
+
+
+await set(
+
+bookingRef,
+
+{
+
+
+bookingId:
+
+bookingRef.key,
+
+
+
+
+
+customerId:
+
+currentUser.uid,
+
+
+
+
+
+customerName:
+
+currentUser.displayName ||
+
+currentUser.email.split("@")[0],
+
+
+
+
+
+customerEmail:
+
+currentUser.email,
+
+
+
+
+
+
+vehicleId:
+vehicleSelect.value,
+
+
+
+
+
+
+vehicleName:
+
+selectedVehicle.vehicleName,
+
+
+
+
+
+
+vehicleNumber:
+
+selectedVehicle.vehicleNumber,
+
+
+
+
+
+
+serviceType:
+
+document
+
+.getElementById("serviceType")
+
+.value,
+
+
+
+
+
+
+problemDescription:
+
+document
+
+.getElementById("problemDescription")
+
+.value,
+
+
+
+
+
+
+bookingDate:
+
+document
+
+.getElementById("bookingDate")
+
+.value,
+
+
+
+
+
+
+status:
+
+"Pending",
+
+
+
+
+
+
+mechanicId:
+
+"",
+
+
+
+
+
+mechanicName:
+
+"",
+
+
+
+
+
+mechanicNote:
+
+"",
+
+
+
+
+
+estimatedCost:
+
+0,
+
+
+
+
+
+finalAmount:
+
+0,
+
+
+
+
+
+paymentStatus:
+
+"Pending",
+
+
+
+
+
+createdAt:
+
+serverTimestamp()
+
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+message.innerHTML =
+
+"Service booked successfully.";
+
+setTimeout(() => {
+    window.location.href = "my-bookings.html";
+}, 1500);
+
+
+
+bookingForm.reset();
+
+
+
+
+
+selectedVehicle=null;
+
+
+
+
+
+
+
+}
+
+catch(error){
+
+
+
+console.error(
+
+"Booking Error:",
+
+error
+
+);
+
+
+
+message.innerHTML =
+
+"Unable to book service. Try again.";
+
+
+
+
+
+}
+
+
+
+
+}
+
+);
+
+
+
+
+
+</script>
+
+
+</body>
+
+</html>

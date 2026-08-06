@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Account | Servora</title>
+
+<link rel="icon" href="images/logo.png">
+
+
+<link rel="stylesheet"
+href="css/style.css">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ===========================
+        HEADER
+=========================== -->
+
+
+<header class="navbar">
+
+
+<div class="container">
+
+
+<a href="index.html" class="logo">
+
+
+<link rel="icon" href="images/logo.png">
+
+
+<div class="logo-text">
+
+<h2>Servora</h2>
+
+<span>
+Drive Smart. Service Smarter.
+</span>
+
+</div>
+
+
+</a>
+
+
+
+<div class="nav-buttons">
+
+
+<a href="index.html" class="btn-login">
+Home
+</a>
+
+
+<a href="login.html" class="btn-register">
+Login
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</header>
+
+
+
+
+
+<!-- ===========================
+      REGISTER SECTION
+=========================== -->
+
+
+<section class="auth-section">
+
+
+<div class="auth-container">
+
+
+
+
+
+<!-- LEFT PANEL -->
+
+
+<div class="auth-left">
+
+
+
+
+
+
+<h1>
+
+Join the Future of
+
+<span>
+Vehicle Service
+</span>
+
+</h1>
+
+
+
+
+<p>
+
+Create your Servora account to book vehicle services,
+manage your vehicles, track live service progress,
+download invoices and receive instant updates.
+
+</p>
+
+
+
+
+<div class="auth-features">
+
+
+
+
+
+<div class="auth-feature">
+
+
+<i class="fas fa-calendar-check"></i>
+
+
+<div>
+
+<h4>
+Easy Booking
+</h4>
+
+
+<p>
+Book vehicle service in less than a minute.
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="auth-feature">
+
+
+<i class="fas fa-location-dot"></i>
+
+
+<div>
+
+
+<h4>
+Live Tracking
+</h4>
+
+
+<p>
+Track every service stage in real time.
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="auth-feature">
+
+
+<i class="fas fa-file-invoice"></i>
+
+
+<div>
+
+
+<h4>
+Digital Invoices
+</h4>
+
+
+<p>
+Access service history anytime.
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+<!-- RIGHT PANEL -->
+
+
+<div class="auth-box">
+
+
+
+<div class="auth-header">
+
+
+<h2>
+Create Account
+</h2>
+
+
+<p>
+
+Welcome to Servora.
+Please fill your details to continue.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<form id="registerForm">
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+<i class="fa-solid fa-user"></i>
+
+Full Name
+
+</label>
+
+
+
+<input
+type="text"
+id="name"
+placeholder="Enter your full name"
+required>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+<i class="fa-solid fa-envelope"></i>
+
+Email Address
+
+</label>
+
+
+
+<input
+type="email"
+id="email"
+placeholder="Enter your email"
+required>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+<i class="fa-solid fa-phone"></i>
+
+Phone Number
+
+</label>
+
+
+
+<input
+type="tel"
+id="phone"
+placeholder="Enter mobile number"
+maxlength="10"
+required>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+<i class="fa-solid fa-lock"></i>
+
+Password
+
+</label>
+
+
+
+
+<div class="password-box">
+
+
+<input
+type="password"
+id="password"
+placeholder="Create password"
+required>
+
+
+
+
+<i
+class="fa-solid fa-eye togglePassword"
+id="togglePassword">
+</i>
+
+
+
+</div>
+
+
+
+
+
+<small class="password-hint">
+
+Password must contain at least
+6 characters.
+
+</small>
+
+
+
+
+<div id="passwordStrength"
+class="password-strength">
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+<i class="fa-solid fa-lock"></i>
+
+Confirm Password
+
+</label>
+
+
+
+
+<div class="password-box">
+
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm password"
+required>
+
+
+
+
+<i
+class="fa-solid fa-eye"
+id="toggleConfirmPassword">
+</i>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div id="message"
+class="auth-message">
+
+</div>
+
+
+
+
+
+
+
+<button
+type="submit"
+class="auth-btn"
+id="registerBtn">
+
+
+
+<span id="btnText">
+
+Create Account
+
+</span>
+
+
+
+
+<span
+id="loader"
+style="display:none;">
+
+
+<i class="fas fa-spinner fa-spin"></i>
+
+Creating...
+
+
+</span>
+
+
+
+
+</button>
+
+
+
+
+
+
+
+<div class="auth-divider">
+
+
+<span>
+OR
+</span>
+
+
+</div>
+
+
+
+
+
+
+<p class="auth-footer">
+
+
+Already have an account?
+
+
+<a href="login.html">
+
+Login Here
+
+</a>
+
+
+
+</p>
+
+
+
+
+
+</form>
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+<script type="module">
+
+
+import {
+    auth,
+    db
+}
+from "./js/firebase-config.js";
+
+
+
+import {
+
+    createUserWithEmailAndPassword,
+
+    updateProfile
+
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+import {
+
+    ref,
+
+    set,
+
+    serverTimestamp
+
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+
+const registerForm =
+document.getElementById("registerForm");
+
+
+
+const message =
+document.getElementById("message");
+
+
+
+const registerBtn =
+document.getElementById("registerBtn");
+
+
+
+const btnText =
+document.getElementById("btnText");
+
+
+
+const loader =
+document.getElementById("loader");
+
+
+
+const password =
+document.getElementById("password");
+
+
+
+const confirmPassword =
+document.getElementById("confirmPassword");
+
+
+
+const passwordStrength =
+document.getElementById("passwordStrength");
+
+
+
+const togglePassword =
+document.getElementById("togglePassword");
+
+
+
+const toggleConfirmPassword =
+document.getElementById("toggleConfirmPassword");
+
+
+
+
+
+
+
+// SHOW / HIDE PASSWORD
+
+
+togglePassword.onclick = ()=>{
+
+
+if(password.type==="password"){
+
+
+password.type="text";
+
+
+togglePassword.classList.remove("fa-eye");
+
+
+togglePassword.classList.add("fa-eye-slash");
+
+
+}
+
+else{
+
+
+password.type="password";
+
+
+togglePassword.classList.remove("fa-eye-slash");
+
+
+togglePassword.classList.add("fa-eye");
+
+
+}
+
+
+};
+
+
+
+
+
+
+
+toggleConfirmPassword.onclick = ()=>{
+
+
+if(confirmPassword.type==="password"){
+
+
+confirmPassword.type="text";
+
+
+toggleConfirmPassword.classList.remove("fa-eye");
+
+
+toggleConfirmPassword.classList.add("fa-eye-slash");
+
+
+}
+
+else{
+
+
+confirmPassword.type="password";
+
+
+toggleConfirmPassword.classList.remove("fa-eye-slash");
+
+
+toggleConfirmPassword.classList.add("fa-eye");
+
+
+}
+
+
+};
+
+
+
+
+
+
+
+
+
+// PASSWORD STRENGTH
+
+
+password.addEventListener("input",()=>{
+
+
+let value=password.value;
+
+
+let strength=0;
+
+
+
+if(value.length>=6)
+
+strength++;
+
+
+
+if(/[A-Z]/.test(value))
+
+strength++;
+
+
+
+if(/[0-9]/.test(value))
+
+strength++;
+
+
+
+if(/[!@#$%^&*]/.test(value))
+
+strength++;
+
+
+
+
+
+switch(strength){
+
+
+case 0:
+
+case 1:
+
+
+passwordStrength.innerHTML =
+"<span style='color:red'>Weak Password</span>";
+
+break;
+
+
+
+
+case 2:
+
+
+passwordStrength.innerHTML =
+"<span style='color:orange'>Medium Password</span>";
+
+break;
+
+
+
+
+case 3:
+
+
+passwordStrength.innerHTML =
+"<span style='color:#0099ff'>Good Password</span>";
+
+break;
+
+
+
+
+case 4:
+
+
+passwordStrength.innerHTML =
+"<span style='color:green'>Strong Password ✓</span>";
+
+break;
+
+
+
+}
+
+
+});
+
+
+
+
+
+
+
+
+
+// REGISTER USER
+
+
+registerForm.addEventListener("submit", async(e)=>{
+
+
+e.preventDefault();
+
+
+
+
+message.innerHTML="";
+
+
+
+
+
+const name =
+document.getElementById("name").value.trim();
+
+
+
+const email =
+document.getElementById("email").value.trim();
+
+
+
+const phone =
+document.getElementById("phone").value.trim();
+
+
+
+const pass =
+password.value;
+
+
+
+const confirm =
+confirmPassword.value;
+
+
+
+
+
+
+
+
+if(name.length < 3){
+
+
+message.innerHTML =
+"Enter a valid full name.";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+if(phone.length !== 10){
+
+
+message.innerHTML =
+"Enter a valid 10-digit phone number.";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+if(pass !== confirm){
+
+
+message.innerHTML =
+"Passwords do not match.";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+registerBtn.disabled=true;
+
+
+btnText.style.display="none";
+
+
+loader.style.display="inline";
+
+
+
+
+
+
+try{
+
+
+
+// CREATE FIREBASE AUTH USER
+
+
+const userCredential =
+await createUserWithEmailAndPassword(
+
+auth,
+
+email,
+
+pass
+
+);
+
+
+
+const user =
+userCredential.user;
+
+
+
+
+
+
+
+
+// UPDATE PROFILE NAME
+
+
+await updateProfile(user,{
+
+
+displayName:name
+
+
+});
+
+
+
+
+
+
+
+
+// SAVE DATA TO REALTIME DATABASE
+
+
+await set(
+
+
+ref(db,"users/"+user.uid),
+
+
+{
+
+
+uid:user.uid,
+
+
+name:name,
+
+
+email:email,
+
+
+phone:phone,
+
+
+createdAt:serverTimestamp()
+
+
+
+}
+
+
+);
+
+
+
+
+
+
+
+
+message.className =
+"auth-message success";
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-circle-check"></i>
+
+Account created successfully.
+
+`;
+
+
+
+
+
+
+
+setTimeout(()=>{
+
+
+window.location.href="customer/dashboard.html";
+
+
+},1500);
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+catch(error){
+
+
+
+message.className =
+"auth-message error";
+
+
+
+
+switch(error.code){
+
+
+
+
+
+case "auth/email-already-in-use":
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-circle-exclamation"></i>
+
+This email is already registered.
+
+<br>
+
+<a href="login.html">
+
+Click here to Login
+
+</a>
+
+`;
+
+break;
+
+
+
+
+
+
+
+case "auth/weak-password":
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-lock"></i>
+
+Password must contain at least 6 characters.
+
+`;
+
+break;
+
+
+
+
+
+
+
+
+case "auth/invalid-email":
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-envelope-circle-check"></i>
+
+Please enter a valid email address.
+
+`;
+
+break;
+
+
+
+
+
+
+
+
+case "auth/network-request-failed":
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-wifi"></i>
+
+Internet connection lost.
+
+`;
+
+break;
+
+
+
+
+
+
+
+
+default:
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-circle-xmark"></i>
+
+${error.message}
+
+`;
+
+
+
+}
+
+
+
+
+
+
+console.error(
+
+"Firebase Error:",
+
+error
+
+);
+
+
+
+
+
+
+registerBtn.disabled=false;
+
+
+btnText.style.display="inline";
+
+
+loader.style.display="none";
+
+
+
+}
+
+
+
+});
+
+
+
+</script>
+
+<!-- ===========================
+        FOOTER
+=========================== -->
+
+
+<footer class="footer">
+
+
+<div class="footer-bottom">
+
+
+<p>
+
+© 2026 Servora. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

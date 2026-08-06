@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard | Servora</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+<!-- ===========================
+        NAVBAR
+=========================== -->
+
+<header class="navbar">
+
+<div class="logo">
+
+<h2>Servora Admin</h2>
+
+</div>
+
+<nav>
+
+<a href="admin/dashboard.html">
+Dashboard
+</a>
+
+<button id="logoutBtn">
+Logout
+</button>
+
+</nav>
+
+</header>
+
+<!-- ===========================
+      ADMIN DASHBOARD
+=========================== -->
+
+<section class="admin-section">
+
+<div class="admin-container">
+
+<h1>
+Admin Dashboard
+</h1>
+
+<p>
+Manage users, mechanics and service bookings.
+</p>
+
+<!-- Dashboard Cards -->
+
+<div class="admin-cards">
+
+<div class="admin-card">
+
+<h2 id="userCount">
+0
+</h2>
+
+<p>
+Total Users
+</p>
+
+</div>
+
+<div class="admin-card">
+
+<h2 id="bookingCount">
+0
+</h2>
+
+<p>
+Total Bookings
+</p>
+
+</div>
+
+<div class="admin-card">
+
+<h2 id="pendingCount">
+0
+</h2>
+
+<p>
+Pending Services
+</p>
+
+</div>
+
+</div>
+
+<!-- Booking Management -->
+
+<div class="booking-management">
+
+<h2>
+Service Management
+</h2>
+
+<div id="bookingList">
+
+<p>
+Loading bookings...
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===========================
+        FOOTER
+=========================== -->
+
+<footer class="footer">
+
+<div class="footer-bottom">
+
+<p>
+© 2026 Servora. All Rights Reserved.
+</p>
+
+</div>
+
+</footer>
+
+<!-- ===========================
+      JAVASCRIPT
+=========================== -->
+
+<script type="module">
+
+/* ==========================================
+   SERVORA ADMIN DASHBOARD
+   REALTIME DATABASE
+========================================== */
+
+import {
+    auth,
+    db
+}
+from "/static/js/firebase-config.js";
+
+import {
+    checkRole
+}
+from "/static/js/auth-guard.js";
+
+import {
+    signOut,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    ref,
+    get,
+    update
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* ==========================================
+   ADMIN PROTECTION
+========================================== */
+
+checkRole(
+    "admin",
+    "login.html"
+);
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const bookingList =
+    document.getElementById("bookingList");
+
+const userCount =
+    document.getElementById("userCount");
+
+const bookingCount =
+    document.getElementById("bookingCount");
+
+const pendingCount =
+    document.getElementById("pendingCount");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+let mechanics = [];
+
+let bookings = {};
+
+let users = {};
+
+let currentAdmin = null;
+
+
+/* ==========================================
+   AUTHENTICATION
+========================================== */
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+
+        window.location.href = "login.html";
+
+        return;
+
+    }
+
+    currentAdmin = user;
+
+    loadDashboard();
+
+});
+
+/* ==========================================
+   LOAD DASHBOARD DATA
+========================================== */
+
+async function loadDashboard() {
+
+    try {
+
+        mechanics = [];
+        bookings = {};
+        users = {};
+
+        /* -------------------------
+           LOAD USERS
+        ------------------------- */
+
+        const usersSnapshot =
+            await get(ref(db, "users"));
+
+        if (usersSnapshot.exists()) {
+
+            users = usersSnapshot.val();
+
+            const totalUsers =
+                Object.keys(users).length;
+
+            userCount.textContent =
+                totalUsers;
+
+            // Find Mechanics
+
+            Object.keys(users).forEach((uid) => {
+
+                const user = users[uid];
+
+                if (user.role === "mechanic") {
+
+                    mechanics.push({
+
+                        uid: uid,
+
+                        name: user.name || "Mechanic"
+
+                    });
+
+                }
+
+            });
+
+        }
+
+        else {
+
+            userCount.textContent = "0";
+
+        }
+
+
+        /* -------------------------
+           LOAD BOOKINGS
+        ------------------------- */
+
+        const bookingSnapshot =
+            await get(ref(db, "bookings"));
+
+        bookingList.innerHTML = "";
+
+        let totalBookings = 0;
+        let pendingBookings = 0;
+
+        if (bookingSnapshot.exists()) {
+
+            bookings = bookingSnapshot.val();
+
+            totalBookings =
+                Object.keys(bookings).length;
+
+            bookingCount.textContent =
+                totalBookings;
+
+            Object.keys(bookings).forEach((bookingId) => {
+
+                const booking =
+                    bookings[bookingId];
+
+                if (booking.status === "Pending") {
+
+                    pendingBookings++;
+
+                }
+
+            });
+
+        }
+
+        bookingCount.textContent =
+            totalBookings;
+
+        pendingCount.textContent =
+            pendingBookings;
+
+        renderBookings();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        bookingList.innerHTML = `
+
+            <div class="admin-booking-card">
+
+                <h3>Unable to load dashboard.</h3>
+
+                <p>${error.message}</p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+/* ==========================================
+   RENDER BOOKINGS
+========================================== */
+
+function renderBookings() {
+
+    bookingList.innerHTML = "";
+
+    if (Object.keys(bookings).length === 0) {
+
+        bookingList.innerHTML = `
+
+            <div class="admin-booking-card">
+
+                <h3>No Bookings Found</h3>
+
+                <p>No service requests available.</p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    Object.keys(bookings).forEach((bookingId) => {
+
+        const booking = bookings[bookingId];
+
+        let mechanicOptions =
+            `<option value="">Select Mechanic</option>`;
+
+        mechanics.forEach((mechanic) => {
+
+            mechanicOptions += `
+
+                <option
+                    value="${mechanic.uid}"
+                    ${booking.mechanicId === mechanic.uid ? "selected" : ""}
+                >
+
+                    ${mechanic.name}
+
+                </option>
+
+            `;
+
+        });
+
+        bookingList.innerHTML += `
+
+        <div class="admin-booking-card">
+
+            <h2>${booking.serviceType}</h2>
+
+            <hr>
+
+            <h3>Customer Details</h3>
+
+            <p>
+                <strong>Name:</strong>
+                ${booking.customerName}
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                ${booking.customerEmail}
+            </p>
+
+            <h3>Vehicle Details</h3>
+
+            <p>
+                <strong>Vehicle:</strong>
+                ${booking.vehicleName}
+            </p>
+
+            <p>
+                <strong>Number:</strong>
+                ${booking.vehicleNumber}
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                ${booking.bookingDate}
+            </p>
+
+            <p>
+                <strong>Problem:</strong>
+                ${booking.problemDescription}
+            </p>
+
+            <label>
+                Assign Mechanic
+            </label>
+
+            <select id="mechanic-${bookingId}">
+
+                ${mechanicOptions}
+
+            </select>
+
+            <label>
+                Update Status
+            </label>
+
+            <select id="status-${bookingId}">
+
+                <option value="Pending"
+                    ${booking.status === "Pending" ? "selected" : ""}>
+                    Pending
+                </option>
+
+                <option value="Assigned"
+                    ${booking.status === "Assigned" ? "selected" : ""}>
+                    Assigned
+                </option>
+
+                <option value="Confirmed"
+                    ${booking.status === "Confirmed" ? "selected" : ""}>
+                    Confirmed
+                </option>
+
+                <option value="In Progress"
+                    ${booking.status === "In Progress" ? "selected" : ""}>
+                    In Progress
+                </option>
+
+                <option value="Completed"
+                    ${booking.status === "Completed" ? "selected" : ""}>
+                    Completed
+                </option>
+
+            </select>
+
+            <button
+                onclick="updateBooking('${bookingId}')">
+
+                Save Changes
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+/* ==========================================
+   UPDATE BOOKING
+========================================== */
+
+window.updateBooking = async function (bookingId) {
+
+    try {
+
+        const mechanicId =
+            document.getElementById(
+                "mechanic-" + bookingId
+            ).value;
+
+        const status =
+            document.getElementById(
+                "status-" + bookingId
+            ).value;
+
+        let mechanicName = "";
+
+        // Find selected mechanic name
+
+        if (mechanicId !== "") {
+
+            const mechanic =
+                mechanics.find(m => m.uid === mechanicId);
+
+            if (mechanic) {
+
+                mechanicName = mechanic.name;
+
+            }
+
+        }
+
+        // Update Realtime Database
+
+        await update(
+
+            ref(db, "bookings/" + bookingId),
+
+            {
+
+                mechanicId: mechanicId,
+
+                mechanicName: mechanicName,
+
+                status: status,
+
+                updatedAt: Date.now()
+
+            }
+
+        );
+
+        alert("Booking updated successfully.");
+
+        // Refresh dashboard
+
+        await loadDashboard();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert("Unable to update booking.\n\n" + error.message);
+
+    }
+
+};
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+if (logoutBtn) {
+
+    logoutBtn.addEventListener("click", async () => {
+
+        const confirmLogout =
+            confirm("Are you sure you want to logout?");
+
+        if (!confirmLogout) return;
+
+        try {
+
+            await signOut(auth);
+
+            sessionStorage.clear();
+
+            window.location.href = "login.html";
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            alert("Logout failed.");
+
+        }
+
+    });
+
+}
+
+
+/* ==========================================
+   INITIALIZE
+========================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    userCount.textContent = "0";
+    bookingCount.textContent = "0";
+    pendingCount.textContent = "0";
+
+    bookingList.innerHTML = `
+        <p>Loading dashboard...</p>
+    `;
+
+});
+
+
+/* ==========================================
+   END OF ADMIN DASHBOARD
+========================================== */
+
+</script>
+
+</body>
+
+</html>

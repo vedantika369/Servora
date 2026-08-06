@@ -1,0 +1,949 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title> Mechanic Dashboard | Servora </title> 
+<link rel="stylesheet"
+href="../css/style.css"> 
+</head>
+
+<body>
+
+<!-- ==========================
+     NAVBAR
+========================== -->
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <h2>Servora Mechanic</h2>
+
+    </div>
+
+    <nav>
+
+        <a href="mechanic/dashboard.html" class="active">
+            Dashboard
+        </a>
+
+        <button id="logoutBtn">
+            Logout
+        </button>
+
+    </nav>
+
+</header>
+
+
+<!-- ==========================
+     DASHBOARD
+========================== -->
+
+<section class="mechanic-section">
+
+    <div class="mechanic-container">
+
+        <h1>
+            Mechanic Dashboard
+        </h1>
+
+        <p>
+            Accept new service requests and manage your assigned jobs.
+        </p>
+
+
+        <!-- ==========================
+             AVAILABLE JOBS
+        ========================== -->
+
+        <div class="dashboard-block">
+
+            <h2>
+                🔧 Available Service Requests
+            </h2>
+
+            <p>
+                Accept a pending booking to start working on it.
+            </p>
+
+            <div id="availableJobs">
+
+                <p class="loading-text">
+                    Loading available jobs...
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================
+             MY ASSIGNED JOBS
+        ========================== -->
+
+        <div class="dashboard-block">
+
+            <h2>
+                🚗 My Assigned Services
+            </h2>
+
+            <p>
+                Update the progress of services you have accepted.
+            </p>
+
+            <div id="myJobs">
+
+                <p class="loading-text">
+                    Loading your assigned jobs...
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================
+     FOOTER
+========================== -->
+
+<footer class="footer">
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Servora. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- ==========================
+     SCRIPT
+========================== -->
+
+<script type="module">
+
+/* ==========================================
+   IMPORTS
+========================================== */
+
+import {
+    auth,
+    db
+}
+from "/static/js/firebase-config.js";
+
+import {
+    checkRole
+}
+from "/static/js/auth-guard.js";
+
+import {
+    onAuthStateChanged,
+    signOut
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    ref,
+    get,
+    update
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const availableJobs =
+document.getElementById("availableJobs");
+
+const myJobs =
+document.getElementById("myJobs");
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+let mechanicUID = "";
+
+let mechanicName = "";
+
+let mechanicEmail = "";
+
+
+/* ==========================================
+   ROLE PROTECTION
+========================================== */
+
+checkRole(
+    "mechanic",
+    "/login"
+);
+
+
+/* ==========================================
+   AUTHENTICATION
+========================================== */
+
+onAuthStateChanged(auth, async(user)=>{
+
+    if(!user){
+
+        window.location.href="login.html";
+
+        return;
+
+    }
+
+    mechanicUID = user.uid;
+
+    const snapshot =
+    await get(
+        ref(
+            db,
+            "users/"+mechanicUID
+        )
+    );
+
+    if(snapshot.exists()){
+
+        const data = snapshot.val();
+
+        mechanicName = data.name || "";
+
+        mechanicEmail = data.email || "";
+
+    }
+
+    loadAvailableJobs();
+
+    loadMyJobs();
+
+});
+
+/* ==========================================
+   LOAD AVAILABLE JOBS
+========================================== */
+
+async function loadAvailableJobs(){
+
+    try{
+
+        const snapshot =
+        await get(
+            ref(db,"bookings")
+        );
+
+        availableJobs.innerHTML = "";
+
+        if(!snapshot.exists()){
+
+            availableJobs.innerHTML = `
+
+            <div class="mechanic-card">
+
+                <h3>No Service Requests</h3>
+
+                <p>
+                    There are currently no pending bookings.
+                </p>
+
+            </div>
+
+            `;
+
+            return;
+
+        }
+
+        const bookings = snapshot.val();
+
+        let found = false;
+
+        Object.keys(bookings).forEach((id)=>{
+
+            const booking = bookings[id];
+
+            if(booking.status !== "Pending")
+                return;
+
+            found = true;
+
+            availableJobs.innerHTML += `
+
+            <div class="mechanic-card">
+
+                <h2>
+
+                    ${booking.serviceType}
+
+                </h2>
+
+                <hr>
+
+                <h3>
+
+                    Customer Details
+
+                </h3>
+
+                <p>
+
+                    <strong>Name:</strong>
+
+                    ${booking.customerName}
+
+                </p>
+
+                <p>
+
+                    <strong>Email:</strong>
+
+                    ${booking.customerEmail}
+
+                </p>
+
+                <h3>
+
+                    Vehicle Details
+
+                </h3>
+
+                <p>
+
+                    <strong>Vehicle:</strong>
+
+                    ${booking.vehicleName}
+
+                </p>
+
+                <p>
+
+                    <strong>Number:</strong>
+
+                    ${booking.vehicleNumber}
+
+                </p>
+
+                <p>
+
+                    <strong>Booking Date:</strong>
+
+                    ${booking.bookingDate}
+
+                </p>
+
+                <h3>
+
+                    Problem
+
+                </h3>
+
+                <p>
+
+                    ${booking.problemDescription}
+
+                </p>
+
+                <button
+                    onclick="acceptJob('${id}')">
+
+                    Accept Job
+
+                </button>
+
+            </div>
+
+            `;
+
+        });
+
+        if(!found){
+
+            availableJobs.innerHTML = `
+
+            <div class="mechanic-card">
+
+                <h3>
+
+                    No Pending Jobs
+
+                </h3>
+
+                <p>
+
+                    All service requests have been accepted.
+
+                </p>
+
+            </div>
+
+            `;
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        availableJobs.innerHTML = `
+
+        <div class="mechanic-card">
+
+            <h3>
+
+                Error Loading Jobs
+
+            </h3>
+
+        </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==========================================
+   ACCEPT JOB
+========================================== */
+
+window.acceptJob = async(id)=>{
+
+    try{
+
+        await update(
+
+            ref(db,"bookings/"+id),
+
+            {
+
+                mechanicId: mechanicUID,
+
+                mechanicName: mechanicName,
+
+                status: "Accepted"
+
+            }
+
+        );
+
+        alert(
+
+            "Service Accepted Successfully."
+
+        );
+
+        loadAvailableJobs();
+
+        loadMyJobs();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+
+            "Unable to accept service."
+
+        );
+
+    }
+
+};
+
+/* ==========================================
+   LOAD MY ASSIGNED JOBS
+========================================== */
+
+async function loadMyJobs(){
+
+    try{
+
+        const snapshot =
+        await get(
+            ref(db,"bookings")
+        );
+
+        myJobs.innerHTML = "";
+
+        if(!snapshot.exists()){
+
+            showNoAssignedJobs();
+
+            return;
+
+        }
+
+        const bookings = snapshot.val();
+
+        let found = false;
+
+        Object.keys(bookings).forEach((id)=>{
+
+            const booking = bookings[id];
+
+            if(booking.mechanicId !== mechanicUID)
+                return;
+
+            found = true;
+
+            myJobs.innerHTML += `
+
+<div class="mechanic-card">
+
+<h2>
+
+${booking.serviceType}
+
+</h2>
+
+<hr>
+
+<h3>
+
+Customer Details
+
+</h3>
+
+<p>
+
+<strong>Name:</strong>
+
+${booking.customerName}
+
+</p>
+
+<p>
+
+<strong>Email:</strong>
+
+${booking.customerEmail}
+
+</p>
+
+<h3>
+
+Vehicle Details
+
+</h3>
+
+<p>
+
+<strong>Vehicle:</strong>
+
+${booking.vehicleName}
+
+</p>
+
+<p>
+
+<strong>Vehicle Number:</strong>
+
+${booking.vehicleNumber}
+
+</p>
+
+<p>
+
+<strong>Booking Date:</strong>
+
+${booking.bookingDate}
+
+</p>
+
+<h3>
+
+Problem Description
+
+</h3>
+
+<p>
+
+${booking.problemDescription}
+
+</p>
+
+<label>
+
+Service Status
+
+</label>
+
+<select id="status-${id}">
+
+<option value="Accepted"
+${booking.status==="Accepted"?"selected":""}>
+
+Accepted
+
+</option>
+
+<option value="In Progress"
+${booking.status==="In Progress"?"selected":""}>
+
+In Progress
+
+</option>
+
+<option value="Completed"
+${booking.status==="Completed"?"selected":""}>
+
+Completed
+
+</option>
+
+</select>
+
+<label>
+
+Repair Notes
+
+</label>
+
+<textarea
+id="note-${id}"
+placeholder="Enter repair details">${booking.mechanicNote || ""}</textarea>
+
+<label>
+
+Estimated Cost
+
+</label>
+
+<input
+type="number"
+id="cost-${id}"
+value="${booking.estimatedCost || ""}"
+placeholder="Estimated Cost">
+
+<label>
+
+Final Amount
+
+</label>
+
+<input
+type="number"
+id="final-${id}"
+value="${booking.finalAmount || ""}"
+placeholder="Final Amount">
+
+<button
+onclick="updateService('${id}')">
+
+Update Service
+
+</button>
+
+</div>
+
+`;
+
+        });
+
+        if(!found){
+
+            showNoAssignedJobs();
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        myJobs.innerHTML = `
+
+<div class="mechanic-card">
+
+<h3>
+
+Unable to load assigned services.
+
+</h3>
+
+</div>
+
+`;
+
+    }
+
+}
+
+
+/* ==========================================
+   NO ASSIGNED JOBS
+========================================== */
+
+function showNoAssignedJobs(){
+
+    myJobs.innerHTML = `
+
+<div class="mechanic-card">
+
+<h3>
+
+No Assigned Services
+
+</h3>
+
+<p>
+
+Accept a pending booking to start working on it.
+
+</p>
+
+</div>
+
+`;
+
+}
+
+/* ==========================================
+   UPDATE SERVICE
+========================================== */
+
+window.updateService = async(id)=>{
+
+    try{
+
+        const status =
+        document.getElementById(
+            "status-"+id
+        ).value;
+
+        const note =
+        document.getElementById(
+            "note-"+id
+        ).value.trim();
+
+        const estimatedCost =
+        Number(
+            document.getElementById(
+                "cost-"+id
+            ).value
+        );
+
+        const finalAmount =
+        Number(
+            document.getElementById(
+                "final-"+id
+            ).value
+        );
+
+        let paymentStatus = "Pending";
+
+        if(status === "Completed"){
+
+            paymentStatus = "Pending";
+
+        }
+
+        await update(
+
+            ref(db,"bookings/"+id),
+
+            {
+
+                status: status,
+
+                mechanicNote: note,
+
+                estimatedCost: estimatedCost,
+
+                finalAmount: finalAmount,
+
+                paymentStatus: paymentStatus,
+
+                completedAt: Date.now()
+
+            }
+
+        );
+
+        alert(
+            "Service Updated Successfully."
+        );
+
+        loadMyJobs();
+
+        loadAvailableJobs();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Unable to update service."
+        );
+
+    }
+
+};
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+logoutBtn.addEventListener("click", async()=>{
+
+    try{
+
+        await signOut(auth);
+
+        sessionStorage.clear();
+
+        window.location.href="login.html";
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert("Unable to logout.");
+
+    }
+
+});
+
+
+/* ==========================================
+   AUTO REFRESH
+========================================== */
+
+setInterval(()=>{
+
+    if(mechanicUID){
+
+        loadAvailableJobs();
+
+        loadMyJobs();
+
+    }
+
+},30000);
+
+
+/* ==========================================
+   PAGE VISIBILITY REFRESH
+========================================== */
+
+document.addEventListener(
+
+    "visibilitychange",
+
+    ()=>{
+
+        if(
+
+            !document.hidden &&
+
+            mechanicUID
+
+        ){
+
+            loadAvailableJobs();
+
+            loadMyJobs();
+
+        }
+
+    }
+
+);
+
+
+/* ==========================================
+   PAGE SHOW
+========================================== */
+
+window.addEventListener(
+
+    "pageshow",
+
+    ()=>{
+
+        if(mechanicUID){
+
+            loadAvailableJobs();
+
+            loadMyJobs();
+
+        }
+
+    }
+
+);
+
+
+/* ==========================================
+   DOM LOADED
+========================================== */
+
+document.addEventListener(
+
+    "DOMContentLoaded",
+
+    ()=>{
+
+        availableJobs.innerHTML =
+
+        `
+
+        <p class="loading-text">
+
+            Loading available services...
+
+        </p>
+
+        `;
+
+
+        myJobs.innerHTML =
+
+        `
+
+        <p class="loading-text">
+
+            Loading assigned services...
+
+        </p>
+
+        `;
+
+    }
+
+);
+
+
+/* ==========================================
+   END OF MECHANIC DASHBOARD
+========================================== */

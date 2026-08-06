@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Customer Dashboard | Servora</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- Navbar -->
+
+<header class="navbar">
+
+
+<div class="logo">
+<h2>Servora</h2>
+</div>
+
+
+<nav>
+
+<a href="dashboard.html">Dashboard</a>
+
+<a href="book-service.html">Book Service</a>
+
+<a href="bookings.html">Bookings</a>
+
+<a href="profile.html">Profile</a>
+
+
+<button id="logoutBtn">
+Logout
+</button>
+
+
+</nav>
+
+
+</header>
+
+
+
+
+
+
+<!-- Dashboard Section -->
+
+
+<section class="dashboard-section">
+
+
+<div class="dashboard-container">
+
+
+
+<div class="welcome-card">
+
+
+<h1>
+Welcome, <span id="userName">User</span>
+</h1>
+
+
+<p>
+Manage your vehicle services easily with Servora.
+</p>
+
+
+<p>
+Email:
+<span id="userEmail"></span>
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="dashboard-cards">
+
+
+<div class="dashboard-card">
+
+<h3>
+🚗 My Vehicles
+</h3>
+
+<p>
+Manage your registered vehicles.
+</p>
+
+<a href="my-vehicles.html">
+View Vehicles
+</a>
+
+</div>
+
+
+
+
+
+<div class="dashboard-card">
+
+<h3>
+🔧 Book Service
+</h3>
+
+<p>
+Schedule your vehicle service.
+</p>
+
+<a href="book-service.html">
+Book Now
+</a>
+
+
+</div>
+
+
+
+
+
+
+<div class="dashboard-card">
+
+<h3>
+📋 Service History
+</h3>
+
+<p>
+Check previous services.
+</p>
+
+
+<a href="history.html">
+View History
+</a>
+
+
+</div>
+
+
+
+
+
+
+<div class="dashboard-card">
+
+<h3>
+🧾 Invoice
+</h3>
+
+<p>
+Download your service invoices.
+</p>
+
+
+<a href="invoice.html">
+View Invoice
+</a>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<footer class="footer">
+
+<div class="footer-bottom">
+
+<p>
+© 2026 Servora. All Rights Reserved.
+</p>
+
+
+</div>
+
+</footer>
+
+
+
+
+
+
+
+<script type="module">
+
+
+import {
+    auth,
+    db
+}
+from "static/js/firebase-config.js";
+
+
+
+import {
+
+    onAuthStateChanged,
+
+    signOut
+
+}
+from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+import {
+
+    ref,
+
+    get
+
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+
+
+
+const userName =
+document.getElementById("userName");
+
+
+const userEmail =
+document.getElementById("userEmail");
+
+
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+
+
+
+
+
+
+
+
+// CHECK LOGIN STATUS
+
+
+onAuthStateChanged(auth, async(user)=>{
+
+
+if(user){
+
+
+
+// Show Email
+
+userEmail.innerHTML =
+user.email;
+
+
+
+
+
+// Get user data from Realtime Database
+
+
+const userRef =
+
+ref(
+
+db,
+
+"users/"+user.uid
+
+);
+
+
+
+const snapshot =
+
+await get(userRef);
+
+
+
+
+
+
+if(snapshot.exists()){
+
+
+
+const data =
+snapshot.val();
+
+
+
+
+userName.innerHTML =
+data.name || "User";
+
+
+
+}
+
+else{
+
+
+userName.innerHTML =
+user.email.split("@")[0];
+
+
+}
+
+
+
+}
+
+else{
+
+
+window.location.href="login.html";
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// LOGOUT
+
+
+logoutBtn.addEventListener(
+
+"click",
+
+async()=>{
+
+
+await signOut(auth);
+
+
+
+window.location.href="login.html";
+
+
+
+}
+
+
+
+);
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+</html>

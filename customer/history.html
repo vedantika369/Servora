@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+
+<meta charset="UTF-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<title>
+Service History | Servora
+</title>
+
+
+
+
+<link rel="stylesheet"
+href="css/style.css">
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+
+
+<header class="navbar">
+
+
+
+<div class="logo">
+
+
+<h2>
+Servora
+</h2>
+
+
+</div>
+
+
+
+
+
+<nav>
+
+
+
+<a href="customer/dashboard.html">
+
+Dashboard
+
+</a>
+
+
+
+
+<a href="bookings.html">
+
+Bookings
+
+</a>
+
+
+
+
+
+<a href="invoice.html">
+
+Invoice
+
+</a>
+
+
+
+
+
+<a href="profile.html">
+
+Profile
+
+</a>
+
+
+
+</nav>
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+<section class="history-section">
+
+
+
+<div class="history-container">
+
+
+
+<h1>
+
+Service History
+
+</h1>
+
+
+
+
+<p>
+
+View your completed vehicle services.
+
+</p>
+
+
+
+
+
+
+<div id="historyList">
+
+
+<p>
+
+Loading history...
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<footer class="footer">
+
+
+
+<div class="footer-bottom">
+
+
+
+<p>
+
+© 2026 Servora. All Rights Reserved.
+
+</p>
+
+
+
+</div>
+
+
+
+</footer>
+
+<script type="module">
+
+
+import {
+
+    auth,
+
+    db
+
+}
+
+from "/static/js/firebase-config.js";
+
+
+
+
+
+
+import {
+
+    onAuthStateChanged
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+
+
+
+import {
+
+    ref,
+
+    get
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+
+
+
+
+const historyList =
+
+document.getElementById("historyList");
+
+
+
+
+
+
+
+
+// ================================
+// CHECK USER LOGIN
+// ================================
+
+
+
+onAuthStateChanged(auth,(user)=>{
+
+
+
+if(user){
+
+
+
+loadHistory(user.uid);
+
+
+
+}
+
+
+
+else{
+
+
+window.location.href="login.html";
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// ================================
+// LOAD SERVICE HISTORY
+// ================================
+
+
+
+async function loadHistory(uid){
+
+
+
+try{
+
+
+
+
+
+const bookingRef =
+
+ref(
+
+db,
+
+"bookings"
+
+);
+
+
+
+
+
+
+const snapshot =
+
+await get(bookingRef);
+
+
+
+
+
+
+
+historyList.innerHTML="";
+
+
+
+
+
+
+
+
+if(!snapshot.exists()){
+
+
+
+showEmptyHistory();
+
+
+return;
+
+
+}
+
+
+
+
+
+
+const bookings =
+
+snapshot.val();
+
+
+
+
+
+let completedServices = [];
+
+
+
+
+
+
+Object.keys(bookings).forEach((id)=>{
+
+
+
+const service =
+
+bookings[id];
+
+
+
+
+
+
+if(
+
+service.customerId === uid &&
+
+service.status === "Completed"
+
+){
+
+
+
+completedServices.push(service);
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+// Sort latest first
+
+
+completedServices.sort(
+
+(a,b)=>
+
+
+(b.createdAt || 0)
+
+-
+
+(a.createdAt || 0)
+
+
+
+);
+
+
+
+
+
+
+
+
+if(completedServices.length===0){
+
+
+
+showEmptyHistory();
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+completedServices.forEach((service)=>{
+
+
+
+historyList.innerHTML +=
+
+
+
+`
+
+<div class="history-card">
+
+
+
+
+
+<h2>
+
+${service.serviceType}
+
+</h2>
+
+
+
+
+
+
+<hr>
+
+
+
+
+
+
+
+<h3>
+
+Vehicle Details
+
+</h3>
+
+
+
+
+
+<p>
+
+🚗 Vehicle:
+
+${service.vehicleName || "Not Available"}
+
+</p>
+
+
+
+
+
+
+<p>
+
+🔢 Number:
+
+${service.vehicleNumber || "Not Available"}
+
+</p>
+
+
+
+
+
+
+
+
+
+<h3>
+
+Service Information
+
+</h3>
+
+
+
+
+
+
+<p>
+
+📅 Date:
+
+${service.bookingDate || "Not Available"}
+
+</p>
+
+
+
+
+
+
+<p>
+
+👨‍🔧 Mechanic:
+
+${service.mechanicName || "Not Available"}
+
+</p>
+
+
+
+
+
+
+
+
+
+<h3>
+
+Repair Details
+
+</h3>
+
+
+
+
+
+
+<p>
+
+${service.mechanicNote || "No notes available"}
+
+</p>
+
+
+
+
+
+
+
+
+
+<h3>
+
+Payment Details
+
+</h3>
+
+
+
+
+
+
+
+<p>
+
+Final Amount:
+
+₹ ${service.finalAmount || service.estimatedCost || 0}
+
+</p>
+
+
+
+
+
+
+
+<p>
+
+Payment Status:
+
+${service.paymentStatus || "Pending"}
+
+</p>
+
+
+
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+
+
+
+}
+
+
+
+catch(error){
+
+
+
+console.error(
+
+"History Loading Error:",
+
+error
+
+);
+
+
+
+historyList.innerHTML = `
+
+
+<div class="history-card">
+
+
+<h3>
+
+Unable to load service history
+
+</h3>
+
+
+<p>
+
+Please try again later.
+
+</p>
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// ================================
+// EMPTY HISTORY MESSAGE
+// ================================
+
+
+
+function showEmptyHistory(){
+
+
+
+historyList.innerHTML =
+
+
+
+`
+
+<div class="history-card">
+
+
+
+<h3>
+
+No Completed Services
+
+</h3>
+
+
+
+<p>
+
+Your completed services will appear here.
+
+</p>
+
+
+
+</div>
+
+`;
+
+
+
+}
+
+
+
+</script>

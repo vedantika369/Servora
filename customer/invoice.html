@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Invoice | Servora</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="logo">
+
+<h2>
+Servora
+</h2>
+
+</div>
+
+<nav>
+
+<a href="customer/dashboard.html">
+Dashboard
+</a>
+
+<a href="history.html">
+History
+</a>
+
+<a href="profile.html">
+Profile
+</a>
+
+</nav>
+
+</header>
+
+<section class="invoice-section">
+
+<div class="invoice-container">
+
+<h1>
+Service Invoice
+</h1>
+
+<div id="invoiceList">
+
+<p>
+Loading invoices...
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="footer">
+
+<div class="footer-bottom">
+
+<p>
+© 2026 Servora. All Rights Reserved.
+</p>
+
+</div>
+
+</footer>
+
+<script type="module">
+
+/* ==========================================
+   SERVORA INVOICE
+   REALTIME DATABASE
+========================================== */
+
+import {
+    auth,
+    db
+}
+from "/static/js/firebase-config.js";
+
+import {
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    ref,
+    get
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const invoiceList =
+    document.getElementById("invoiceList");
+
+
+/* ==========================================
+   AUTHENTICATION
+========================================== */
+
+onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+
+        window.location.href = "login.html";
+        return;
+
+    }
+
+    loadInvoices(user.uid);
+
+});
+
+
+/* ==========================================
+   LOAD INVOICES
+========================================== */
+
+async function loadInvoices(uid) {
+
+    try {
+
+        const snapshot =
+            await get(ref(db, "bookings"));
+
+        invoiceList.innerHTML = "";
+
+        if (!snapshot.exists()) {
+
+            invoiceList.innerHTML = `
+
+                <div class="invoice-card">
+
+                    <h3>No Invoice Available</h3>
+
+                    <p>
+                        Complete service invoices will appear here.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+        const bookings = snapshot.val();
+
+        let invoiceNumber = 1001;
+
+        const completedBookings = Object.entries(bookings)
+            .map(([id, booking]) => ({
+                id,
+                ...booking
+            }))
+            .filter(booking =>
+                booking.customerId === uid &&
+                booking.status === "Completed"
+            )
+            .sort((a, b) =>
+                (b.createdAt || 0) - (a.createdAt || 0)
+            );
+
+        if (completedBookings.length === 0) {
+
+            invoiceList.innerHTML = `
+
+                <div class="invoice-card">
+
+                    <h3>No Invoice Available</h3>
+
+                    <p>
+                        Complete service invoices will appear here.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+/* ==========================================
+   DISPLAY INVOICES
+========================================== */
+
+        completedBookings.forEach((invoice) => {
+
+            invoiceList.innerHTML += `
+
+            <div class="invoice-card">
+
+                <div class="invoice-header">
+
+                    <h2>SERVORA</h2>
+
+                    <p>
+                        Vehicle Service Invoice
+                    </p>
+
+                </div>
+
+                <hr>
+
+                <h3>
+
+                    Invoice No:
+                    INV-${invoiceNumber}
+
+                </h3>
+
+                <p>
+
+                    <strong>Date:</strong>
+
+                    ${invoice.bookingDate}
+
+                </p>
+
+                <h3>
+
+                    Customer Details
+
+                </h3>
+
+                <p>
+
+                    <strong>Name:</strong>
+
+                    ${invoice.customerName}
+
+                </p>
+
+                <p>
+
+                    <strong>Email:</strong>
+
+                    ${invoice.customerEmail}
+
+                </p>
+
+                <h3>
+
+                    Vehicle Details
+
+                </h3>
+
+                <p>
+
+                    <strong>Vehicle:</strong>
+
+                    ${invoice.vehicleName}
+
+                </p>
+
+                <p>
+
+                    <strong>Number:</strong>
+
+                    ${invoice.vehicleNumber}
+
+                </p>
+
+                <h3>
+
+                    Service Details
+
+                </h3>
+
+                <p>
+
+                    <strong>Service:</strong>
+
+                    ${invoice.serviceType}
+
+                </p>
+
+                <p>
+
+                    <strong>Mechanic:</strong>
+
+                    ${invoice.mechanicName || "Not Assigned"}
+
+                </p>
+
+                <p>
+
+                    <strong>Repair Notes:</strong>
+
+                    ${invoice.mechanicNote || "No notes available"}
+
+                </p>
+
+                <h3>
+
+                    Payment Details
+
+                </h3>
+
+                <p>
+
+                    <strong>Amount:</strong>
+
+                    ₹${invoice.finalAmount || invoice.estimatedCost || 0}
+
+                </p>
+
+                <p>
+
+                    <strong>Payment Status:</strong>
+
+                    ${invoice.paymentStatus || "Pending"}
+
+                </p>
+
+                <button
+                    onclick="printInvoice()">
+
+                    Print Invoice
+
+                </button>
+
+            </div>
+
+            `;
+
+            invoiceNumber++;
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        invoiceList.innerHTML = `
+
+            <div class="invoice-card">
+
+                <h3>Error</h3>
+
+                <p>${error.message}</p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+/* ==========================================
+   PRINT INVOICE
+========================================== */
+
+window.printInvoice = function () {
+
+    window.print();
+
+};
+
+
+/* ==========================================
+   PAGE INITIALIZATION
+========================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    invoiceList.innerHTML = `
+        <p>Loading invoices...</p>
+    `;
+
+});
+
+
+/* ==========================================
+   END OF INVOICE PAGE
+========================================== */
+
+</script>
+
+</body>
+
+</html>

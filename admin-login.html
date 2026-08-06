@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Admin Login | Servora</title>
+
+
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+</head>
+
+
+
+<body>
+
+
+
+
+<header class="navbar">
+
+
+<div class="container">
+
+
+
+<a href="/" class="logo">
+
+
+<div class="logo-text">
+
+<h2>
+Servora Admin
+</h2>
+
+
+<span>
+Service Management Panel
+</span>
+
+
+</div>
+
+
+</a>
+
+
+
+
+
+<div class="nav-buttons">
+
+
+<a href="/" class="btn-login">
+
+Home
+
+</a>
+
+
+<a href="/login" class="btn-register">
+
+User Login
+
+</a>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</header>
+
+
+
+
+
+
+
+
+<section class="auth-section">
+
+
+<div class="auth-container">
+
+
+
+<div class="auth-box">
+
+
+
+
+
+<div class="auth-header">
+
+
+<h2>
+Admin Login
+</h2>
+
+
+
+<p>
+Authorized access only.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<form id="adminLoginForm">
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+
+<i class="fa-solid fa-envelope"></i>
+
+
+Admin Email
+
+
+</label>
+
+
+
+
+<input
+
+
+type="email"
+
+
+id="email"
+
+
+placeholder="Enter admin email"
+
+
+required>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+
+
+<i class="fa-solid fa-lock"></i>
+
+
+Password
+
+
+</label>
+
+
+
+
+<input
+
+
+type="password"
+
+
+id="password"
+
+
+placeholder="Enter password"
+
+
+required>
+
+
+
+
+</div>
+
+
+
+
+<button
+
+type="submit"
+
+class="auth-btn">
+
+Login
+
+</button>
+
+
+
+
+
+<p id="message"
+class="auth-message">
+
+</p>
+
+
+
+
+</form>
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<footer class="footer">
+
+
+<div class="footer-bottom">
+
+
+<p>
+
+© 2026 Servora. All Rights Reserved.
+
+</p>
+
+
+</div>
+
+
+</footer>
+
+
+
+
+
+
+
+
+
+<script type="module">
+
+
+import {
+
+
+auth,
+
+db
+
+
+}
+
+from "/static/js/firebase-config.js";
+
+
+
+
+
+import {
+
+
+signInWithEmailAndPassword,
+
+signOut
+
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+
+
+import {
+
+
+ref,
+
+get
+
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+
+
+
+
+
+
+const form =
+
+document.getElementById(
+"adminLoginForm"
+);
+
+
+
+
+
+const message =
+
+document.getElementById(
+"message"
+);
+
+
+
+
+
+
+
+
+
+form.addEventListener(
+
+"submit",
+
+async(e)=>{
+
+
+
+e.preventDefault();
+
+
+
+
+
+message.innerHTML="";
+
+
+
+
+
+
+const email =
+
+document
+
+.getElementById("email")
+
+.value
+
+.trim();
+
+
+
+
+
+
+
+const password =
+
+document
+
+.getElementById("password")
+
+.value;
+
+
+
+
+
+
+
+
+try{
+
+
+
+
+
+// LOGIN WITH FIREBASE AUTH
+
+
+const userCredential =
+
+await signInWithEmailAndPassword(
+
+
+auth,
+
+
+email,
+
+
+password
+
+
+);
+
+
+
+
+
+
+
+
+const user =
+
+userCredential.user;
+
+
+
+
+
+
+
+
+// GET ADMIN DATA FROM REALTIME DATABASE
+
+
+const adminRef =
+
+
+ref(
+
+db,
+
+"users/"+user.uid
+
+);
+
+
+
+
+
+
+
+const snapshot =
+
+
+await get(adminRef);
+
+
+
+
+
+
+
+
+if(snapshot.exists()){
+
+
+
+
+
+const data =
+
+snapshot.val();
+
+
+
+
+
+
+
+
+if(data.role === "admin"){
+
+
+
+
+
+
+localStorage.setItem(
+
+"servoraAdmin",
+
+JSON.stringify(data)
+
+);
+
+
+
+
+
+
+
+window.location.href =
+
+"/admin/dashboard";
+
+
+
+
+
+
+
+}
+
+else{
+
+
+
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-circle-exclamation"></i>
+
+You are not authorized as admin.
+
+`;
+
+
+
+
+
+
+await signOut(auth);
+
+
+
+
+
+}
+
+
+
+
+
+}
+
+else{
+
+
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-user-slash"></i>
+
+Admin profile not found.
+
+`;
+
+
+
+
+
+
+await signOut(auth);
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+catch(error){
+
+
+
+
+
+
+switch(error.code){
+
+
+
+
+
+case "auth/invalid-credential":
+
+
+case "auth/wrong-password":
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-lock"></i>
+
+Invalid email or password.
+
+`;
+
+break;
+
+
+
+
+
+
+
+
+case "auth/user-not-found":
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-user"></i>
+
+Admin account not found.
+
+`;
+
+break;
+
+
+
+
+
+
+
+
+default:
+
+
+
+message.innerHTML = `
+
+<i class="fa-solid fa-circle-xmark"></i>
+
+${error.message}
+
+`;
+
+
+
+
+
+}
+
+
+
+
+
+console.error(
+
+"Admin Login Error:",
+
+error
+
+);
+
+
+
+
+
+}
+
+
+
+
+
+});
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+
+</html>
