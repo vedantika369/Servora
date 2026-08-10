@@ -5313,3 +5313,746 @@ cursor:pointer;
     }
 
 }
+/* =========================================================
+   SERVORA - BOOK SERVICE PAGE
+   FINAL UI ENHANCEMENT
+   ADD THIS AT THE VERY BOTTOM OF style.css
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   PAGE BACKGROUND
+--------------------------------------------------------- */
+
+.booking-section {
+    min-height: calc(100vh - 90px);
+    padding: 70px 30px;
+    background:
+        linear-gradient(135deg, #f8fbff 0%, #eef5ff 100%);
+    display: block;
+}
+
+
+/* ---------------------------------------------------------
+   MAIN BOOKING CONTAINER
+--------------------------------------------------------- */
+
+.booking-container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+
+/* ---------------------------------------------------------
+   IF BOOKING PAGE USES TWO-COLUMN LAYOUT
+--------------------------------------------------------- */
+
+.booking-layout {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 45px;
+    align-items: start;
+}
+
+
+/* ---------------------------------------------------------
+   LEFT INTRODUCTION
+--------------------------------------------------------- */
+
+.booking-intro {
+    padding: 45px 20px;
+    position: sticky;
+    top: 110px;
+}
+
+.booking-intro h1 {
+    font-size: 48px;
+    line-height: 1.12;
+    font-weight: 800;
+    color: #172033;
+    margin-bottom: 20px;
+}
+
+.booking-intro h1 span {
+    color: #2563eb;
+}
+
+.booking-intro > p {
+    color: #64748b;
+    font-size: 17px;
+    line-height: 1.8;
+    max-width: 500px;
+}
+
+
+/* ---------------------------------------------------------
+   INTRO FEATURES
+--------------------------------------------------------- */
+
+.booking-benefits {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.booking-benefit {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #334155;
+    font-weight: 600;
+}
+
+.booking-benefit i {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+
+/* ---------------------------------------------------------
+   BOOKING BOX
+--------------------------------------------------------- */
+
+.booking-box {
+    width: 100%;
+    background: #ffffff;
+
+    padding: 42px;
+
+    border-radius: 24px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.08);
+
+    position: relative;
+}
+
+
+/* ---------------------------------------------------------
+   BOOKING BOX HEADER
+--------------------------------------------------------- */
+
+.booking-box h1 {
+    text-align: left;
+
+    font-size: 32px;
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    color: #172033;
+
+    margin-bottom: 10px;
+}
+
+.booking-box > p {
+    text-align: left;
+
+    color: #64748b;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    margin-bottom: 30px;
+}
+
+
+/* ---------------------------------------------------------
+   STEP INDICATOR
+--------------------------------------------------------- */
+
+.booking-steps,
+.steps,
+.step-indicator {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin: 10px 0 35px;
+
+    gap: 10px;
+}
+
+.booking-step,
+.step {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.booking-step.active,
+.step.active {
+    color: #2563eb;
+}
+
+.booking-step-number,
+.step-number {
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e8eef7;
+
+    color: #64748b;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.booking-step.active .booking-step-number,
+.step.active .step-number {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+
+/* ---------------------------------------------------------
+   FORM LABELS
+--------------------------------------------------------- */
+
+.booking-box label {
+    display: block;
+
+    margin-top: 20px;
+    margin-bottom: 9px;
+
+    color: #1e293b;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+/* ---------------------------------------------------------
+   INPUTS / SELECT / TEXTAREA
+--------------------------------------------------------- */
+
+.booking-box input,
+.booking-box select,
+.booking-box textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+
+    border: 1px solid #d7e0ec;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    color: #172033;
+
+    font-size: 15px;
+
+    font-family: inherit;
+
+    outline: none;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.booking-box input:hover,
+.booking-box select:hover,
+.booking-box textarea:hover {
+    border-color: #a9bad1;
+}
+
+.booking-box input:focus,
+.booking-box select:focus,
+.booking-box textarea:focus {
+    border-color: #2563eb;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, 0.10);
+}
+
+.booking-box textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+
+/* ---------------------------------------------------------
+   SERVICE SELECTION AREA
+--------------------------------------------------------- */
+
+.service-options,
+.service-selection,
+.services-selection {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 16px;
+
+    margin-top: 15px;
+}
+
+
+/* ---------------------------------------------------------
+   SERVICE CARDS
+--------------------------------------------------------- */
+
+.service-option,
+.service-choice,
+.service-select-card {
+    position: relative;
+
+    padding: 22px;
+
+    border: 1px solid #d9e2ef;
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.service-option:hover,
+.service-choice:hover,
+.service-select-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 10px 25px rgba(37, 99, 235, 0.10);
+
+    background: #f8fbff;
+}
+
+.service-option.selected,
+.service-choice.selected,
+.service-select-card.selected {
+    border-color: #2563eb;
+
+    background: #eff6ff;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* ---------------------------------------------------------
+   SERVICE CARD TITLE
+--------------------------------------------------------- */
+
+.service-option h3,
+.service-choice h3,
+.service-select-card h3 {
+    margin: 0 0 8px;
+
+    color: #172033;
+
+    font-size: 16px;
+
+    font-weight: 750;
+}
+
+.service-option p,
+.service-choice p,
+.service-select-card p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+.service-option strong,
+.service-choice strong,
+.service-select-card strong {
+    display: block;
+
+    margin-top: 12px;
+
+    color: #2563eb;
+
+    font-size: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   VEHICLE SELECTION
+--------------------------------------------------------- */
+
+.vehicle-selection {
+    margin-bottom: 25px;
+}
+
+.vehicle-select-wrapper {
+    position: relative;
+}
+
+#vehicleSelect {
+    appearance: auto;
+
+    min-height: 50px;
+
+    cursor: pointer;
+}
+
+
+/* ---------------------------------------------------------
+   ADD VEHICLE BUTTON
+--------------------------------------------------------- */
+
+.add-vehicle-btn,
+.add-vehicle,
+#addVehicleBtn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 12px;
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    border: 1px solid #bfdbfe;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.add-vehicle-btn:hover,
+.add-vehicle:hover,
+#addVehicleBtn:hover {
+    background: #dbeafe;
+
+    transform: translateY(-1px);
+}
+
+
+/* ---------------------------------------------------------
+   BOOKING BUTTON
+--------------------------------------------------------- */
+
+.booking-box button[type="submit"],
+.confirm-booking,
+#confirmBookingBtn {
+    width: 100%;
+
+    margin-top: 28px;
+
+    padding: 16px 22px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.20);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.booking-box button[type="submit"]:hover,
+.confirm-booking:hover,
+#confirmBookingBtn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(37, 99, 235, 0.28);
+}
+
+.booking-box button[type="submit"]:active,
+.confirm-booking:active,
+#confirmBookingBtn:active {
+    transform: translateY(0);
+}
+
+
+/* ---------------------------------------------------------
+   MESSAGE
+--------------------------------------------------------- */
+
+#message {
+    padding: 12px 15px;
+
+    margin-top: 18px;
+
+    text-align: center;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------
+   DISABLED BUTTON
+--------------------------------------------------------- */
+
+.booking-box button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* ---------------------------------------------------------
+   BOOKING SUMMARY
+--------------------------------------------------------- */
+
+.booking-summary,
+.summary-card {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+}
+
+.booking-summary h3,
+.summary-card h3 {
+    margin-bottom: 15px;
+
+    color: #172033;
+
+    font-size: 17px;
+}
+
+.booking-summary p,
+.summary-card p {
+    margin: 7px 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   RIGHT SIDE FORM CARD
+--------------------------------------------------------- */
+
+.booking-form-card {
+    width: 100%;
+
+    background: #ffffff;
+
+    border-radius: 24px;
+
+    padding: 38px;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 20px 50px rgba(15, 23, 42, 0.08);
+
+    box-sizing: border-box;
+}
+
+
+/* ---------------------------------------------------------
+   FIX COMMON FLEX / GRID OVERFLOW
+--------------------------------------------------------- */
+
+.booking-section *,
+.booking-container *,
+.booking-layout * {
+    box-sizing: border-box;
+}
+
+.booking-layout > *,
+.booking-container > * {
+    min-width: 0;
+}
+
+
+/* ---------------------------------------------------------
+   PREVENT HORIZONTAL OVERFLOW
+--------------------------------------------------------- */
+
+body {
+    overflow-x: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+--------------------------------------------------------- */
+
+@media (max-width: 991px) {
+
+    .booking-layout {
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+    }
+
+    .booking-intro {
+        position: static;
+
+        padding: 10px 5px;
+
+        text-align: center;
+    }
+
+    .booking-intro > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .booking-benefits {
+        align-items: center;
+    }
+
+    .booking-box,
+    .booking-form-card {
+        padding: 30px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .booking-section {
+        padding: 35px 15px;
+    }
+
+    .booking-intro h1 {
+        font-size: 34px;
+    }
+
+    .booking-box,
+    .booking-form-card {
+        padding: 22px;
+        border-radius: 18px;
+    }
+
+    .service-options,
+    .service-selection,
+    .services-selection {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-steps,
+    .steps,
+    .step-indicator {
+        overflow-x: auto;
+
+        justify-content: flex-start;
+
+        padding-bottom: 8px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .booking-section {
+        padding: 25px 10px;
+    }
+
+    .booking-intro h1 {
+        font-size: 30px;
+    }
+
+    .booking-box,
+    .booking-form-card {
+        padding: 18px;
+    }
+
+    .booking-box h1 {
+        font-size: 26px;
+    }
+
+}
