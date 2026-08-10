@@ -1384,7 +1384,7 @@
                     </div>
 
                     <div class="vehicle-list" id="vehicleList">
-                        <!-- Vehicles will be loaded here dynamically -->
+                        <!-- Vehicles will be loaded here dynamically from Firebase -->
                     </div>
 
                     <div class="no-vehicle" id="noVehicleMessage">
@@ -1516,49 +1516,104 @@
         <p>&copy; 2024 Servora. All rights reserved.</p>
     </footer>
 
-    <script>
-        // Sample vehicle data - In production, this would come from a database
-        // Currently empty - only show vehicles that users have added
-        const userVehicles = [];
+    <script type="module">
+        import { auth, db } from "../js/firebase-config.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-        // Load vehicles on page load
-        function loadVehicles() {
-            const vehicleList = document.getElementById('vehicleList');
-            const noVehicleMessage = document.getElementById('noVehicleMessage');
+        let currentUserUID = "";
+        let userVehicles = [];
 
-            // Clear existing content
-            vehicleList.innerHTML = '';
-
-            if (userVehicles.length === 0) {
-                // Show no vehicles message
-                noVehicleMessage.classList.remove('hidden');
+        // Check user login and load vehicles
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserUID = user.uid;
+                loadVehicles();
             } else {
-                // Hide no vehicles message
-                noVehicleMessage.classList.add('hidden');
-
-                // Display user vehicles
-                userVehicles.forEach((vehicle, index) => {
-                    const label = document.createElement('label');
-                    label.className = 'vehicle-option';
-                    label.innerHTML = `
-                        <input type="radio" name="vehicle" value="${vehicle.id}" ${index === 0 ? 'checked' : ''}>
-                        <div class="vehicle-icon">${vehicle.icon}</div>
-                        <p class="vehicle-name">${vehicle.name}</p>
-                        <p class="vehicle-number">${vehicle.number}</p>
-                    `;
-                    label.addEventListener('change', updateSummary);
-                    vehicleList.appendChild(label);
-                });
+                window.location.href = "login.html";
             }
+        });
+
+        // Load vehicles from Firebase
+        async function loadVehicles() {
+            try {
+                const vehiclesRef = ref(db, "vehicles");
+                const snapshot = await get(vehiclesRef);
+
+                const vehicleList = document.getElementById('vehicleList');
+                const noVehicleMessage = document.getElementById('noVehicleMessage');
+
+                vehicleList.innerHTML = '';
+                userVehicles = [];
+
+                if (!snapshot.exists()) {
+                    noVehicleMessage.classList.remove('hidden');
+                    return;
+                }
+
+                const vehicles = snapshot.val();
+                let found = false;
+
+                Object.keys(vehicles).forEach((vehicleId) => {
+                    const vehicle = vehicles[vehicleId];
+                    
+                    // Only show vehicles for current user
+                    if (vehicle.userId === currentUserUID) {
+                        found = true;
+                        
+                        // Store vehicle data
+                        userVehicles.push({
+                            id: vehicleId,
+                            name: vehicle.vehicleName,
+                            number: vehicle.vehicleNumber,
+                            model: vehicle.model,
+                            year: vehicle.year,
+                            icon: getVehicleIcon(vehicle.model)
+                        });
+
+                        // Create vehicle option element
+                        const label = document.createElement('label');
+                        label.className = 'vehicle-option';
+                        label.innerHTML = `
+                            <input type="radio" name="vehicle" value="${vehicleId}">
+                            <div class="vehicle-icon">${getVehicleIcon(vehicle.model)}</div>
+                            <p class="vehicle-name">${vehicle.vehicleName}</p>
+                            <p class="vehicle-number">${vehicle.vehicleNumber}</p>
+                        `;
+                        label.addEventListener('change', updateSummary);
+                        vehicleList.appendChild(label);
+                    }
+                });
+
+                if (found) {
+                    noVehicleMessage.classList.add('hidden');
+                } else {
+                    noVehicleMessage.classList.remove('hidden');
+                }
+
+            } catch (error) {
+                console.error("Error loading vehicles:", error);
+                document.getElementById('noVehicleMessage').classList.remove('hidden');
+            }
+        }
+
+        // Get appropriate icon based on vehicle model
+        function getVehicleIcon(model) {
+            const modelLower = model.toLowerCase();
+            if (modelLower.includes('suv') || modelLower.includes('xuv')) return '🚙';
+            if (modelLower.includes('sedan')) return '🚗';
+            if (modelLower.includes('truck')) return '🚚';
+            if (modelLower.includes('van')) return '🚐';
+            return '🚗'; // default
         }
 
         // Update booking summary
         function updateSummary() {
             // Get selected vehicle
-            const selectedVehicle = document.querySelector('input[name="vehicle"]:checked');
-            if (selectedVehicle) {
-                const vehicleId = selectedVehicle.value;
-                const vehicle = userVehicles.find(v => v.id == vehicleId);
+            const selectedVehicleInput = document.querySelector('input[name="vehicle"]:checked');
+            if (selectedVehicleInput) {
+                const vehicleId = selectedVehicleInput.value;
+                const vehicle = userVehicles.find(v => v.id === vehicleId);
                 if (vehicle) {
                     document.getElementById('summaryVehicle').textContent = `${vehicle.name} (${vehicle.number})`;
                 }
@@ -1617,15 +1672,15 @@
             alert('Thank you for booking with Servora! Your service has been scheduled.');
         }
 
+        // Make bookService accessible globally
+        window.bookService = bookService;
+
         // Add event listeners to form inputs
         document.getElementById('date').addEventListener('change', updateSummary);
         document.getElementById('time').addEventListener('change', updateSummary);
         document.querySelectorAll('input[name="service"]').forEach(input => {
             input.addEventListener('change', updateSummary);
         });
-
-        // Load vehicles when page loads
-        window.addEventListener('DOMContentLoaded', loadVehicles);
     </script>
 
 </body>
