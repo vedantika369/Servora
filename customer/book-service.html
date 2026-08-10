@@ -207,14 +207,6 @@
 
     box-sizing: border-box;
     
-    margin-bottom: 0;
-}
-
-/* =========================================================
-   VEHICLE SECTION
-========================================================= */
-
-.vehicle-section {
     margin-bottom: 40px;
 }
 
@@ -337,7 +329,7 @@
         0 8px 22px rgba(37, 99, 235, 0.07);
 }
 
-.vehicle-option.selected {
+.vehicle-option:has(input:checked) {
     border-color: #2563eb;
 
     background: #eff6ff;
@@ -405,7 +397,7 @@
 ========================================================= */
 
 .no-vehicle {
-    display: none;
+    display: block;
 
     width: 100%;
 
@@ -422,8 +414,8 @@
     background: #f8fafc;
 }
 
-.no-vehicle.show {
-    display: block;
+.no-vehicle.hidden {
+    display: none;
 }
 
 .no-vehicle-icon {
@@ -640,11 +632,11 @@
 
 .service-section {
 
-    margin-top: 40px;
+    margin-top: 0;
 
-    padding-top: 40px;
+    padding-top: 0;
 
-    border-top: 1px solid #e5e7eb;
+    border-top: none;
 }
 
 .service-section h3 {
@@ -723,7 +715,7 @@
         0 8px 22px rgba(37, 99, 235, 0.07);
 }
 
-.service-option.selected {
+.service-option:has(input:checked) {
 
     border-color: #2563eb;
 
@@ -1131,6 +1123,7 @@
     .form-section, .service-section {
         margin-top: 30px;
         padding-top: 30px;
+        border-top: 1px solid #e5e7eb;
     }
 
     .booking-summary {
@@ -1339,9 +1332,9 @@
             </h1>
             <div class="nav-menu">
                 <a href="../../index.html" class="nav-item">Home</a>
-                <a href="#" class="nav-item">Dashboard</a>
-                <a href="#" class="nav-item">Vehicles</a>
-                <a href="#" class="nav-item">Profile</a>
+                <a href="dashboard.html" class="nav-item">Dashboard</a>
+                <a href="my-vehicles.html" class="nav-item">Vehicles</a>
+                <a href="profile.html" class="nav-item">Profile</a>
                 <a href="#" class="nav-item logout-btn">Logout</a>
             </div>
         </div>
@@ -1390,35 +1383,35 @@
 
                     <div class="service-grid">
                         <label class="service-option">
-                            <input type="radio" name="service">
+                            <input type="radio" name="service" value="general">
                             <h4>🔧 General Service</h4>
                             <p>Complete vehicle inspection, basic maintenance and servicing.</p>
                             <div class="service-price">Starting from ₹999</div>
                         </label>
 
                         <label class="service-option">
-                            <input type="radio" name="service">
+                            <input type="radio" name="service" value="engine">
                             <h4>⚙️ Engine Repair</h4>
                             <p>Diagnose and repair engine-related problems and performance issues.</p>
                             <div class="service-price">Inspection from ₹499</div>
                         </label>
 
                         <label class="service-option">
-                            <input type="radio" name="service">
+                            <input type="radio" name="service" value="oil-change">
                             <h4>🛢️ Oil Change</h4>
                             <p>Engine oil replacement with basic vehicle checks.</p>
                             <div class="service-price">Starting from ₹699</div>
                         </label>
 
                         <label class="service-option">
-                            <input type="radio" name="service">
+                            <input type="radio" name="service" value="cleaning">
                             <h4>✨ Car Cleaning</h4>
                             <p>Interior and exterior cleaning for a fresh, clean vehicle.</p>
                             <div class="service-price">Starting from ₹399</div>
                         </label>
 
                         <label class="service-option">
-                            <input type="radio" name="service">
+                            <input type="radio" name="service" value="emergency">
                             <h4>🚨 Emergency Repair</h4>
                             <p>Urgent repair services for unexpected vehicle issues.</p>
                             <div class="service-price">Call for price</div>
@@ -1430,37 +1423,18 @@
                 <div class="vehicle-section">
                     <div class="section-title">
                         <h3>1. Choose Your Vehicle</h3>
-                        <a href="#" class="add-vehicle-btn">+ Add Vehicle</a>
+                        <a href="my-vehicles.html" class="add-vehicle-btn">+ Add Vehicle</a>
                     </div>
 
-                    <div class="vehicle-list">
-                        <label class="vehicle-option selected">
-                            <input type="radio" name="vehicle" checked>
-                            <div class="vehicle-icon">🚗</div>
-                            <p class="vehicle-name">Toyota Camry</p>
-                            <p class="vehicle-number">ABC123</p>
-                        </label>
-
-                        <label class="vehicle-option">
-                            <input type="radio" name="vehicle">
-                            <div class="vehicle-icon">🚙</div>
-                            <p class="vehicle-name">Honda CR-V</p>
-                            <p class="vehicle-number">XYZ789</p>
-                        </label>
-
-                        <label class="vehicle-option">
-                            <input type="radio" name="vehicle">
-                            <div class="vehicle-icon">🏎️</div>
-                            <p class="vehicle-name">BMW 3 Series</p>
-                            <p class="vehicle-number">LMN456</p>
-                        </label>
+                    <div class="vehicle-list" id="vehicleList">
+                        <!-- Vehicles will be loaded here dynamically -->
                     </div>
 
-                    <div class="no-vehicle">
+                    <div class="no-vehicle" id="noVehicleMessage">
                         <div class="no-vehicle-icon">🚗</div>
                         <h3>No vehicles added</h3>
                         <p>Add a vehicle to your account to proceed with booking a service.</p>
-                        <a href="#" class="primary-action">Add Your First Vehicle</a>
+                        <a href="my-vehicles.html" class="primary-action">Add Your First Vehicle</a>
                     </div>
                 </div>
 
@@ -1498,23 +1472,23 @@
                     <h3>4. Booking Summary</h3>
                     <div class="summary-row">
                         <span class="summary-label">Selected Vehicle:</span>
-                        <span class="summary-value">Toyota Camry (ABC123)</span>
+                        <span class="summary-value" id="summaryVehicle">Not selected</span>
                     </div>
                     <div class="summary-row">
                         <span class="summary-label">Selected Service:</span>
-                        <span class="summary-value">Oil Change</span>
+                        <span class="summary-value" id="summaryService">Not selected</span>
                     </div>
                     <div class="summary-row">
                         <span class="summary-label">Service Price:</span>
-                        <span class="summary-value">₹699</span>
+                        <span class="summary-value" id="summaryPrice">-</span>
                     </div>
                     <div class="summary-row">
                         <span class="summary-label">Appointment Date:</span>
-                        <span class="summary-value">Not selected</span>
+                        <span class="summary-value" id="summaryDate">Not selected</span>
                     </div>
                     <div class="summary-row">
                         <span class="summary-label">Appointment Time:</span>
-                        <span class="summary-value">Not selected</span>
+                        <span class="summary-value" id="summaryTime">Not selected</span>
                     </div>
                 </div>
 
@@ -1543,9 +1517,117 @@
     </footer>
 
     <script>
-        function bookService() {
-            alert("Thank you for booking with Servora! Your service has been scheduled.");
+        // Sample vehicle data - In production, this would come from a database
+        const userVehicles = [
+            { id: 1, name: 'Toyota Camry', number: 'ABC123', icon: '🚗' },
+            { id: 2, name: 'Honda CR-V', number: 'XYZ789', icon: '🚙' }
+        ];
+
+        // Load vehicles on page load
+        function loadVehicles() {
+            const vehicleList = document.getElementById('vehicleList');
+            const noVehicleMessage = document.getElementById('noVehicleMessage');
+
+            // Clear existing content
+            vehicleList.innerHTML = '';
+
+            if (userVehicles.length === 0) {
+                // Show no vehicles message
+                noVehicleMessage.classList.remove('hidden');
+            } else {
+                // Hide no vehicles message
+                noVehicleMessage.classList.add('hidden');
+
+                // Display user vehicles
+                userVehicles.forEach((vehicle, index) => {
+                    const label = document.createElement('label');
+                    label.className = 'vehicle-option' + (index === 0 ? ':has(input:checked)' : '');
+                    label.innerHTML = `
+                        <input type="radio" name="vehicle" value="${vehicle.id}" ${index === 0 ? 'checked' : ''}>
+                        <div class="vehicle-icon">${vehicle.icon}</div>
+                        <p class="vehicle-name">${vehicle.name}</p>
+                        <p class="vehicle-number">${vehicle.number}</p>
+                    `;
+                    label.addEventListener('change', updateSummary);
+                    vehicleList.appendChild(label);
+                });
+            }
         }
+
+        // Update booking summary
+        function updateSummary() {
+            // Get selected vehicle
+            const selectedVehicle = document.querySelector('input[name="vehicle"]:checked');
+            if (selectedVehicle) {
+                const vehicleId = selectedVehicle.value;
+                const vehicle = userVehicles.find(v => v.id == vehicleId);
+                if (vehicle) {
+                    document.getElementById('summaryVehicle').textContent = `${vehicle.name} (${vehicle.number})`;
+                }
+            }
+
+            // Get selected service
+            const selectedService = document.querySelector('input[name="service"]:checked');
+            if (selectedService) {
+                const serviceLabel = selectedService.closest('.service-option').querySelector('h4').textContent;
+                const servicePrice = selectedService.closest('.service-option').querySelector('.service-price').textContent;
+                document.getElementById('summaryService').textContent = serviceLabel.replace(/[^a-zA-Z\s]/g, '').trim();
+                document.getElementById('summaryPrice').textContent = servicePrice;
+            }
+
+            // Get selected date
+            const date = document.getElementById('date').value;
+            if (date) {
+                const dateObj = new Date(date);
+                document.getElementById('summaryDate').textContent = dateObj.toLocaleDateString('en-IN');
+            }
+
+            // Get selected time
+            const time = document.getElementById('time').value;
+            if (time) {
+                document.getElementById('summaryTime').textContent = time;
+            }
+        }
+
+        // Book service function
+        function bookService() {
+            const vehicleSelect = document.querySelector('input[name="vehicle"]:checked');
+            const serviceSelect = document.querySelector('input[name="service"]:checked');
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+
+            if (!vehicleSelect) {
+                alert('Please select a vehicle');
+                return;
+            }
+
+            if (!serviceSelect) {
+                alert('Please select a service');
+                return;
+            }
+
+            if (!date) {
+                alert('Please select a date');
+                return;
+            }
+
+            if (!time) {
+                alert('Please select a time');
+                return;
+            }
+
+            alert('Thank you for booking with Servora! Your service has been scheduled.');
+        }
+
+        // Add event listeners to form inputs
+        document.getElementById('date').addEventListener('change', updateSummary);
+        document.getElementById('time').addEventListener('change', updateSummary);
+        document.querySelectorAll('input[name="service"]').forEach(input => {
+            input.addEventListener('change', updateSummary);
+        });
+
+        // Load vehicles when page loads
+        window.addEventListener('DOMContentLoaded', loadVehicles);
     </script>
 
 </body>
