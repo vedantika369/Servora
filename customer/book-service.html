@@ -632,11 +632,11 @@
 
 .service-section {
 
-    margin-top: 0;
+    margin-top: 40px;
 
-    padding-top: 0;
+    padding-top: 40px;
 
-    border-top: none;
+    border-top: 1px solid #e5e7eb;
 }
 
 .service-section h3 {
@@ -1376,7 +1376,26 @@
             <!-- Main booking card -->
             <div class="booking-card">
 
-                <!-- Service selection section (moved to top for visibility) -->
+                <!-- Vehicle selection section (FIRST) -->
+                <div class="vehicle-section">
+                    <div class="section-title">
+                        <h3>1. Choose Your Vehicle</h3>
+                        <a href="my-vehicles.html" class="add-vehicle-btn">+ Add Vehicle</a>
+                    </div>
+
+                    <div class="vehicle-list" id="vehicleList">
+                        <!-- Vehicles will be loaded here dynamically -->
+                    </div>
+
+                    <div class="no-vehicle" id="noVehicleMessage">
+                        <div class="no-vehicle-icon">🚗</div>
+                        <h3>No vehicles added</h3>
+                        <p>Add a vehicle to your account to proceed with booking a service.</p>
+                        <a href="my-vehicles.html" class="primary-action">Add Your First Vehicle</a>
+                    </div>
+                </div>
+
+                <!-- Service selection section (SECOND) -->
                 <div class="service-section">
                     <h3>2. Select a Service</h3>
                     <p>Select the service your vehicle needs.</p>
@@ -1416,25 +1435,6 @@
                             <p>Urgent repair services for unexpected vehicle issues.</p>
                             <div class="service-price">Call for price</div>
                         </label>
-                    </div>
-                </div>
-
-                <!-- Vehicle selection section -->
-                <div class="vehicle-section">
-                    <div class="section-title">
-                        <h3>1. Choose Your Vehicle</h3>
-                        <a href="my-vehicles.html" class="add-vehicle-btn">+ Add Vehicle</a>
-                    </div>
-
-                    <div class="vehicle-list" id="vehicleList">
-                        <!-- Vehicles will be loaded here dynamically -->
-                    </div>
-
-                    <div class="no-vehicle" id="noVehicleMessage">
-                        <div class="no-vehicle-icon">🚗</div>
-                        <h3>No vehicles added</h3>
-                        <p>Add a vehicle to your account to proceed with booking a service.</p>
-                        <a href="my-vehicles.html" class="primary-action">Add Your First Vehicle</a>
                     </div>
                 </div>
 
@@ -1518,10 +1518,8 @@
 
     <script>
         // Sample vehicle data - In production, this would come from a database
-        const userVehicles = [
-            { id: 1, name: 'Toyota Camry', number: 'ABC123', icon: '🚗' },
-            { id: 2, name: 'Honda CR-V', number: 'XYZ789', icon: '🚙' }
-        ];
+        // Currently empty - only show vehicles that users have added
+        const userVehicles = [];
 
         // Load vehicles on page load
         function loadVehicles() {
@@ -1541,7 +1539,7 @@
                 // Display user vehicles
                 userVehicles.forEach((vehicle, index) => {
                     const label = document.createElement('label');
-                    label.className = 'vehicle-option' + (index === 0 ? ':has(input:checked)' : '');
+                    label.className = 'vehicle-option';
                     label.innerHTML = `
                         <input type="radio" name="vehicle" value="${vehicle.id}" ${index === 0 ? 'checked' : ''}>
                         <div class="vehicle-icon">${vehicle.icon}</div>
