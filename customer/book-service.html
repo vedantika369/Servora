@@ -198,13 +198,379 @@
    SECTION COMMON
 ========================================================= */
 
-.vehicle-section,
-.form-section {
+.vehicle-section {
     width: 100%;
 
     box-sizing: border-box;
 }
+/* =====================================================
+   BOOKING FORM SECTION - FIXED
+===================================================== */
 
+.form-section {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    margin-top: 40px;
+    padding-top: 40px;
+    padding-bottom: 10px;
+
+    border-top: 1px solid #e2e8f0;
+
+    display: block;
+    clear: both;
+
+    overflow: visible;
+}
+
+/* Form section heading */
+
+.form-section h3,
+.form-section h2 {
+    margin: 0 0 8px 0;
+    color: #111827;
+    font-weight: 700;
+}
+
+/* Description */
+
+.form-section > p {
+    margin: 0 0 28px 0;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.form-group {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #334155;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Inputs */
+
+.form-group select,
+.form-group input,
+.form-group textarea {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+
+    color: #111827;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group select {
+    min-height: 50px;
+    cursor: pointer;
+}
+
+.form-group input {
+    min-height: 50px;
+}
+
+.form-group textarea {
+    min-height: 130px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+/* Focus */
+
+.form-group select:focus,
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+/* =====================================================
+   SERVICE GRID
+===================================================== */
+
+.service-grid {
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-top: 18px;
+}
+
+/* Service card */
+
+.service-option {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.service-option:hover {
+    border-color: #93c5fd;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.service-option.selected {
+    border-color: #2563eb;
+
+    background: #eff6ff;
+
+    box-shadow:
+        0 5px 15px rgba(37, 99, 235, 0.08);
+}
+
+.service-option input {
+    display: none;
+}
+
+.service-option h4 {
+    margin: 0 0 8px 0;
+
+    color: #111827;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.service-option p {
+    margin: 0 0 12px 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+.service-price {
+    display: block;
+
+    color: #2563eb;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* =====================================================
+   BOOKING SUBMIT
+===================================================== */
+
+.booking-submit {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    box-sizing: border-box;
+
+    margin-top: 28px;
+
+    padding: 15px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.booking-submit:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 18px rgba(37, 99, 235, 0.20);
+}
+
+.booking-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+#message {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin: 18px 0 0 0;
+
+    padding: 12px 15px;
+
+    text-align: center;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border-radius: 8px;
+}
+
+/* =====================================================
+   IMPORTANT OVERFLOW / ALIGNMENT FIX
+===================================================== */
+
+.booking-page,
+.booking-container,
+.booking-card,
+.form-section {
+    box-sizing: border-box;
+}
+
+.booking-page {
+    overflow-x: hidden;
+}
+
+.booking-container {
+    width: 100%;
+}
+
+.booking-card {
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+}
+
+/* Prevent floating elements from affecting form */
+
+.form-section::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .service-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-section {
+        margin-top: 35px;
+        padding-top: 35px;
+    }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+    .form-section {
+        width: 100%;
+
+        margin-top: 30px;
+
+        padding-top: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .service-grid {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+    .service-option {
+        padding: 17px;
+    }
+
+    .booking-submit {
+        margin-top: 22px;
+    }
+}
 
 /* =========================================================
    VEHICLE SECTION
