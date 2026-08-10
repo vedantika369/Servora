@@ -1,734 +1,1155 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
 
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
+    <title>
+        My Bookings | Servora
+    </title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="../css/style.css">
 
-
-
-<title>
-My Bookings | Servora
-</title>
-
-
-
-
-
-<link rel="stylesheet" href="../css/style.css">
-
-
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
-
 
 
 <body>
 
 
-
-
+<!-- =========================================
+     CUSTOMER NAVBAR
+========================================= -->
 
 <header class="navbar">
 
+    <div class="navbar-container">
 
 
-<div class="logo">
+        <!-- LOGO -->
 
-<h2>
-Servora
-</h2>
+        <a href="dashboard.html"
+           class="logo">
 
-</div>
+            <img
+                src="../images/logo.png"
+                alt="Servora Logo"
+            >
 
+            <div class="logo-text">
 
+                <h2>
+                    Servora
+                </h2>
 
+                <span>
+                    Drive Smart. Service Smarter.
+                </span>
 
+            </div>
 
-<nav>
-
-
-
-<a href="customer/dashboard.html">
-
-Dashboard
-
-</a>
-
-
-
-
-<a href="book-service.html">
-
-Book Service
-
-</a>
+        </a>
 
 
 
+        <!-- NAVIGATION -->
 
-<a href="service-status.html">
+        <nav>
 
-Status
-
-</a>
-
-
-
-
-<a href="profile.html">
-
-Profile
-
-</a>
+            <a href="dashboard.html">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
 
 
+            <a href="my-vehicles.html">
+                <i class="fa-solid fa-car"></i>
+                My Vehicles
+            </a>
 
-</nav>
+
+            <a href="book-service.html">
+                <i class="fa-solid fa-calendar-plus"></i>
+                Book Service
+            </a>
 
 
+            <a href="bookings.html"
+               class="active">
+
+                <i class="fa-solid fa-list-check"></i>
+                My Bookings
+
+            </a>
+
+
+            <a href="history.html">
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                History
+
+            </a>
+
+
+            <a href="profile.html">
+
+                <i class="fa-solid fa-user"></i>
+                Profile
+
+            </a>
+
+        </nav>
+
+
+        <!-- LOGOUT -->
+
+        <button
+            id="logoutBtn"
+            class="logout-btn">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+
+    </div>
 
 </header>
 
 
 
+<!-- =========================================
+     PAGE HEADER
+========================================= -->
 
+<section class="page-header">
 
+    <div class="page-header-content">
 
+        <span class="page-label">
+            SERVICE MANAGEMENT
+        </span>
 
+        <h1>
+            My Bookings
+        </h1>
 
+        <p>
+            Track your vehicle service requests
+            and see real-time updates from your mechanic.
+        </p>
 
-<section class="bookings-section">
-
-
-
-<div class="bookings-container">
-
-
-
-<h1>
-
-My Service Bookings
-
-</h1>
-
-
-
-
-<p>
-
-View all your vehicle service requests.
-
-</p>
-
-
-
-
-
-
-<div id="bookingList">
-
-
-<p>
-
-Loading bookings...
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-</div>
-
+    </div>
 
 </section>
 
 
 
+<!-- =========================================
+     BOOKING SECTION
+========================================= -->
+
+<section class="bookings-section">
+
+    <div class="bookings-container">
+
+
+        <!-- TOP AREA -->
+
+        <div class="bookings-top">
+
+            <div>
+
+                <h2>
+                    Active Services
+                </h2>
+
+                <p>
+                    Your ongoing and upcoming service requests.
+                </p>
+
+            </div>
+
+
+            <a
+                href="book-service.html"
+                class="new-booking-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Book New Service
+
+            </a>
+
+        </div>
 
 
 
+        <!-- FILTERS -->
+
+        <div class="booking-filters">
+
+            <button
+                class="filter-btn active"
+                data-filter="all">
+
+                All
+
+            </button>
 
 
+            <button
+                class="filter-btn"
+                data-filter="Pending">
+
+                Pending
+
+            </button>
+
+
+            <button
+                class="filter-btn"
+                data-filter="Accepted">
+
+                Accepted
+
+            </button>
+
+
+            <button
+                class="filter-btn"
+                data-filter="In Progress">
+
+                In Progress
+
+            </button>
+
+
+            <button
+                class="filter-btn"
+                data-filter="Completed">
+
+                Completed
+
+            </button>
+
+        </div>
+
+
+
+        <!-- BOOKING LIST -->
+
+        <div
+            id="bookingList"
+            class="booking-list">
+
+            <div class="loading-state">
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                <h3>
+                    Loading your bookings...
+                </h3>
+
+                <p>
+                    Please wait while we fetch your latest service requests.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+    <!-- =========================================
+     FOOTER
+========================================= -->
 
 <footer class="footer">
 
+    <div class="footer-bottom">
 
+        <p>
+            © 2026 Servora. All Rights Reserved.
+        </p>
 
-<div class="footer-bottom">
-
-
-
-<p>
-
-© 2026 Servora. All Rights Reserved.
-
-</p>
-
-
-
-</div>
-
-
+    </div>
 
 </footer>
 
+
+<!-- =========================================
+     FIREBASE + BOOKING SCRIPT
+========================================= -->
+
 <script type="module">
 
-
 import {
-
     auth,
-
     db
-
-}
-
-from "./js/firebase-config.js";
-
-
-
-
+} from "./js/firebase-config.js";
 
 
 import {
-
-    onAuthStateChanged
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-
-
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 import {
-
     ref,
-
-    get
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-
-
-
-
-
+    onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
 const bookingList =
+    document.getElementById("bookingList");
 
-document.getElementById("bookingList");
-
-
-
-
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
 
+let currentUser = null;
+
+let allBookings = [];
+
+let currentFilter = "all";
 
 
+/* =========================================
+   AUTHENTICATION
+========================================= */
 
-// ================================
-// CHECK LOGIN
-// ================================
+onAuthStateChanged(auth, (user) => {
 
+    if (!user) {
 
+        window.location.href = "login.html";
 
-onAuthStateChanged(auth,(user)=>{
+        return;
 
+    }
 
+    currentUser = user;
 
-if(user){
-
-
-
-loadBookings(user.uid);
-
-
-
-}
-
-
-
-else{
-
-
-window.location.href="login.html";
-
-
-}
-
-
+    loadBookings();
 
 });
 
 
+/* =========================================
+   LOAD BOOKINGS IN REAL TIME
+========================================= */
+
+function loadBookings() {
+
+    const bookingsRef =
+        ref(db, "bookings");
 
 
+    onValue(
+        bookingsRef,
+        (snapshot) => {
+
+            allBookings = [];
 
 
+            if (!snapshot.exists()) {
+
+                renderBookings();
+
+                return;
+
+            }
 
 
+            const data =
+                snapshot.val();
 
 
+            Object.keys(data).forEach((id) => {
 
-// ================================
-// LOAD USER BOOKINGS
-// ================================
-
-
-
-async function loadBookings(uid){
+                const booking =
+                    data[id];
 
 
+                /*
+                 * Only show bookings belonging
+                 * to the logged-in customer.
+                 */
 
-try{
+                if (
+                    booking.customerId ===
+                    currentUser.uid
+                ) {
 
+                    allBookings.push({
 
+                        id: id,
 
-const bookingRef =
+                        ...booking
 
-ref(
+                    });
 
-db,
+                }
 
-"bookings"
-
-);
-
-
-
-
-
-
-const snapshot =
-
-await get(bookingRef);
+            });
 
 
+            /*
+             * Newest bookings first
+             */
+
+            allBookings.sort((a, b) => {
+
+                const dateA =
+                    a.createdAt || 0;
+
+                const dateB =
+                    b.createdAt || 0;
+
+                return dateB - dateA;
+
+            });
 
 
+            renderBookings();
+
+        },
+
+        (error) => {
+
+            console.error(
+                "Booking loading error:",
+                error
+            );
 
 
+            bookingList.innerHTML = `
 
-bookingList.innerHTML="";
+                <div class="error-state">
 
+                    <i class="fa-solid fa-triangle-exclamation"></i>
 
+                    <h3>
+                        Unable to load bookings
+                    </h3>
 
+                    <p>
+                        Please refresh the page and try again.
+                    </p>
 
+                </div>
 
+            `;
 
-if(!snapshot.exists()){
+        }
 
-
-
-showNoBookings();
-
-
-return;
-
+    );
 
 }
 
 
+/* =========================================
+   RENDER BOOKINGS
+========================================= */
+
+function renderBookings() {
+
+    bookingList.innerHTML = "";
 
 
+    let filteredBookings =
+        allBookings;
 
 
+    if (currentFilter !== "all") {
 
-const bookings =
+        filteredBookings =
+            allBookings.filter(
+                booking => {
 
-snapshot.val();
+                    return getFilterStatus(
+                        booking
+                    ) === currentFilter;
 
+                }
+            );
 
-
-
-
-
-let userBookings = [];
-
-
-
-
-
+    }
 
 
+    if (filteredBookings.length === 0) {
 
-Object.keys(bookings).forEach((id)=>{
+        bookingList.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+
+                    <i class="fa-solid fa-calendar-xmark"></i>
+
+                </div>
+
+                <h3>
+                    No Bookings Found
+                </h3>
+
+                <p>
+                    You don't have any
+                    ${currentFilter === "all"
+                        ? ""
+                        : currentFilter.toLowerCase()
+                    }
+                    service bookings yet.
+                </p>
+
+                <a
+                    href="book-service.html"
+                    class="new-booking-btn">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Book a Service
+
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
 
 
+    filteredBookings.forEach(
+        booking => {
 
-const booking =
+            bookingList.innerHTML +=
+                createBookingCard(
+                    booking
+                );
 
-bookings[id];
-
-
-
-
-
-
-if(booking.customerId === uid){
-
-
-
-userBookings.push(booking);
-
-
+        }
+    );
 
 }
 
 
+/* =========================================
+   NORMALIZE STATUS
+========================================= */
 
-});
+function getFilterStatus(booking) {
 
-
-
-
-
-
-
-// Sort latest booking first
+    const status =
+        booking.status || "Pending";
 
 
-userBookings.sort(
+    if (
+        status === "Assigned" ||
+        status === "Accepted" ||
+        status === "Confirmed"
+    ) {
 
-(a,b)=>
+        return "Accepted";
 
-(b.createdAt || 0)
-
--
-
-(a.createdAt || 0)
-
-);
+    }
 
 
+    if (status === "In Progress") {
+
+        return "In Progress";
+
+    }
 
 
+    if (status === "Completed") {
+
+        return "Completed";
+
+    }
 
 
-
-
-
-if(userBookings.length === 0){
-
-
-
-showNoBookings();
-
-
-return;
-
+    return "Pending";
 
 }
 
 
+/* =========================================
+   BOOKING CARD
+========================================= */
 
+function createBookingCard(booking) {
 
+    const status =
+        booking.status || "Pending";
 
 
+    const displayStatus =
+        getDisplayStatus(status);
 
 
-userBookings.forEach((booking)=>{
+    const statusClass =
+        getStatusClass(status);
 
 
+    const service =
+        booking.serviceType ||
+        booking.service ||
+        "Vehicle Service";
 
-bookingList.innerHTML +=
 
+    const vehicle =
+        booking.vehicleName ||
+        booking.vehicle ||
+        "Vehicle";
 
 
-`
+    const vehicleNumber =
+        booking.vehicleNumber ||
+        "";
 
-<div class="booking-card">
 
+    const date =
+        booking.bookingDate ||
+        booking.serviceDate ||
+        "Not scheduled";
 
 
+    const mechanicName =
+        booking.mechanicName ||
+        "";
 
 
+    const estimatedCost =
+        Number(
+            booking.estimatedCost || 0
+        );
 
-<h2>
 
-${booking.serviceType || "Service"}
+    const finalAmount =
+        Number(
+            booking.finalAmount || 0
+        );
 
-</h2>
 
+    let amount = estimatedCost;
 
+    if (finalAmount > 0) {
 
+        amount = finalAmount;
 
+    }
 
 
-<hr>
+    return `
 
+        <article
+            class="booking-card"
+            data-status="${status}"
+        >
 
 
+            <div class="booking-card-header">
 
+                <div class="service-title">
 
+                    <div class="service-icon">
 
+                        <i class="fa-solid fa-car"></i>
 
-<p>
+                    </div>
 
-🚗 Vehicle:
 
-${booking.vehicleName || "Not Available"}
+                    <div>
 
-</p>
+                        <h3>
+                            ${escapeHTML(service)}
+                        </h3>
 
+                        <p>
+                            ${escapeHTML(vehicle)}
+                            ${vehicleNumber
+                                ? " • " +
+                                  escapeHTML(vehicleNumber)
+                                : ""
+                            }
+                        </p>
 
+                    </div>
 
+                </div>
 
 
+                <span
+                    class="booking-status ${statusClass}">
 
+                    ${displayStatus}
 
-<p>
+                </span>
 
-🔢 Number:
+            </div>
 
-${booking.vehicleNumber || "Not Available"}
 
-</p>
+            <div class="booking-card-body">
 
 
+                <div class="booking-info">
 
+                    <span>
+                        <i class="fa-regular fa-calendar"></i>
+                        Service Date
+                    </span>
 
+                    <strong>
+                        ${escapeHTML(date)}
+                    </strong>
 
+                </div>
 
 
+                <div class="booking-info">
 
-<p>
+                    <span>
+                        <i class="fa-solid fa-user-gear"></i>
+                        Mechanic
+                    </span>
 
-📅 Booking Date:
+                    <strong>
 
-${booking.bookingDate || "Not Available"}
+                        ${
+                            mechanicName
+                            ? escapeHTML(mechanicName)
+                            : "Waiting for mechanic"
+                        }
 
-</p>
+                    </strong>
 
+                </div>
 
 
+                <div class="booking-info">
 
+                    <span>
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                        Estimated Cost
+                    </span>
 
+                    <strong>
 
+                        ${
+                            amount > 0
+                            ? "₹ " + amount
+                            : "To be estimated"
+                        }
 
+                    </strong>
 
-<p>
+                </div>
 
-👨‍🔧 Mechanic:
 
-${booking.mechanicName || "Not Assigned"}
+            </div>
 
-</p>
 
+            ${createProgress(status)}
 
 
+            <div class="booking-card-footer">
 
+                <span class="booking-id">
 
+                    Booking ID:
+                    ${escapeHTML(
+                        booking.bookingId ||
+                        booking.id
+                    )}
 
+                </span>
 
 
-<p>
+                ${
+                    status !== "Completed"
 
-💰 Estimated Cost:
+                    ? `
 
-₹${booking.estimatedCost || 0}
+                    <button
+                        class="view-details-btn"
+                        onclick="showBookingDetails('${booking.id}')">
 
-</p>
+                        <i class="fa-solid fa-eye"></i>
 
+                        View Details
 
+                    </button>
 
+                    `
 
+                    : `
 
+                    <a
+                        href="history.html"
+                        class="view-details-btn">
 
+                        <i class="fa-solid fa-file-invoice"></i>
 
+                        View History
 
+                    </a>
 
-<p>
+                    `
 
-Status:
+                }
 
-<span class="status">
+            </div>
 
-${booking.status || "Pending"}
 
-</span>
+        </article>
 
-</p>
-
-
-
-
-
-
-
-
-
-<p>
-
-${booking.mechanicNote || "No updates yet"}
-
-</p>
-
-
-
-
-
-
-
-</div>
-
-
-
-`;
-
-
-
-});
-
-
-
-
-
+    `;
 
 }
 
 
+/* =========================================
+   STATUS TEXT
+========================================= */
 
-catch(error){
+function getDisplayStatus(status) {
 
+    switch (status) {
 
+        case "Assigned":
+            return "Mechanic Assigned";
 
-console.error(
+        case "Accepted":
+            return "Mechanic Accepted";
 
-"Booking Loading Error:",
+        case "Confirmed":
+            return "Confirmed";
 
-error
+        case "In Progress":
+            return "In Progress";
 
-);
+        case "Completed":
+            return "Completed";
 
+        case "Pending":
+        default:
+            return "Waiting for Mechanic";
 
-
-bookingList.innerHTML =
-
-
-
-`
-
-<div class="no-booking">
-
-
-<h3>
-
-Unable to load bookings
-
-</h3>
-
-
-<p>
-
-Please try again later.
-
-</p>
-
-
-</div>
-
-
-`;
-
-
+    }
 
 }
 
 
+/* =========================================
+   STATUS CLASS
+========================================= */
+
+function getStatusClass(status) {
+
+    switch (status) {
+
+        case "Assigned":
+        case "Accepted":
+        case "Confirmed":
+            return "status-accepted";
+
+        case "In Progress":
+            return "status-progress";
+
+        case "Completed":
+            return "status-completed";
+
+        case "Pending":
+        default:
+            return "status-pending";
+
+    }
 
 }
 
 
+/* =========================================
+   PROGRESS TIMELINE
+========================================= */
+
+function createProgress(status) {
+
+    let step = 1;
 
 
+    if (
+        status === "Assigned" ||
+        status === "Accepted" ||
+        status === "Confirmed"
+    ) {
+
+        step = 2;
+
+    }
 
 
+    if (status === "In Progress") {
+
+        step = 3;
+
+    }
 
 
+    if (status === "Completed") {
+
+        step = 4;
+
+    }
 
 
+    return `
 
-// ================================
-// NO BOOKINGS MESSAGE
-// ================================
+        <div class="booking-progress">
 
+            <div
+                class="progress-step ${step >= 1 ? "active" : ""}">
 
+                <span>1</span>
 
-function showNoBookings(){
+                <small>
+                    Requested
+                </small>
 
-
-
-bookingList.innerHTML =
-
-
-
-`
-
-<div class="no-booking">
+            </div>
 
 
-
-<h3>
-
-No Bookings Found
-
-</h3>
+            <div
+                class="progress-line ${step >= 2 ? "active" : ""}">
+            </div>
 
 
+            <div
+                class="progress-step ${step >= 2 ? "active" : ""}">
+
+                <span>2</span>
+
+                <small>
+                    Accepted
+                </small>
+
+            </div>
 
 
-<p>
-
-Book your first vehicle service.
-
-</p>
+            <div
+                class="progress-line ${step >= 3 ? "active" : ""}">
+            </div>
 
 
+            <div
+                class="progress-step ${step >= 3 ? "active" : ""}">
+
+                <span>3</span>
+
+                <small>
+                    Servicing
+                </small>
+
+            </div>
 
 
-<a href="book-service.html">
-
-Book Service
-
-</a>
+            <div
+                class="progress-line ${step >= 4 ? "active" : ""}">
+            </div>
 
 
+            <div
+                class="progress-step ${step >= 4 ? "active" : ""}">
 
+                <span>4</span>
 
-</div>
+                <small>
+                    Completed
+                </small>
 
+            </div>
 
+        </div>
 
-`;
-
-
+    `;
 
 }
 
 
+/* =========================================
+   HTML SAFETY
+========================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================
+   FILTER BUTTONS
+========================================= */
+
+document
+    .querySelectorAll(".filter-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".filter-btn")
+                    .forEach(btn => {
+
+                        btn.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                currentFilter =
+                    button.dataset.filter ||
+                    "all";
+
+
+                renderBookings();
+
+            }
+        );
+
+    });
+
+
+/* =========================================
+   BOOKING DETAILS
+========================================= */
+
+window.showBookingDetails =
+    function(id) {
+
+        const booking =
+            allBookings.find(
+                item => item.id === id
+            );
+
+
+        if (!booking) return;
+
+
+        const service =
+            booking.serviceType ||
+            booking.service ||
+            "Vehicle Service";
+
+
+        const vehicle =
+            booking.vehicleName ||
+            booking.vehicle ||
+            "Vehicle";
+
+
+        const problem =
+            booking.problemDescription ||
+            booking.problem ||
+            "No problem description provided.";
+
+
+        const mechanic =
+            booking.mechanicName ||
+            "Not assigned yet";
+
+
+        alert(
+
+            "SERVICE DETAILS\n\n" +
+
+            "Service: " + service + "\n" +
+
+            "Vehicle: " + vehicle + "\n" +
+
+            "Vehicle Number: " +
+            (booking.vehicleNumber || "N/A") +
+            "\n\n" +
+
+            "Problem:\n" +
+            problem +
+            "\n\n" +
+
+            "Status: " +
+            getDisplayStatus(
+                booking.status
+            ) +
+            "\n\n" +
+
+            "Mechanic: " +
+            mechanic
+
+        );
+
+    };
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+if (logoutBtn) {
+
+    logoutBtn.addEventListener(
+        "click",
+        async () => {
+
+            try {
+
+                await signOut(auth);
+
+                window.location.href =
+                    "login.html";
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Logout Error:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+}
 
 </script>
 </body>
+
 </html>
