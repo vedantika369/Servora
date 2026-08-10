@@ -1,989 +1,1786 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
 
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
+    <title>Book a Service | Servora</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
 
+    <style>
 
+        /* =========================================
+           SERVORA BOOKING PAGE
+        ========================================= */
 
-<title>
-Book Service | Servora
-</title>
+        .booking-page {
+            min-height: calc(100vh - 80px);
+            background: #f8fafc;
+            padding: 60px 20px;
+        }
 
+        .booking-container {
+            max-width: 1100px;
+            margin: auto;
+        }
 
+        /* Header */
 
-<link rel="stylesheet" href="../css/style.css">
+        .booking-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
+        .booking-header h1 {
+            font-size: 36px;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .booking-header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* Progress */
+
+        .booking-progress {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .progress-step.active {
+            color: #2563eb;
+        }
+
+        .progress-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e2e8f0;
+            color: #64748b;
+        }
+
+        .progress-step.active .progress-number {
+            background: #2563eb;
+            color: white;
+        }
+
+        .progress-line {
+            width: 50px;
+            height: 2px;
+            background: #e2e8f0;
+        }
+
+        /* Main Card */
+
+        .booking-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+        }
+
+        .booking-card h2 {
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .booking-card > p {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        /* Vehicle Section */
+
+        .vehicle-section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title h3 {
+            margin: 0;
+            color: #111827;
+        }
+
+        .add-vehicle-btn {
+            border: none;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .add-vehicle-btn:hover {
+            background: #dbeafe;
+        }
+
+        /* Vehicle Cards */
+
+        .vehicle-list {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(250px, 1fr));
+
+            gap: 15px;
+        }
+
+        .vehicle-option {
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 18px;
+            cursor: pointer;
+            transition: 0.25s;
+            background: #fff;
+        }
+
+        .vehicle-option:hover {
+            border-color: #93c5fd;
+            transform: translateY(-2px);
+        }
+
+        .vehicle-option.selected {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .vehicle-option input {
+            display: none;
+        }
+
+        .vehicle-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: #dbeafe;
+            color: #2563eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .vehicle-name {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .vehicle-number {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* No Vehicle */
+
+        .no-vehicle {
+            display: none;
+            text-align: center;
+            padding: 35px 20px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            background: #f8fafc;
+        }
+
+        .no-vehicle.show {
+            display: block;
+        }
+
+        .no-vehicle-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .no-vehicle h3 {
+            margin-bottom: 8px;
+            color: #111827;
+        }
+
+        .no-vehicle p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .primary-action {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 9px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .primary-action:hover {
+            background: #1d4ed8;
+        }
+
+        /* Form */
+
+        .form-section {
+            margin-top: 35px;
+            padding-top: 35px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .form-group select,
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+            box-sizing: border-box;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Service Cards */
+
+        .service-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(210px, 1fr));
+
+            gap: 15px;
+        }
+
+        .service-option {
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 18px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .service-option:hover {
+            border-color: #93c5fd;
+        }
+
+        .service-option.selected {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .service-option input {
+            display: none;
+        }
+
+        .service-option h4 {
+            margin: 0 0 7px;
+            color: #111827;
+        }
+
+        .service-option p {
+            margin: 0 0 10px;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .service-price {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        /* Submit */
+
+        .booking-submit {
+            width: 100%;
+            margin-top: 15px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .booking-submit:hover {
+            background: #1d4ed8;
+        }
+
+        .booking-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Message */
+
+        #message {
+            text-align: center;
+            margin-top: 18px;
+            font-weight: 600;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 768px) {
+
+            .booking-page {
+                padding: 35px 15px;
+            }
+
+            .booking-card {
+                padding: 25px 20px;
+            }
+
+            .booking-header h1 {
+                font-size: 28px;
+            }
+
+            .booking-progress {
+                gap: 8px;
+            }
+
+            .progress-line {
+                width: 20px;
+            }
+
+            .progress-step span:not(.progress-number) {
+                display: none;
+            }
+
+        }
+
+    </style>
 
 </head>
-
 
 
 <body>
 
 
-
+<!-- =========================================
+     CUSTOMER NAVBAR
+========================================= -->
 
 <header class="navbar">
 
+    <div class="logo">
 
-<div class="logo">
+        <h2>Servora</h2>
 
-
-<h2>
-Servora
-</h2>
+    </div>
 
 
-</div>
+    <nav>
 
+        <a href="dashboard.html">
+            Dashboard
+        </a>
 
+        <a href="my-vehicles.html">
+            My Vehicles
+        </a>
 
+        <a href="book-service.html"
+           class="active">
+            Book Service
+        </a>
 
+        <a href="bookings.html">
+            Bookings
+        </a>
 
-<nav>
+        <a href="profile.html">
+            Profile
+        </a>
 
-
-<a href="dashboard.html">
-Dashboard
-</a>
-
-
-<a href="my-vehicles.html">
-My Vehicles
-</a>
-
-
-<a href="bookings.html">
-Bookings
-</a>
-
-
-<a href="profile.html">
-Profile
-</a>
-
-
-</nav>
-
-
+    </nav>
 
 </header>
 
 
+<!-- =========================================
+     BOOKING PAGE
+========================================= -->
 
+<section class="booking-page">
 
+    <div class="booking-container">
 
 
+        <div class="booking-header">
 
+            <h1>
+                Book Your Vehicle Service
+            </h1>
 
+            <p>
+                Choose your vehicle, select a service,
+                and tell us what your vehicle needs.
+            </p>
 
-<section class="booking-section">
+        </div>
 
 
+        <!-- Progress -->
 
-<div class="booking-container">
+        <div class="booking-progress">
 
+            <div class="progress-step active">
 
+                <span class="progress-number">
+                    1
+                </span>
 
-<div class="booking-box">
+                <span>
+                    Vehicle
+                </span>
 
+            </div>
 
+            <div class="progress-line"></div>
 
-<h1>
-Book Vehicle Service
-</h1>
+            <div class="progress-step">
 
+                <span class="progress-number">
+                    2
+                </span>
 
+                <span>
+                    Service
+                </span>
 
-<p>
-Select your vehicle and schedule service.
-</p>
+            </div>
 
+            <div class="progress-line"></div>
 
+            <div class="progress-step">
 
+                <span class="progress-number">
+                    3
+                </span>
 
+                <span>
+                    Details
+                </span>
 
+            </div>
 
-<form id="bookingForm">
+            <div class="progress-line"></div>
 
+            <div class="progress-step">
 
+                <span class="progress-number">
+                    4
+                </span>
 
+                <span>
+                    Confirm
+                </span>
 
+            </div>
 
-<label>
+        </div>
 
-Select Vehicle
 
-</label>
+        <!-- Booking Card -->
 
+        <div class="booking-card">
 
+            <h2>
+                Book a Service
+            </h2>
 
+            <p>
+                Let's get your vehicle ready for the road.
+            </p>
 
-<select 
-id="vehicleSelect"
-required>
 
+            <form id="bookingForm">
 
-<option value="">
 
-Loading vehicles...
+                <!-- VEHICLE -->
 
-</option>
+                <div class="vehicle-section">
 
+                    <div class="section-title">
 
-</select>
+                        <h3>
+                            1. Choose Your Vehicle
+                        </h3>
 
+                        <a href="my-vehicles.html"
+                           class="add-vehicle-btn">
 
+                            + Add Vehicle
 
+                        </a>
 
+                    </div>
 
 
+                    <div id="vehicleList"
+                         class="vehicle-list">
 
+                        <!-- Vehicles will be loaded here -->
 
+                    </div>
 
-<label>
 
-Service Type
+                    <div id="noVehicle"
+                         class="no-vehicle">
 
-</label>
+                        <div class="no-vehicle-icon">
+                            🚗
+                        </div>
 
+                        <h3>
+                            No vehicle registered yet
+                        </h3>
 
+                        <p>
+                            Add your vehicle first.
+                            It only takes a minute and
+                            you'll be able to book your
+                            service immediately.
+                        </p>
 
+                        <a href="my-vehicles.html"
+                           class="primary-action">
 
+                            + Add My Vehicle
 
-<select 
-id="serviceType"
-required>
+                        </a>
 
+                    </div>
 
+                </div>
 
-<option value="">
 
-Choose Service
+                <!-- =========================================
+     SERVICE SELECTION
+========================================= -->
 
-</option>
+<div class="form-section">
 
+    <h3>2. Choose a Service</h3>
 
+    <p style="color:#64748b; margin-bottom:20px;">
+        Select the service your vehicle needs.
+    </p>
 
-<option value="General Service">
+    <div class="service-grid">
 
-General Service
+        <label class="service-option">
 
-</option>
+            <input
+                type="radio"
+                name="serviceType"
+                value="General Service"
+                required
+            >
 
+            <h4>🔧 General Service</h4>
 
+            <p>
+                Complete vehicle inspection,
+                basic maintenance and servicing.
+            </p>
 
-<option value="Engine Repair">
+            <span class="service-price">
+                Starting from ₹999
+            </span>
 
-Engine Repair
+        </label>
 
-</option>
 
+        <label class="service-option">
 
+            <input
+                type="radio"
+                name="serviceType"
+                value="Engine Repair"
+            >
 
-<option value="Oil Change">
+            <h4>⚙️ Engine Repair</h4>
 
-Oil Change
+            <p>
+                Diagnose and repair engine-related
+                problems and performance issues.
+            </p>
 
-</option>
+            <span class="service-price">
+                Inspection from ₹499
+            </span>
 
+        </label>
 
 
-<option value="Car Cleaning">
+        <label class="service-option">
 
-Car Cleaning
+            <input
+                type="radio"
+                name="serviceType"
+                value="Oil Change"
+            >
 
-</option>
+            <h4>🛢️ Oil Change</h4>
 
+            <p>
+                Engine oil replacement with
+                basic vehicle checks.
+            </p>
 
+            <span class="service-price">
+                Starting from ₹699
+            </span>
 
-<option value="Emergency Repair">
+        </label>
 
-Emergency Repair
 
-</option>
+        <label class="service-option">
 
+            <input
+                type="radio"
+                name="serviceType"
+                value="Car Cleaning"
+            >
 
+            <h4>✨ Car Cleaning</h4>
 
-</select>
+            <p>
+                Interior and exterior cleaning
+                for a fresh, clean vehicle.
+            </p>
 
+            <span class="service-price">
+                Starting from ₹399
+            </span>
 
+        </label>
 
 
+        <label class="service-option">
 
+            <input
+                type="radio"
+                name="serviceType"
+                value="Emergency Repair"
+            >
 
+            <h4>🚨 Emergency Repair</h4>
 
+            <p>
+                Urgent assistance for unexpected
+                vehicle problems.
+            </p>
 
+            <span class="service-price">
+                Inspection from ₹499
+            </span>
 
-<label>
+        </label>
 
-Problem Description
+    </div>
 
-</label>
+</div>
 
 
+<!-- =========================================
+     SERVICE DETAILS
+========================================= -->
 
+<div class="form-section">
 
-<textarea
+    <h3>3. Service Details</h3>
 
-id="problemDescription"
+    <p style="color:#64748b; margin-bottom:20px;">
+        Tell us about the problem with your vehicle.
+    </p>
 
-placeholder="Describe vehicle problem"
 
-required>
+    <div class="form-group">
 
-</textarea>
+        <label for="problemDescription">
+            What problem are you experiencing?
+        </label>
 
+        <textarea
+            id="problemDescription"
+            placeholder="Example: My car makes a strange noise when I start the engine..."
+            required
+        ></textarea>
 
+    </div>
 
 
+    <div class="form-group">
 
+        <label for="bookingDate">
+            Preferred Service Date
+        </label>
 
+        <input
+            type="date"
+            id="bookingDate"
+            required
+        >
 
+        <small style="
+            display:block;
+            margin-top:7px;
+            color:#64748b;
+        ">
+            The mechanic/service team will confirm
+            the available time after reviewing your request.
+        </small>
 
+    </div>
 
-<label>
+</div>
 
-Preferred Date
 
-</label>
+<!-- =========================================
+     BOOKING SUMMARY
+========================================= -->
 
+<div
+    class="form-section"
+    id="bookingSummary"
+    style="display:none;"
+>
 
+    <h3>4. Review Your Request</h3>
 
+    <div style="
+        background:#f8fafc;
+        border-radius:12px;
+        padding:20px;
+        margin-top:20px;
+    ">
 
-<input
+        <p>
+            <strong>Vehicle:</strong>
+            <span id="summaryVehicle">-</span>
+        </p>
 
-type="date"
+        <p>
+            <strong>Service:</strong>
+            <span id="summaryService">-</span>
+        </p>
 
-id="bookingDate"
+        <p>
+            <strong>Date:</strong>
+            <span id="summaryDate">-</span>
+        </p>
 
-required>
+        <p style="margin-bottom:0;">
+            <strong>Problem:</strong>
+            <span id="summaryProblem">-</span>
+        </p>
 
+    </div>
 
+</div>
 
 
+<!-- =========================================
+     SUBMIT
+========================================= -->
 
-
-
-
-
-<button 
-
-type="submit">
-
-Confirm Booking
-
+<button
+    type="submit"
+    id="bookingSubmit"
+    class="booking-submit"
+>
+    Confirm Service Booking
 </button>
 
 
-
-
-
-
-<p id="message">
-
-</p>
-
-
-
-
-
+<p id="message"></p>
 
 
 </form>
 
-
-
 </div>
 
-
 </div>
-
 
 </section>
 
 
-
-
-
-
-
+<!-- =========================================
+     FOOTER
+========================================= -->
 
 <footer class="footer">
 
+    <div class="footer-bottom">
 
-<div class="footer-bottom">
+        <p>
+            © 2026 Servora.Developed by Vedantika Deshmukh from Arvind Gavali College of Engineering,Satara in Inplant Training 2026. All Rights Reserved.
+        </p>
 
-
-<p>
-
-© 2026 Servora. All Rights Reserved.
-
-</p>
-
-
-</div>
-
+    </div>
 
 </footer>
 
-<script type="module">
-
+    <script type="module">
 
 import {
-
     auth,
-
     db
-
-}
-
-from "./js/firebase-config.js";
-
-
-
+} from "./js/firebase-config.js";
 
 
 import {
-
     onAuthStateChanged
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 import {
-
     ref,
-
     get,
-
     push,
-
     set,
-
     serverTimestamp
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-
-
-
-
+/* =========================================
+   VARIABLES
+========================================= */
 
 let currentUser = null;
 
+let vehicles = {};
 
 let selectedVehicle = null;
 
 
-let vehicles = {};
+const vehicleList =
+    document.getElementById("vehicleList");
 
-
-
-
-
-
-
-
-const vehicleSelect =
-
-document.getElementById("vehicleSelect");
-
-
+const noVehicle =
+    document.getElementById("noVehicle");
 
 const bookingForm =
-
-document.getElementById("bookingForm");
-
-
+    document.getElementById("bookingForm");
 
 const message =
+    document.getElementById("message");
 
-document.getElementById("message");
+const bookingSubmit =
+    document.getElementById("bookingSubmit");
 
-
-
-
-
-
-
+const bookingSummary =
+    document.getElementById("bookingSummary");
 
 
-// ================================
-// CHECK USER LOGIN
-// ================================
+/* =========================================
+   AUTHENTICATION
+========================================= */
 
+onAuthStateChanged(auth, async (user) => {
 
+    if (!user) {
 
-onAuthStateChanged(auth,(user)=>{
+        window.location.href = "login.html";
 
+        return;
 
-if(user){
+    }
 
+    currentUser = user;
 
-currentUser = user;
-
-
-loadVehicles();
-
-
-
-}
-
-else{
-
-
-window.location.href="login.html";
-
-
-}
-
+    await loadVehicles();
 
 });
 
 
+/* =========================================
+   LOAD CUSTOMER VEHICLES
+========================================= */
 
+async function loadVehicles() {
 
+    try {
 
+        const vehiclesRef =
+            ref(db, "vehicles");
 
+        const snapshot =
+            await get(vehiclesRef);
 
 
+        vehicleList.innerHTML = "";
 
+        vehicles = {};
 
+        selectedVehicle = null;
 
-// ================================
-// LOAD USER VEHICLES
-// ================================
 
+        if (!snapshot.exists()) {
 
+            showNoVehicles();
 
-async function loadVehicles(){
+            return;
 
+        }
 
 
-try{
+        const allVehicles =
+            snapshot.val();
 
 
+        let userVehicleCount = 0;
 
-const vehiclesRef =
 
-ref(
+        Object.keys(allVehicles).forEach((id) => {
 
-db,
+            const vehicle =
+                allVehicles[id];
 
-"vehicles"
 
-);
+            if (
+                vehicle.userId !== currentUser.uid
+            ) {
 
+                return;
 
+            }
 
 
+            vehicles[id] = vehicle;
 
-const snapshot =
+            userVehicleCount++;
 
-await get(vehiclesRef);
 
+            vehicleList.innerHTML += `
 
+                <label
+                    class="vehicle-option"
+                    data-id="${id}"
+                >
 
+                    <input
+                        type="radio"
+                        name="vehicle"
+                        value="${id}"
+                    >
 
+                    <div class="vehicle-icon">
+                        🚗
+                    </div>
 
+                    <div class="vehicle-name">
 
-vehicleSelect.innerHTML = `
+                        ${vehicle.vehicleName || "Vehicle"}
 
-<option value="">
+                    </div>
 
-Select Vehicle
+                    <div class="vehicle-number">
 
-</option>
+                        ${vehicle.vehicleNumber || "Number not available"}
 
-`;
+                    </div>
 
+                </label>
 
+            `;
 
+        });
 
 
+        if (userVehicleCount === 0) {
 
-if(snapshot.exists()){
+            showNoVehicles();
 
+            return;
 
+        }
 
 
+        noVehicle.classList.remove("show");
 
-vehicles = snapshot.val();
+        vehicleList.style.display = "grid";
 
 
+        attachVehicleSelection();
 
 
+    }
 
+    catch (error) {
 
-Object.keys(vehicles).forEach((id)=>{
+        console.error(
+            "Vehicle Loading Error:",
+            error
+        );
 
 
+        vehicleList.innerHTML = `
 
-const vehicle =
+            <p style="
+                color:#dc2626;
+                padding:15px;
+            ">
 
-vehicles[id];
+                Unable to load your vehicles.
+                Please refresh the page.
 
+            </p>
 
+        `;
 
-
-
-
-if(vehicle.userId === currentUser.uid){
-
-
-
-vehicleSelect.innerHTML += `
-
-
-<option value="${id}">
-
-
-${vehicle.vehicleName}
-
--
-
-${vehicle.vehicleNumber}
-
-
-</option>
-
-
-`;
-
-
+    }
 
 }
 
 
+/* =========================================
+   NO VEHICLE MESSAGE
+========================================= */
 
-});
+function showNoVehicles() {
 
+    vehicleList.innerHTML = "";
 
+    vehicleList.style.display = "none";
 
-}
+    noVehicle.classList.add("show");
 
+    if (bookingSubmit) {
 
+        bookingSubmit.disabled = true;
 
-
-
-
-}
-
-catch(error){
-
-
-
-console.error(
-
-"Vehicle Loading Error:",
-
-error
-
-);
-
-
-
-vehicleSelect.innerHTML = `
-
-<option>
-
-Unable to load vehicles
-
-</option>
-
-`;
-
-
+    }
 
 }
 
 
+/* =========================================
+   VEHICLE SELECTION
+========================================= */
+
+function attachVehicleSelection() {
+
+    document
+        .querySelectorAll(".vehicle-option")
+        .forEach((card) => {
+
+
+            card.addEventListener(
+                "click",
+                () => {
+
+
+                    document
+                        .querySelectorAll(
+                            ".vehicle-option"
+                        )
+                        .forEach((item) => {
+
+                            item.classList.remove(
+                                "selected"
+                            );
+
+                        });
+
+
+                    card.classList.add(
+                        "selected"
+                    );
+
+
+                    const vehicleId =
+                        card.dataset.id;
+
+
+                    selectedVehicle =
+                        vehicles[vehicleId];
+
+
+                    const radio =
+                        card.querySelector(
+                            "input"
+                        );
+
+
+                    if (radio) {
+
+                        radio.checked = true;
+
+                    }
+
+
+                    updateSummary();
+
+                }
+            );
+
+        });
 
 }
 
 
+/* =========================================
+   SERVICE SELECTION
+========================================= */
+
+document
+    .querySelectorAll(".service-option")
+    .forEach((card) => {
 
 
+        card.addEventListener(
+            "click",
+            () => {
 
 
+                document
+                    .querySelectorAll(
+                        ".service-option"
+                    )
+                    .forEach((item) => {
+
+                        item.classList.remove(
+                            "selected"
+                        );
+
+                    });
 
 
+                card.classList.add(
+                    "selected"
+                );
 
 
+                const radio =
+                    card.querySelector(
+                        "input"
+                    );
 
 
-// ================================
-// SELECT VEHICLE
-// ================================
+                if (radio) {
+
+                    radio.checked = true;
+
+                }
 
 
+                updateSummary();
 
-vehicleSelect.addEventListener(
+            }
+        );
 
-"change",
-
-(e)=>{
-
-
-
-const vehicleId = e.target.value;
+    });
 
 
+/* =========================================
+   DATE
+========================================= */
+
+const bookingDate =
+    document.getElementById(
+        "bookingDate"
+    );
 
 
-if(vehicleId && vehicles[vehicleId]){
+if (bookingDate) {
+
+    const today =
+        new Date()
+            .toISOString()
+            .split("T")[0];
 
 
-selectedVehicle = vehicles[vehicleId];
+    bookingDate.min = today;
 
+
+    bookingDate.addEventListener(
+        "change",
+        updateSummary
+    );
 
 }
 
-else{
+
+/* =========================================
+   PROBLEM DESCRIPTION
+========================================= */
+
+const problemDescription =
+    document.getElementById(
+        "problemDescription"
+    );
 
 
-selectedVehicle = null;
+if (problemDescription) {
 
+    problemDescription.addEventListener(
+        "input",
+        updateSummary
+    );
 
 }
 
 
+/* =========================================
+   UPDATE BOOKING SUMMARY
+========================================= */
 
+function updateSummary() {
+
+    if (!bookingSummary) return;
+
+
+    const selectedService =
+        document.querySelector(
+            'input[name="serviceType"]:checked'
+        );
+
+
+    const date =
+        document.getElementById(
+            "bookingDate"
+        );
+
+
+    const problem =
+        document.getElementById(
+            "problemDescription"
+        );
+
+
+    if (
+        !selectedVehicle &&
+        !selectedService &&
+        !date?.value &&
+        !problem?.value
+    ) {
+
+        bookingSummary.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    bookingSummary.style.display =
+        "block";
+
+
+    const summaryVehicle =
+        document.getElementById(
+            "summaryVehicle"
+        );
+
+
+    const summaryService =
+        document.getElementById(
+            "summaryService"
+        );
+
+
+    const summaryDate =
+        document.getElementById(
+            "summaryDate"
+        );
+
+
+    const summaryProblem =
+        document.getElementById(
+            "summaryProblem"
+        );
+
+
+    if (summaryVehicle) {
+
+        summaryVehicle.textContent =
+            selectedVehicle
+
+                ? `${selectedVehicle.vehicleName}
+                   - ${selectedVehicle.vehicleNumber}`
+
+                : "Not selected";
+
+    }
+
+
+    if (summaryService) {
+
+        summaryService.textContent =
+            selectedService
+
+                ? selectedService.value
+
+                : "Not selected";
+
+    }
+
+
+    if (summaryDate) {
+
+        summaryDate.textContent =
+            date?.value || "Not selected";
+
+    }
+
+
+    if (summaryProblem) {
+
+        summaryProblem.textContent =
+            problem?.value || "Not provided";
+
+    }
 
 }
 
-);
 
-
-
-
-
-
-
-
-
-
-
-
-// ================================
-// CREATE BOOKING
-// ================================
-
-
+/* =========================================
+   BOOK SERVICE
+========================================= */
 
 bookingForm.addEventListener(
+    "submit",
+    async (e) => {
 
-"submit",
-
-async(e)=>{
-
-
-e.preventDefault();
+        e.preventDefault();
 
 
+        message.textContent = "";
 
 
+        /* VEHICLE */
 
-if(!selectedVehicle){
+        if (!selectedVehicle) {
 
+            message.style.color =
+                "#dc2626";
 
+            message.textContent =
+                "Please select a vehicle first.";
 
-message.innerHTML =
+            return;
 
-"Please select your vehicle.";
-
-
-return;
-
-
-}
-
+        }
 
 
+        /* SERVICE */
+
+        const selectedService =
+            document.querySelector(
+                'input[name="serviceType"]:checked'
+            );
 
 
+        if (!selectedService) {
 
-try{
+            message.style.color =
+                "#dc2626";
+
+            message.textContent =
+                "Please select a service.";
+
+            return;
+
+        }
 
 
+        /* DATE */
+
+        const date =
+            document.getElementById(
+                "bookingDate"
+            ).value;
 
 
+        if (!date) {
 
-const bookingRef =
+            message.style.color =
+                "#dc2626";
 
-push(
+            message.textContent =
+                "Please select your preferred service date.";
 
-ref(db,"bookings")
+            return;
 
+        }
+
+
+        /* PROBLEM */
+
+        const problem =
+            document.getElementById(
+                "problemDescription"
+            ).value.trim();
+
+
+        if (!problem) {
+
+            message.style.color =
+                "#dc2626";
+
+            message.textContent =
+                "Please describe the vehicle problem.";
+
+            return;
+
+        }
+
+
+        /* DISABLE BUTTON */
+
+        bookingSubmit.disabled = true;
+
+        bookingSubmit.textContent =
+            "Booking Service...";
+
+
+        try {
+
+
+            /* CREATE BOOKING ID */
+
+            const bookingRef =
+                push(
+                    ref(db, "bookings")
+                );
+
+
+            const bookingId =
+                bookingRef.key;
+
+
+            /* CUSTOMER NAME */
+
+            const customerName =
+                currentUser.displayName ||
+
+                currentUser.email
+                    .split("@")[0];
+
+
+            /* CREATE BOOKING */
+
+            await set(
+                bookingRef,
+                {
+
+                    bookingId:
+
+                        bookingId,
+
+
+                    customerId:
+
+                        currentUser.uid,
+
+
+                    customerName:
+
+                        customerName,
+
+
+                    customerEmail:
+
+                        currentUser.email,
+
+
+                    vehicleId:
+
+                        selectedVehicle.id || "",
+
+
+                    vehicleName:
+
+                        selectedVehicle.vehicleName ||
+                        "",
+
+
+                    vehicleNumber:
+
+                        selectedVehicle.vehicleNumber ||
+                        "",
+
+
+                    serviceType:
+
+                        selectedService.value,
+
+
+                    problemDescription:
+
+                        problem,
+
+
+                    bookingDate:
+
+                        date,
+
+
+                    status:
+
+                        "Pending",
+
+
+                    mechanicId:
+
+                        "",
+
+
+                    mechanicName:
+
+                        "",
+
+
+                    mechanicNote:
+
+                        "",
+
+
+                    estimatedCost:
+
+                        0,
+
+
+                    finalAmount:
+
+                        0,
+
+
+                    paymentStatus:
+
+                        "Pending",
+
+
+                    mechanicAcceptedAt:
+
+                        null,
+
+
+                    completedAt:
+
+                        null,
+
+
+                    createdAt:
+
+                        serverTimestamp()
+
+                }
+            );
+
+
+            /* SUCCESS */
+
+            message.style.color =
+                "#16a34a";
+
+
+            message.textContent =
+                "Service request submitted successfully!";
+
+
+            bookingForm.reset();
+
+
+            selectedVehicle = null;
+
+
+            document
+                .querySelectorAll(
+                    ".vehicle-option"
+                )
+                .forEach((card) => {
+
+                    card.classList.remove(
+                        "selected"
+                    );
+
+                });
+
+
+            document
+                .querySelectorAll(
+                    ".service-option"
+                )
+                .forEach((card) => {
+
+                    card.classList.remove(
+                        "selected"
+                    );
+
+                });
+
+
+            if (bookingSummary) {
+
+                bookingSummary.style.display =
+                    "none";
+
+            }
+
+
+            /*
+             * Customer goes to active bookings.
+             * History is only for completed services.
+             */
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "bookings.html";
+
+            }, 1200);
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Booking Error:",
+                error
+            );
+
+
+            message.style.color =
+                "#dc2626";
+
+
+            message.textContent =
+                "Unable to book service. Please try again.";
+
+
+            bookingSubmit.disabled =
+                false;
+
+
+            bookingSubmit.textContent =
+                "Confirm Service Booking";
+
+        }
+
+    }
 );
 
-
-
-
-
-
-await set(
-
-bookingRef,
-
-{
-
-
-bookingId:
-
-bookingRef.key,
-
-
-
-
-
-customerId:
-
-currentUser.uid,
-
-
-
-
-
-customerName:
-
-currentUser.displayName ||
-
-currentUser.email.split("@")[0],
-
-
-
-
-
-customerEmail:
-
-currentUser.email,
-
-
-
-
-
-
-vehicleId:
-vehicleSelect.value,
-
-
-
-
-
-
-vehicleName:
-
-selectedVehicle.vehicleName,
-
-
-
-
-
-
-vehicleNumber:
-
-selectedVehicle.vehicleNumber,
-
-
-
-
-
-
-serviceType:
+</script>
+<script>
 
 document
+.querySelectorAll(".service-option")
+.forEach((card) => {
 
-.getElementById("serviceType")
+    card.addEventListener("click", () => {
 
-.value,
+        document
+        .querySelectorAll(".service-option")
+        .forEach((item) => {
 
+            item.classList.remove("selected");
 
+        });
 
+        card.classList.add("selected");
 
+    });
 
+});
 
-problemDescription:
 
 document
+.querySelectorAll(".vehicle-option")
+.forEach((card) => {
 
-.getElementById("problemDescription")
+    card.addEventListener("click", () => {
 
-.value,
+        document
+        .querySelectorAll(".vehicle-option")
+        .forEach((item) => {
 
+            item.classList.remove("selected");
 
+        });
 
+        card.classList.add("selected");
 
+    });
 
+});
 
-bookingDate:
 
-document
+const dateInput =
+document.getElementById("bookingDate");
 
-.getElementById("bookingDate")
 
-.value,
+if (dateInput) {
 
+    const today =
+        new Date()
+        .toISOString()
+        .split("T")[0];
 
-
-
-
-
-status:
-
-"Pending",
-
-
-
-
-
-
-mechanicId:
-
-"",
-
-
-
-
-
-mechanicName:
-
-"",
-
-
-
-
-
-mechanicNote:
-
-"",
-
-
-
-
-
-estimatedCost:
-
-0,
-
-
-
-
-
-finalAmount:
-
-0,
-
-
-
-
-
-paymentStatus:
-
-"Pending",
-
-
-
-
-
-createdAt:
-
-serverTimestamp()
-
-
-
+    dateInput.min = today;
 
 }
-
-);
-
-
-
-
-
-
-
-
-message.innerHTML =
-
-"Service booked successfully.";
-
-setTimeout(() => {
-    window.location.href = "my-bookings.html";
-}, 1500);
-
-
-
-bookingForm.reset();
-
-
-
-
-
-selectedVehicle=null;
-
-
-
-
-
-
-
-}
-
-catch(error){
-
-
-
-console.error(
-
-"Booking Error:",
-
-error
-
-);
-
-
-
-message.innerHTML =
-
-"Unable to book service. Try again.";
-
-
-
-
-
-}
-
-
-
-
-}
-
-);
-
-
-
-
 
 </script>
 
