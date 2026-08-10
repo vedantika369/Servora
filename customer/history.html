@@ -1,190 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
 
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
+    <title>Service History | Servora</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
-<title>
-Service History | Servora
-</title>
-
-
-
-
-<link rel="stylesheet" href="../css/style.css">
-
-
+    <link rel="stylesheet"
+          href="../css/style.css">
 
 </head>
-
 
 
 <body>
 
 
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <nav class="navbar">
+
+        <div class="container">
+
+            <!-- Logo -->
+
+            <a href="dashboard.html"
+               class="logo">
+
+                <img src="../images/logo.png"
+                     alt="Servora Logo">
+
+                <div class="logo-text">
+
+                    <h2>Servora</h2>
+
+                    <span>
+                        Drive Smart. Service Smarter.
+                    </span>
+
+                </div>
+
+            </a>
 
 
+            <!-- Navigation -->
 
-<header class="navbar">
+            <ul class="nav-links">
 
+                <li>
+                    <a href="dashboard.html">
+                        Dashboard
+                    </a>
+                </li>
 
+                <li>
+                    <a href="my-vehicles.html">
+                        My Vehicles
+                    </a>
+                </li>
 
-<div class="logo">
+                <li>
+                    <a href="book-service.html">
+                        Book Service
+                    </a>
+                </li>
 
+                <li>
+                    <a href="bookings.html">
+                        Bookings
+                    </a>
+                </li>
 
-<h2>
-Servora
-</h2>
+                <li>
+                    <a href="history.html"
+                       class="active">
+                        History
+                    </a>
+                </li>
 
+                <li>
+                    <a href="profile.html">
+                        Profile
+                    </a>
+                </li>
 
-</div>
-
-
-
-
-
-<nav>
-
-
-
-<a href="customer/dashboard.html">
-
-Dashboard
-
-</a>
-
-
-
-
-<a href="bookings.html">
-
-Bookings
-
-</a>
-
-
-
-
-
-<a href="invoice.html">
-
-Invoice
-
-</a>
+            </ul>
 
 
+            <!-- Logout -->
+
+            <div class="nav-buttons">
+
+                <button id="logoutBtn"
+                        class="btn-login">
+
+                    Logout
+
+                </button>
+
+            </div>
 
 
+            <!-- Mobile Menu -->
 
-<a href="profile.html">
+            <div class="menu-btn">
 
-Profile
+                <i class="fa-solid fa-bars"></i>
 
-</a>
+            </div>
 
+        </div>
 
-
-</nav>
-
-
+    </nav>
 
 </header>
 
 
 
+<!-- =====================================================
+     HISTORY PAGE
+===================================================== -->
+
+<main class="history-page">
+
+    <div class="history-container">
+
+
+        <!-- Page Header -->
+
+        <div class="history-header">
+
+            <div>
+
+                <span class="history-badge">
+                    ✓ Completed Services
+                </span>
+
+                <h1>
+                    Service History
+                </h1>
+
+                <p>
+                    View your completed vehicle services,
+                    repair details, mechanic notes and payment
+                    information in one place.
+                </p>
+
+            </div>
+
+
+            <a href="book-service.html"
+               class="history-book-btn">
+
+                + Book New Service
+
+            </a>
+
+        </div>
 
 
 
+        <!-- Summary -->
+
+        <div class="history-summary">
+
+            <div class="history-stat">
+
+                <div class="history-stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Completed Services
+                    </span>
+
+                    <strong id="completedCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="history-stat">
+
+                <div class="history-stat-icon">
+                    ₹
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Spent
+                    </span>
+
+                    <strong id="totalSpent">
+                        ₹0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="history-stat">
+
+                <div class="history-stat-icon">
+                    🚗
+                </div>
+
+                <div>
+
+                    <span>
+                        Vehicles Serviced
+                    </span>
+
+                    <strong id="vehiclesServiced">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
 
 
 
-<section class="history-section">
+        <!-- History List -->
+
+        <section class="history-content">
+
+            <div class="history-content-header">
+
+                <div>
+
+                    <h2>
+                        Completed Services
+                    </h2>
+
+                    <p>
+                        Your previous service records
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="historyList">
+
+                <div class="history-loading">
+
+                    <div class="loading-spinner"></div>
+
+                    <p>
+                        Loading your service history...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+</main>
 
 
 
-<div class="history-container">
-
-
-
-<h1>
-
-Service History
-
-</h1>
-
-
-
-
-<p>
-
-View your completed vehicle services.
-
-</p>
-
-
-
-
-
-
-<div id="historyList">
-
-
-<p>
-
-Loading history...
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer class="footer">
 
+    <div class="footer-bottom">
 
+        <p>
+            © 2026 Servora. Developed by Vedantika Deshmukh
+            from Arvind Gavali College of Engineering, Satara
+            in Inplant Training 2026. All Rights Reserved.
+        </p>
 
-<div class="footer-bottom">
-
-
-
-<p>
-
-© 2026 Servora.Developed by Vedantika Deshmukh from Arvind Gavali College of Engineerin,Satara in Inplant Training 2026. All Rights Reserved.
-
-</p>
-
-
-
-</div>
-
-
+    </div>
 
 </footer>
+
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
 
 <script type="module">
 
@@ -192,572 +311,661 @@ Loading history...
 import {
 
     auth,
-
     db
 
 }
 
-from "/static/js/firebase-config.js";
-
-
-
+from "./js/firebase-config.js";
 
 
 
 import {
 
-    onAuthStateChanged
+    onAuthStateChanged,
+    signOut
 
 }
 
 from
-
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-
 
 
 
 import {
 
     ref,
-
     get
 
 }
 
 from
-
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
 
-
-
-
-
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
 const historyList =
+    document.getElementById("historyList");
 
-document.getElementById("historyList");
+const completedCount =
+    document.getElementById("completedCount");
 
+const totalSpent =
+    document.getElementById("totalSpent");
 
+const vehiclesServiced =
+    document.getElementById("vehiclesServiced");
 
-
-
-
-
-
-// ================================
-// CHECK USER LOGIN
-// ================================
-
-
-
-onAuthStateChanged(auth,(user)=>{
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
 
 
-if(user){
+/* =====================================================
+   AUTHENTICATION
+===================================================== */
 
+onAuthStateChanged(auth, (user) => {
 
+    if (user) {
 
-loadHistory(user.uid);
+        loadHistory(user.uid);
 
+    }
 
+    else {
 
-}
+        window.location.href = "login.html";
 
-
-
-else{
-
-
-window.location.href="login.html";
-
-
-}
-
-
+    }
 
 });
 
 
 
+/* =====================================================
+   LOAD HISTORY
+===================================================== */
+
+async function loadHistory(uid) {
+
+    try {
+
+        const bookingRef =
+            ref(db, "bookings");
+
+        const snapshot =
+            await get(bookingRef);
 
 
+        if (!snapshot.exists()) {
+
+            showEmptyHistory();
+
+            return;
+
+        }
 
 
+        const bookings =
+            snapshot.val();
 
 
+        let completedServices = [];
 
 
+        Object.keys(bookings).forEach((id) => {
 
-// ================================
-// LOAD SERVICE HISTORY
-// ================================
-
-
-
-async function loadHistory(uid){
+            const service =
+                bookings[id];
 
 
+            if (
+                service.customerId === uid &&
+                service.status === "Completed"
+            ) {
 
-try{
+                completedServices.push({
 
+                    id: id,
 
+                    ...service
 
+                });
 
+            }
 
-const bookingRef =
-
-ref(
-
-db,
-
-"bookings"
-
-);
-
-
+        });
 
 
+        /* =============================================
+           SORT LATEST FIRST
+        ============================================= */
+
+        completedServices.sort((a, b) => {
+
+            const dateA =
+                a.createdAt || 0;
+
+            const dateB =
+                b.createdAt || 0;
+
+            return dateB - dateA;
+
+        });
 
 
-const snapshot =
+        /* =============================================
+           EMPTY
+        ============================================= */
 
-await get(bookingRef);
+        if (completedServices.length === 0) {
 
+            showEmptyHistory();
 
+            return;
 
-
-
-
-
-historyList.innerHTML="";
-
-
+        }
 
 
+        /* =============================================
+           SUMMARY
+        ============================================= */
+
+        updateSummary(
+            completedServices
+        );
 
 
+        /* =============================================
+           DISPLAY
+        ============================================= */
+
+        historyList.innerHTML = "";
 
 
-if(!snapshot.exists()){
+        completedServices.forEach(
+            (service) => {
+
+                historyList.innerHTML +=
+                    createHistoryCard(service);
+
+            }
+        );
 
 
+    }
 
-showEmptyHistory();
+    catch (error) {
+
+        console.error(
+            "History Loading Error:",
+            error
+        );
 
 
-return;
+        historyList.innerHTML = `
 
+            <div class="history-error">
+
+                <div class="error-icon">
+                    !
+                </div>
+
+                <h3>
+                    Unable to load service history
+                </h3>
+
+                <p>
+                    Something went wrong while loading
+                    your completed services.
+                </p>
+
+                <button
+                    onclick="location.reload()"
+                    class="history-retry-btn">
+
+                    Try Again
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
 
 }
 
 
 
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+function updateSummary(services) {
+
+
+    /* Completed count */
+
+    completedCount.textContent =
+        services.length;
 
 
 
-const bookings =
+    /* Total amount */
 
-snapshot.val();
-
-
+    let total = 0;
 
 
+    services.forEach((service) => {
 
-let completedServices = [];
+        const amount =
+            Number(
+                service.finalAmount ||
+                service.invoiceAmount ||
+                service.estimatedCost ||
+                0
+            );
 
+        total += amount;
 
-
-
-
-
-Object.keys(bookings).forEach((id)=>{
-
-
-
-const service =
-
-bookings[id];
+    });
 
 
+    totalSpent.textContent =
+        "₹" + total.toLocaleString("en-IN");
 
 
 
+    /* Unique vehicles */
 
-if(
-
-service.customerId === uid &&
-
-service.status === "Completed"
-
-){
+    const vehicleSet =
+        new Set();
 
 
+    services.forEach((service) => {
 
-completedServices.push(service);
+        if (service.vehicleNumber) {
+
+            vehicleSet.add(
+                service.vehicleNumber
+            );
+
+        }
+
+        else if (service.vehicleName) {
+
+            vehicleSet.add(
+                service.vehicleName
+            );
+
+        }
+
+    });
 
 
+    vehiclesServiced.textContent =
+        vehicleSet.size;
 
 }
 
 
 
-});
+/* =====================================================
+   CREATE HISTORY CARD
+===================================================== */
+
+function createHistoryCard(service) {
+
+
+    const amount =
+        service.finalAmount ||
+        service.invoiceAmount ||
+        service.estimatedCost ||
+        0;
+
+
+    const mechanic =
+        service.mechanicName ||
+        "Servora Mechanic";
+
+
+    const notes =
+        service.mechanicNote ||
+        service.mechanicRemarks ||
+        "No repair notes were added.";
+
+
+    const paymentStatus =
+        service.paymentStatus ||
+        "Pending";
+
+
+    return `
+
+        <article class="history-card">
+
+
+            <!-- Card Top -->
+
+            <div class="history-card-top">
+
+
+                <div class="history-service-title">
+
+
+                    <div class="service-history-icon">
+                        🔧
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+                            ${service.serviceType ||
+                            "Vehicle Service"}
+                        </h3>
+
+                        <span class="completed-badge">
+
+                            ✓ Completed
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="history-amount">
+
+                    <span>
+                        Final Amount
+                    </span>
+
+                    <strong>
+                        ₹${Number(amount)
+                        .toLocaleString("en-IN")}
+                    </strong>
+
+                </div>
+
+
+            </div>
 
 
 
+            <!-- Vehicle -->
+
+            <div class="history-section-block">
+
+                <h4>
+                    🚗 Vehicle Details
+                </h4>
+
+
+                <div class="history-details-grid">
+
+
+                    <div>
+
+                        <span>
+                            Vehicle
+                        </span>
+
+                        <strong>
+                            ${service.vehicleName ||
+                            "Not Available"}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Registration Number
+                        </span>
+
+                        <strong>
+                            ${service.vehicleNumber ||
+                            "Not Available"}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
 
 
 
+            <!-- Service -->
 
-// Sort latest first
+            <div class="history-section-block">
 
-
-completedServices.sort(
-
-(a,b)=>
-
-
-(b.createdAt || 0)
-
--
-
-(a.createdAt || 0)
+                <h4>
+                    📋 Service Information
+                </h4>
 
 
-
-);
-
+                <div class="history-details-grid">
 
 
+                    <div>
+
+                        <span>
+                            Service Date
+                        </span>
+
+                        <strong>
+                            ${service.bookingDate ||
+                            "Not Available"}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Mechanic
+                        </span>
+
+                        <strong>
+                            ${mechanic}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
 
 
 
+            <!-- Repair Notes -->
+
+            <div class="history-section-block">
+
+                <h4>
+                    🛠 Repair Details
+                </h4>
 
 
-if(completedServices.length===0){
+                <div class="repair-note">
+
+                    ${escapeHTML(notes)}
+
+                </div>
+
+            </div>
 
 
 
-showEmptyHistory();
+            <!-- Payment -->
+
+            <div class="history-payment">
 
 
-return;
+                <div>
 
+                    <span>
+                        Payment Status
+                    </span>
+
+                    <strong class="
+                        ${paymentStatus
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}
+                    ">
+
+                        ${paymentStatus}
+
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Service Status
+                    </span>
+
+                    <strong class="completed-text">
+
+                        Completed
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </article>
+
+    `;
 
 }
 
 
 
+/* =====================================================
+   EMPTY HISTORY
+===================================================== */
 
+function showEmptyHistory() {
 
 
+    completedCount.textContent = "0";
 
+    totalSpent.textContent = "₹0";
 
-completedServices.forEach((service)=>{
+    vehiclesServiced.textContent = "0";
 
 
+    historyList.innerHTML = `
 
-historyList.innerHTML +=
+        <div class="history-empty">
 
+            <div class="empty-history-icon">
+                📋
+            </div>
 
+            <h3>
+                No Completed Services Yet
+            </h3>
 
-`
+            <p>
+                Your completed vehicle services will
+                appear here automatically.
+            </p>
 
-<div class="history-card">
+            <a
+                href="book-service.html"
+                class="history-book-btn">
 
+                Book Your First Service
 
+            </a>
 
+        </div>
 
-
-<h2>
-
-${service.serviceType}
-
-</h2>
-
-
-
-
-
-
-<hr>
-
-
-
-
-
-
-
-<h3>
-
-Vehicle Details
-
-</h3>
-
-
-
-
-
-<p>
-
-🚗 Vehicle:
-
-${service.vehicleName || "Not Available"}
-
-</p>
-
-
-
-
-
-
-<p>
-
-🔢 Number:
-
-${service.vehicleNumber || "Not Available"}
-
-</p>
-
-
-
-
-
-
-
-
-
-<h3>
-
-Service Information
-
-</h3>
-
-
-
-
-
-
-<p>
-
-📅 Date:
-
-${service.bookingDate || "Not Available"}
-
-</p>
-
-
-
-
-
-
-<p>
-
-👨‍🔧 Mechanic:
-
-${service.mechanicName || "Not Available"}
-
-</p>
-
-
-
-
-
-
-
-
-
-<h3>
-
-Repair Details
-
-</h3>
-
-
-
-
-
-
-<p>
-
-${service.mechanicNote || "No notes available"}
-
-</p>
-
-
-
-
-
-
-
-
-
-<h3>
-
-Payment Details
-
-</h3>
-
-
-
-
-
-
-
-<p>
-
-Final Amount:
-
-₹ ${service.finalAmount || service.estimatedCost || 0}
-
-</p>
-
-
-
-
-
-
-
-<p>
-
-Payment Status:
-
-${service.paymentStatus || "Pending"}
-
-</p>
-
-
-
-
-
-
-</div>
-
-
-
-`;
-
-
-
-});
-
-
-
-
-
+    `;
 
 }
 
 
 
-catch(error){
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
+function escapeHTML(value) {
 
+    const div =
+        document.createElement("div");
 
-console.error(
+    div.textContent =
+        value;
 
-"History Loading Error:",
-
-error
-
-);
-
-
-
-historyList.innerHTML = `
-
-
-<div class="history-card">
-
-
-<h3>
-
-Unable to load service history
-
-</h3>
-
-
-<p>
-
-Please try again later.
-
-</p>
-
-
-</div>
-
-
-`;
-
-
+    return div.innerHTML;
 
 }
 
 
 
-}
+/* =====================================================
+   LOGOUT
+===================================================== */
 
+if (logoutBtn) {
 
+    logoutBtn.addEventListener(
+        "click",
+        async () => {
 
+            try {
 
+                await signOut(auth);
 
+                window.location.href =
+                    "login.html";
 
+            }
 
+            catch (error) {
 
+                console.error(
+                    "Logout Error:",
+                    error
+                );
 
+                alert(
+                    "Unable to logout. Please try again."
+                );
 
+            }
 
-
-// ================================
-// EMPTY HISTORY MESSAGE
-// ================================
-
-
-
-function showEmptyHistory(){
-
-
-
-historyList.innerHTML =
-
-
-
-`
-
-<div class="history-card">
-
-
-
-<h3>
-
-No Completed Services
-
-</h3>
-
-
-
-<p>
-
-Your completed services will appear here.
-
-</p>
-
-
-
-</div>
-
-`;
-
-
+        }
+    );
 
 }
-
 
 
 </script>
+
+
+</body>
+
+</html>
