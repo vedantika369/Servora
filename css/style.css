@@ -3652,89 +3652,248 @@ color:#0066ff;
 /* PROFILE PAGE */
 
 
-.profile-section{
+/* =========================================================
+   SERVORA CUSTOMER PROFILE PAGE
+   ========================================================= */
 
-padding:80px 8%;
+.profile-section {
+    min-height: calc(100vh - 80px);
+    padding: 60px 20px 80px;
+    background: #f8fafc;
+    box-sizing: border-box;
+}
 
-background:#f8f9fa;
+.profile-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
 
-min-height:80vh;
+/* =========================================================
+   PROFILE PAGE HEADER
+   ========================================================= */
+
+.profile-container > h1 {
+    text-align: center;
+    margin: 0 0 10px;
+    color: #111827;
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.profile-container > h1::after {
+    content: "";
+    display: block;
+    width: 55px;
+    height: 4px;
+    margin: 14px auto 0;
+    border-radius: 10px;
+    background: #2563eb;
+}
+
+/* =========================================================
+   PROFILE CARD
+   ========================================================= */
+
+.profile-card {
+    width: 100%;
+    max-width: 720px;
+    margin: 40px auto 0;
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   PROFILE FORM
+   ========================================================= */
+
+#profileForm {
+    width: 100%;
+}
+
+#profileForm label {
+    display: block;
+    margin: 0 0 8px;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#profileForm input {
+    display: block;
+    width: 100%;
+    height: 50px;
+    margin: 0 0 22px;
+    padding: 0 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #111827;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+}
+
+/* Input focus */
+
+#profileForm input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+/* Readonly email */
+
+#profileForm input[readonly] {
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   UPDATE BUTTON
+   ========================================================= */
+
+#profileForm button[type="submit"] {
+    display: block;
+    width: 100%;
+    min-height: 52px;
+    margin-top: 8px;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+#profileForm button[type="submit"]:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.20);
+}
+
+#profileForm button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+#message {
+    min-height: 22px;
+    margin: 18px 0 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   PROFILE INFORMATION DECORATION
+   ========================================================= */
+
+.profile-card::before {
+    content: "Personal Information";
+    display: block;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #111827;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+/* =========================================================
+   NAVBAR SAFETY
+   Prevents content from being hidden behind navbar
+   ========================================================= */
+
+.profile-section {
+    position: relative;
+    z-index: 1;
+}
+
+.profile-container,
+.profile-card {
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .profile-section {
+        padding: 45px 18px 60px;
+    }
+
+    .profile-container > h1 {
+        font-size: 32px;
+    }
+
+    .profile-card {
+        margin-top: 30px;
+        padding: 30px 24px;
+        border-radius: 16px;
+    }
 
 }
 
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
+@media (max-width: 480px) {
 
-.profile-container{
+    .profile-section {
+        padding: 35px 14px 50px;
+    }
 
-display:flex;
+    .profile-container > h1 {
+        font-size: 28px;
+    }
 
-justify-content:center;
+    .profile-card {
+        margin-top: 25px;
+        padding: 24px 18px;
+        border-radius: 14px;
+    }
 
-}
+    .profile-card::before {
+        font-size: 18px;
+        margin-bottom: 22px;
+    }
 
+    #profileForm input {
+        height: 48px;
+        font-size: 14px;
+    }
 
-
-.profile-box{
-
-background:white;
-
-width:500px;
-
-padding:40px;
-
-border-radius:15px;
-
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
-
-}
-
-
-
-.profile-box h1{
-
-text-align:center;
-
-margin-bottom:10px;
-
-}
-
-
-
-.profile-box button{
-
-width:100%;
-
-padding:15px;
-
-border:none;
-
-background:#0066ff;
-
-color:white;
-
-border-radius:30px;
-
-cursor:pointer;
-
-font-size:16px;
+    #profileForm button[type="submit"] {
+        min-height: 50px;
+        font-size: 15px;
+    }
 
 }
-
-
-.profile-box button:hover{
-
-background:#004bcc;
-
-}
-
-
-
-.profile-box input[readonly]{
-
-background:#eee;
-
-}
-
 /* VEHICLE PAGE */
 
 
