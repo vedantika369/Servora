@@ -698,8 +698,20 @@ header.sticky{
 
     .navbar{
 
-        padding:15px 0;
+        position: relative !important;
+        height: auto !important;
 
+    }
+    .navbar .container {
+        padding: 12px 18px;
+    }
+
+    .history-section,
+    .invoice-section,
+    .profile-section,
+    .dashboard-section,
+    .booking-page {
+        padding-top: 35px !important;
     }
 
 }
@@ -6427,3 +6439,47 @@ body {
         margin-top: 22px;
     }
 }
+
+.history-section,
+.invoice-section,
+.profile-section,
+.dashboard-section,
+.booking-page,
+.vehicles-section,
+.bookings-section {
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+/* Give the main customer sections comfortable spacing */
+.history-section {
+    padding-top: 55px !important;
+}
+
+.invoice-section {
+    padding-top: 55px !important;
+}
+
+.profile-section {
+    padding-top: 55px !important;
+}
+
+.dashboard-section {
+    padding-top: 45px !important;
+}
+
+.booking-page {
+    padding-top: 55px !important;
+}
+
+/* Prevent headings from going underneath navbar */
+.history-container,
+.invoice-container,
+.profile-container,
+.dashboard-container,
+.booking-container {
+    position: relative;
+    z-index: 1;
+}
+
