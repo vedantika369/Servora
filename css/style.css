@@ -370,14 +370,16 @@ header.sticky{
 }
 
 .navbar .container{
-    max-width: 1250px;
     margin: auto;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 24px;
+    box-sizing: border-box;
 
     display:flex;
     justify-content:space-between;
     align-items:center;
 
-    padding:18px 35px;
 }
 
 /* Logo */
