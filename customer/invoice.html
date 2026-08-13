@@ -3,102 +3,572 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>Invoice | Servora</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet"
-href="../css/style.css">
+    <title>Invoice | Servora</title>
+
+    <link rel="stylesheet"
+        href="../css/style.css">
+
+    <style>
+
+        /* =====================================================
+           INVOICE PAGE
+        ===================================================== */
+
+        .invoice-section {
+            min-height: calc(100vh - 80px);
+            background: #f8fafc;
+            padding: 60px 20px;
+        }
+
+        .invoice-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Page Header */
+
+        .invoice-page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .invoice-page-header h1 {
+            margin: 0 0 10px;
+            font-size: 38px;
+            color: #111827;
+        }
+
+        .invoice-page-header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* Invoice List */
+
+        #invoiceList {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Invoice Card */
+
+        .invoice-card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Invoice Top */
+
+        .invoice-top {
+            padding: 30px 35px;
+            background: linear-gradient(
+                135deg,
+                #eff6ff,
+                #ffffff
+            );
+
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .company-info h2 {
+            margin: 0;
+            color: #2563eb;
+            font-size: 30px;
+        }
+
+        .company-info p {
+            margin: 5px 0 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .invoice-number {
+            text-align: right;
+        }
+
+        .invoice-number span {
+            display: block;
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .invoice-number strong {
+            font-size: 18px;
+            color: #111827;
+        }
+
+        /* Status */
+
+        .invoice-status {
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .status-paid {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* Body */
+
+        .invoice-body {
+            padding: 35px;
+        }
+
+        /* Information Grid */
+
+        .invoice-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .invoice-info-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            background: #ffffff;
+        }
+
+        .invoice-info-box h3 {
+            margin: 0 0 15px;
+            color: #111827;
+            font-size: 17px;
+        }
+
+        .invoice-info-box p {
+            margin: 8px 0;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .invoice-info-box strong {
+            color: #334155;
+        }
+
+        /* Service Details */
+
+        .invoice-service {
+            margin-top: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .invoice-service-header {
+            background: #f8fafc;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .invoice-service-header h3 {
+            margin: 0;
+            color: #111827;
+            font-size: 17px;
+        }
+
+        .invoice-service-content {
+            padding: 20px;
+        }
+
+        .service-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .service-row:last-child {
+            border-bottom: none;
+        }
+
+        .service-row span:first-child {
+            color: #64748b;
+        }
+
+        .service-row span:last-child {
+            color: #111827;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* Repair Notes */
+
+        .repair-notes {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .repair-notes h3 {
+            margin: 0 0 10px;
+            color: #111827;
+            font-size: 17px;
+        }
+
+        .repair-notes p {
+            margin: 0;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* Payment */
+
+        .payment-box {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 14px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+        }
+
+        .payment-box h3 {
+            margin: 0 0 18px;
+            color: #111827;
+        }
+
+        .payment-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .payment-total span:first-child {
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .payment-total strong {
+            color: #2563eb;
+            font-size: 28px;
+        }
+
+        /* Footer inside invoice */
+
+        .invoice-footer {
+            padding: 20px 35px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .invoice-footer p {
+            margin: 0;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* Print Button */
+
+        .print-invoice-btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .print-invoice-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Empty State */
+
+        .invoice-empty {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 60px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        .invoice-empty-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .invoice-empty h3 {
+            margin: 0 0 10px;
+            color: #111827;
+        }
+
+        .invoice-empty p {
+            margin: 0;
+            color: #64748b;
+        }
+
+        /* Loading */
+
+        .invoice-loading {
+            text-align: center;
+            padding: 50px;
+            color: #64748b;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 768px) {
+
+            .invoice-section {
+                padding: 35px 15px;
+            }
+
+            .invoice-page-header h1 {
+                font-size: 30px;
+            }
+
+            .invoice-top {
+                flex-direction: column;
+                padding: 25px;
+            }
+
+            .invoice-number {
+                text-align: left;
+            }
+
+            .invoice-body {
+                padding: 25px;
+            }
+
+            .invoice-info-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .invoice-footer {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 20px 25px;
+            }
+
+            .print-invoice-btn {
+                width: 100%;
+            }
+
+            .payment-total strong {
+                font-size: 23px;
+            }
+
+        }
+
+        /* =====================================================
+           PRINT
+        ===================================================== */
+
+        @media print {
+
+            body {
+                background: white !important;
+            }
+
+            .navbar,
+            .footer,
+            .invoice-page-header,
+            .print-invoice-btn {
+                display: none !important;
+            }
+
+            .invoice-section {
+                padding: 0 !important;
+                background: white !important;
+            }
+
+            .invoice-container {
+                max-width: 100% !important;
+            }
+
+            #invoiceList {
+                display: block !important;
+            }
+
+            .invoice-card {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+                margin-bottom: 20px;
+                page-break-inside: avoid;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 <body>
 
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
 <header class="navbar">
 
-<div class="logo">
+    <div class="logo">
 
-<h2>
-Servora
-</h2>
+        <h2>
+            Servora
+        </h2>
 
-</div>
+    </div>
 
-<nav>
+    <nav>
 
-<a href="customer/dashboard.html">
-Dashboard
-</a>
+        <a href="customer/dashboard.html">
+            Dashboard
+        </a>
 
-<a href="history.html">
-History
-</a>
+        <a href="history.html">
+            History
+        </a>
 
-<a href="profile.html">
-Profile
-</a>
+        <a href="profile.html">
+            Profile
+        </a>
 
-</nav>
+    </nav>
 
 </header>
 
+
+<!-- =====================================================
+     INVOICE SECTION
+===================================================== -->
+
 <section class="invoice-section">
 
-<div class="invoice-container">
+    <div class="invoice-container">
 
-<h1>
-Service Invoice
-</h1>
 
-<div id="invoiceList">
+        <div class="invoice-page-header">
 
-<p>
-Loading invoices...
-</p>
+            <h1>
+                Service Invoices
+            </h1>
 
-</div>
+            <p>
+                View and print invoices for your completed vehicle services.
+            </p>
 
-</div>
+        </div>
+
+
+        <div id="invoiceList">
+
+            <div class="invoice-loading">
+
+                Loading your invoices...
+
+            </div>
+
+        </div>
+
+
+    </div>
 
 </section>
 
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
 <footer class="footer">
 
-<div class="footer-bottom">
+    <div class="footer-bottom">
 
-<p>
-© 2026 Servora. Developed by Vedantika Deshmukh from Arvind Gavali College of Engineerin,Satara in Inplant Training 2026. All Rights Reserved.
-</p>
+        <p>
+            © 2026 Servora. Developed by Vedantika Deshmukh from Arvind Gavali College of Engineering, Satara in Inplant Training 2026. All Rights Reserved.
+        </p>
 
-</div>
+    </div>
 
 </footer>
+
+
+<!-- =====================================================
+     FIREBASE SCRIPT
+===================================================== -->
 
 <script type="module">
 
 /* ==========================================
    SERVORA INVOICE
-   REALTIME DATABASE
+   REALTIME DATABASE VERSION
 ========================================== */
 
+
 import {
+
     auth,
+
     db
+
 }
+
 from "/static/js/firebase-config.js";
 
-import {
-    onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 import {
-    ref,
-    get
+
+    onAuthStateChanged
+
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+import {
+
+    ref,
+
+    onValue
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
 
 
 /* ==========================================
@@ -107,6 +577,7 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const invoiceList =
     document.getElementById("invoiceList");
+
 
 
 /* ==========================================
@@ -118,254 +589,519 @@ onAuthStateChanged(auth, (user) => {
     if (!user) {
 
         window.location.href = "login.html";
+
         return;
 
     }
+
 
     loadInvoices(user.uid);
 
 });
 
 
+
 /* ==========================================
    LOAD INVOICES
 ========================================== */
 
-async function loadInvoices(uid) {
+function loadInvoices(uid) {
 
-    try {
+    const bookingsRef =
+        ref(db, "bookings");
 
-        const snapshot =
-            await get(ref(db, "bookings"));
 
-        invoiceList.innerHTML = "";
+    /*
+        onValue makes the invoice page
+        update automatically whenever
+        booking/payment data changes.
+    */
 
-        if (!snapshot.exists()) {
+    onValue(
 
-            invoiceList.innerHTML = `
+        bookingsRef,
 
-                <div class="invoice-card">
+        (snapshot) => {
 
-                    <h3>No Invoice Available</h3>
+            try {
 
-                    <p>
-                        Complete service invoices will appear here.
-                    </p>
+                invoiceList.innerHTML = "";
 
-                </div>
 
-            `;
+                if (!snapshot.exists()) {
 
-            return;
+                    showEmptyInvoices();
 
-        }
+                    return;
 
-        const bookings = snapshot.val();
+                }
 
-        let invoiceNumber = 1001;
 
-        const completedBookings = Object.entries(bookings)
-            .map(([id, booking]) => ({
-                id,
-                ...booking
-            }))
-            .filter(booking =>
-                booking.customerId === uid &&
-                booking.status === "Completed"
-            )
-            .sort((a, b) =>
-                (b.createdAt || 0) - (a.createdAt || 0)
+                const bookings =
+                    snapshot.val();
+
+
+                let invoiceNumber = 1001;
+
+
+                const completedBookings = [];
+
+
+                Object.entries(bookings).forEach(
+                    ([id, booking]) => {
+
+
+                        if (
+
+                            booking.customerId === uid &&
+
+                            booking.status === "Completed"
+
+                        ) {
+
+                            completedBookings.push({
+
+                                id,
+
+                                ...booking
+
+                            });
+
+                        }
+
+                    }
+                );
+
+
+                /* ==========================================
+                   SORT LATEST INVOICE FIRST
+                ========================================== */
+
+                completedBookings.sort(
+                    (a, b) => {
+
+                        return (
+
+                            (b.createdAt || 0) -
+
+                            (a.createdAt || 0)
+
+                        );
+
+                    }
+                );
+
+
+                if (
+                    completedBookings.length === 0
+                ) {
+
+                    showEmptyInvoices();
+
+                    return;
+
+                }
+
+
+                /* ==========================================
+                   DISPLAY INVOICES
+                ========================================== */
+
+                completedBookings.forEach(
+                    (invoice) => {
+
+
+                        const amount =
+                            invoice.finalAmount ||
+                            invoice.estimatedCost ||
+                            0;
+
+
+                        const paymentStatus =
+                            invoice.paymentStatus ||
+                            "Pending";
+
+
+                        const statusClass =
+                            paymentStatus.toLowerCase() === "paid"
+
+                            ? "status-paid"
+
+                            : "status-pending";
+
+
+                        invoiceList.innerHTML += `
+
+                        <div class="invoice-card">
+
+
+                            <!-- INVOICE HEADER -->
+
+                            <div class="invoice-top">
+
+
+                                <div class="company-info">
+
+                                    <h2>
+                                        Servora
+                                    </h2>
+
+                                    <p>
+                                        Drive Smart. Service Smarter.
+                                    </p>
+
+                                </div>
+
+
+                                <div class="invoice-number">
+
+                                    <span>
+                                        Invoice Number
+                                    </span>
+
+                                    <strong>
+                                        INV-${invoiceNumber}
+                                    </strong>
+
+                                    <span>
+                                        ${invoice.bookingDate || "Date not available"}
+                                    </span>
+
+
+                                    <div class="invoice-status ${statusClass}">
+
+                                        ${paymentStatus}
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- INVOICE BODY -->
+
+                            <div class="invoice-body">
+
+
+                                <!-- CUSTOMER + VEHICLE -->
+
+                                <div class="invoice-info-grid">
+
+
+                                    <div class="invoice-info-box">
+
+                                        <h3>
+                                            Customer Details
+                                        </h3>
+
+                                        <p>
+
+                                            <strong>
+                                                Name:
+                                            </strong>
+
+                                            ${invoice.customerName || "Not Available"}
+
+                                        </p>
+
+                                        <p>
+
+                                            <strong>
+                                                Email:
+                                            </strong>
+
+                                            ${invoice.customerEmail || "Not Available"}
+
+                                        </p>
+
+                                    </div>
+
+
+
+                                    <div class="invoice-info-box">
+
+                                        <h3>
+                                            Vehicle Details
+                                        </h3>
+
+                                        <p>
+
+                                            <strong>
+                                                Vehicle:
+                                            </strong>
+
+                                            ${invoice.vehicleName || "Not Available"}
+
+                                        </p>
+
+                                        <p>
+
+                                            <strong>
+                                                Registration No:
+                                            </strong>
+
+                                            ${invoice.vehicleNumber || "Not Available"}
+
+                                        </p>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- SERVICE DETAILS -->
+
+                                <div class="invoice-service">
+
+
+                                    <div class="invoice-service-header">
+
+                                        <h3>
+                                            Service Details
+                                        </h3>
+
+                                    </div>
+
+
+                                    <div class="invoice-service-content">
+
+
+                                        <div class="service-row">
+
+                                            <span>
+                                                Service Type
+                                            </span>
+
+                                            <span>
+                                                ${invoice.serviceType || "Vehicle Service"}
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="service-row">
+
+                                            <span>
+                                                Service Date
+                                            </span>
+
+                                            <span>
+                                                ${invoice.bookingDate || "Not Available"}
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="service-row">
+
+                                            <span>
+                                                Mechanic
+                                            </span>
+
+                                            <span>
+                                                ${invoice.mechanicName || "Not Assigned"}
+                                            </span>
+
+                                        </div>
+
+
+                                        <div class="service-row">
+
+                                            <span>
+                                                Service Status
+                                            </span>
+
+                                            <span>
+                                                Completed
+                                            </span>
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- REPAIR NOTES -->
+
+                                <div class="repair-notes">
+
+                                    <h3>
+                                        Service / Repair Notes
+                                    </h3>
+
+                                    <p>
+
+                                        ${invoice.mechanicNote ||
+                                        invoice.mechanicRemarks ||
+                                        "No repair notes were provided."}
+
+                                    </p>
+
+                                </div>
+
+
+
+                                <!-- PAYMENT -->
+
+                                <div class="payment-box">
+
+                                    <h3>
+                                        Payment Summary
+                                    </h3>
+
+
+                                    <div class="payment-total">
+
+                                        <span>
+                                            Total Service Amount
+                                        </span>
+
+                                        <strong>
+                                            ₹${amount}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <!-- INVOICE FOOTER -->
+
+                            <div class="invoice-footer">
+
+                                <p>
+                                    Thank you for choosing Servora.
+                                </p>
+
+
+                                <button
+
+                                    class="print-invoice-btn"
+
+                                    onclick="printInvoice()">
+
+                                    🖨 Print Invoice
+
+                                </button>
+
+                            </div>
+
+
+                        </div>
+
+                        `;
+
+
+                        invoiceNumber++;
+
+                    }
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Invoice Display Error:",
+                    error
+                );
+
+                showInvoiceError();
+
+            }
+
+        },
+
+        (error) => {
+
+            console.error(
+                "Invoice Loading Error:",
+                error
             );
 
-        if (completedBookings.length === 0) {
-
-            invoiceList.innerHTML = `
-
-                <div class="invoice-card">
-
-                    <h3>No Invoice Available</h3>
-
-                    <p>
-                        Complete service invoices will appear here.
-                    </p>
-
-                </div>
-
-            `;
-
-            return;
+            showInvoiceError();
 
         }
 
-/* ==========================================
-   DISPLAY INVOICES
-========================================== */
-
-        completedBookings.forEach((invoice) => {
-
-            invoiceList.innerHTML += `
-
-            <div class="invoice-card">
-
-                <div class="invoice-header">
-
-                    <h2>SERVORA</h2>
-
-                    <p>
-                        Vehicle Service Invoice
-                    </p>
-
-                </div>
-
-                <hr>
-
-                <h3>
-
-                    Invoice No:
-                    INV-${invoiceNumber}
-
-                </h3>
-
-                <p>
-
-                    <strong>Date:</strong>
-
-                    ${invoice.bookingDate}
-
-                </p>
-
-                <h3>
-
-                    Customer Details
-
-                </h3>
-
-                <p>
-
-                    <strong>Name:</strong>
-
-                    ${invoice.customerName}
-
-                </p>
-
-                <p>
-
-                    <strong>Email:</strong>
-
-                    ${invoice.customerEmail}
-
-                </p>
-
-                <h3>
-
-                    Vehicle Details
-
-                </h3>
-
-                <p>
-
-                    <strong>Vehicle:</strong>
-
-                    ${invoice.vehicleName}
-
-                </p>
-
-                <p>
-
-                    <strong>Number:</strong>
-
-                    ${invoice.vehicleNumber}
-
-                </p>
-
-                <h3>
-
-                    Service Details
-
-                </h3>
-
-                <p>
-
-                    <strong>Service:</strong>
-
-                    ${invoice.serviceType}
-
-                </p>
-
-                <p>
-
-                    <strong>Mechanic:</strong>
-
-                    ${invoice.mechanicName || "Not Assigned"}
-
-                </p>
-
-                <p>
-
-                    <strong>Repair Notes:</strong>
-
-                    ${invoice.mechanicNote || "No notes available"}
-
-                </p>
-
-                <h3>
-
-                    Payment Details
-
-                </h3>
-
-                <p>
-
-                    <strong>Amount:</strong>
-
-                    ₹${invoice.finalAmount || invoice.estimatedCost || 0}
-
-                </p>
-
-                <p>
-
-                    <strong>Payment Status:</strong>
-
-                    ${invoice.paymentStatus || "Pending"}
-
-                </p>
-
-                <button
-                    onclick="printInvoice()">
-
-                    Print Invoice
-
-                </button>
-
-            </div>
-
-            `;
-
-            invoiceNumber++;
-
-        });
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        invoiceList.innerHTML = `
-
-            <div class="invoice-card">
-
-                <h3>Error</h3>
-
-                <p>${error.message}</p>
-
-            </div>
-
-        `;
-
-    }
+    );
 
 }
+
+
+
+/* ==========================================
+   EMPTY INVOICES
+========================================== */
+
+function showEmptyInvoices() {
+
+    invoiceList.innerHTML = `
+
+        <div class="invoice-empty">
+
+            <div class="invoice-empty-icon">
+                🧾
+            </div>
+
+            <h3>
+                No Invoices Available
+            </h3>
+
+            <p>
+                Your invoice will appear here after
+                your vehicle service is completed.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* ==========================================
+   ERROR
+========================================== */
+
+function showInvoiceError() {
+
+    invoiceList.innerHTML = `
+
+        <div class="invoice-empty">
+
+            <div class="invoice-empty-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Unable to Load Invoices
+            </h3>
+
+            <p>
+                Please refresh the page and try again.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
 
 /* ==========================================
    PRINT INVOICE
@@ -378,24 +1114,8 @@ window.printInvoice = function () {
 };
 
 
-/* ==========================================
-   PAGE INITIALIZATION
-========================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    invoiceList.innerHTML = `
-        <p>Loading invoices...</p>
-    `;
-
-});
-
-
-/* ==========================================
-   END OF INVOICE PAGE
-========================================== */
-
 </script>
+
 
 </body>
 
