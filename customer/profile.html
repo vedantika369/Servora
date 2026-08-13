@@ -3,154 +3,467 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<title>
-Profile | Servora
-</title>
+    <title>My Profile | Servora</title>
 
-<link rel="stylesheet"
-href="../css/style.css">
+    <link rel="stylesheet"
+          href="../css/style.css">
 
 </head>
 
+
 <body>
 
-<header class="navbar">
 
-<div class="logo">
+<!-- ==========================================
+     CUSTOMER NAVBAR
+========================================== -->
 
-<h2>
-Servora
-</h2>
+<header>
 
-</div>
+    <nav class="navbar">
 
-<nav>
+        <div class="container">
 
-<a href="dashboard.html">
-Dashboard
-</a>
+            <!-- Logo -->
 
-<a href="my-vehicles.html">
-My Vehicles
-</a>
+            <a href="dashboard.html" class="logo">
 
-<a href="bookings.html">
-Bookings
-</a>
+                <img src="../images/logo.png"
+                     alt="Servora Logo">
 
-<button id="logoutBtn">
+                <div class="logo-text">
 
-Logout
+                    <h2>Servora</h2>
 
-</button>
+                    <span>
+                        Drive Smart. Service Smarter.
+                    </span>
 
-</nav>
+                </div>
+
+            </a>
+
+
+            <!-- Navigation -->
+
+            <ul class="nav-links">
+
+                <li>
+
+                    <a href="dashboard.html">
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="book-service.html">
+
+                        Book Service
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="bookings.html">
+
+                        Bookings
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="history.html">
+
+                        History
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="invoice.html">
+
+                        Invoice
+
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="profile.html"
+                       class="active">
+
+                        Profile
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+
+            <!-- Logout -->
+
+            <div class="nav-buttons">
+
+                <button id="logoutBtn"
+                        class="btn-login">
+
+                    Logout
+
+                </button>
+
+            </div>
+
+
+            <!-- Mobile Menu -->
+
+            <div class="menu-btn">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </div>
+
+        </div>
+
+    </nav>
 
 </header>
 
 
 
-
+<!-- ==========================================
+     PROFILE SECTION
+========================================== -->
 
 <section class="profile-section">
 
-<div class="profile-container">
+    <div class="profile-container">
 
-<h1>
 
-My Profile
+        <!-- Page Header -->
 
-</h1>
+        <div class="profile-header">
 
-<div class="profile-card">
+            <h1>
+                My Profile
+            </h1>
 
-<form id="profileForm">
+            <p>
+                Manage your personal information and account details.
+            </p>
 
-<label>
+        </div>
 
-Name
 
-</label>
 
-<input
-type="text"
-id="name"
-required>
+        <!-- Profile Layout -->
 
-<label>
+        <div class="profile-layout">
 
-Email
 
-</label>
+            <!-- Profile Information Card -->
 
-<input
-type="email"
-id="email"
-readonly>
+            <div class="profile-card">
 
-<label>
 
-Phone Number
+                <div class="profile-card-header">
 
-</label>
+                    <div class="profile-avatar">
 
-<input
-type="text"
-id="phone"
-placeholder="Enter phone number">
+                        <i class="fa-solid fa-user"></i>
 
-<button type="submit">
+                    </div>
 
-Update Profile
+                    <div>
 
-</button>
+                        <h2>
+                            Account Information
+                        </h2>
 
-<p id="message"></p>
+                        <p>
+                            Keep your information up to date.
+                        </p>
 
-</form>
+                    </div>
 
-</div>
+                </div>
 
-</div>
+
+
+                <form id="profileForm">
+
+
+                    <!-- Name -->
+
+                    <div class="profile-form-group">
+
+                        <label for="name">
+
+                            Full Name
+
+                        </label>
+
+                        <div class="profile-input">
+
+                            <i class="fa-solid fa-user"></i>
+
+                            <input
+                                type="text"
+                                id="name"
+                                placeholder="Enter your full name"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Email -->
+
+                    <div class="profile-form-group">
+
+                        <label for="email">
+
+                            Email Address
+
+                        </label>
+
+                        <div class="profile-input">
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                            <input
+                                type="email"
+                                id="email"
+                                readonly>
+
+                        </div>
+
+                        <small>
+                            Your email address is linked to your account.
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- Phone -->
+
+                    <div class="profile-form-group">
+
+                        <label for="phone">
+
+                            Phone Number
+
+                        </label>
+
+                        <div class="profile-input">
+
+                            <i class="fa-solid fa-phone"></i>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                placeholder="Enter 10-digit phone number"
+                                maxlength="10">
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Message -->
+
+                    <div id="message"
+                         class="profile-message">
+
+                    </div>
+
+
+
+                    <!-- Update Button -->
+
+                    <button
+                        type="submit"
+                        id="updateProfileBtn"
+                        class="profile-update-btn">
+
+                        <i class="fa-solid fa-save"></i>
+
+                        Update Profile
+
+                    </button>
+
+
+                </form>
+
+            </div>
+
+
+
+            <!-- Account Summary -->
+
+            <div class="profile-side">
+
+
+                <div class="profile-info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                    </div>
+
+                    <h3>
+                        Account Security
+                    </h3>
+
+                    <p>
+                        Your account information is securely stored
+                        with Servora.
+                    </p>
+
+                </div>
+
+
+
+                <div class="profile-info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-car"></i>
+
+                    </div>
+
+                    <h3>
+                        Manage Vehicles
+                    </h3>
+
+                    <p>
+                        Add and manage the vehicles connected
+                        to your Servora account.
+                    </p>
+
+                    <a href="my-vehicles.html"
+                       class="profile-side-btn">
+
+                        Manage Vehicles
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+
+                <div class="profile-info-card">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-wrench"></i>
+
+                    </div>
+
+                    <h3>
+                        Book a Service
+                    </h3>
+
+                    <p>
+                        Schedule maintenance or repair for
+                        your registered vehicle.
+                    </p>
+
+                    <a href="book-service.html"
+                       class="profile-side-btn">
+
+                        Book Service
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
 
 </section>
 
 
 
-
+<!-- ==========================================
+     FOOTER
+========================================== -->
 
 <footer class="footer">
 
-<div class="footer-bottom">
+    <div class="footer-bottom">
 
-<p>
+        <p>
 
-© 2026 Servora.Developed by Vedantika Deshmukh from Arvind Gavali College of Engineerin,Satara in Inplant Training 2026. All Rights Reserved.
+            © 2026 Servora. Developed by Vedantika Deshmukh
+            from Arvind Gavali College of Engineering, Satara
+            in Inplant Training 2026. All Rights Reserved.
 
-</p>
+        </p>
 
-</div>
+    </div>
 
 </footer>
 
+
+
+<!-- ==========================================
+     FIREBASE / PROFILE JAVASCRIPT
+========================================== -->
+
 <script type="module">
+
 
 import {
     auth,
     db
 }
-from "/static/js/firebase-config.js";
+from "../js/firebase-config.js";
+
 
 import {
     onAuthStateChanged,
+    updateProfile,
     signOut
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 import {
     ref,
@@ -161,73 +474,143 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
 
-const profileForm = document.getElementById("profileForm");
+/* ==========================================
+   ELEMENTS
+========================================== */
 
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const phoneInput = document.getElementById("phone");
+const profileForm =
+    document.getElementById("profileForm");
 
-const logoutBtn = document.getElementById("logoutBtn");
-const message = document.getElementById("message");
+
+const nameInput =
+    document.getElementById("name");
+
+
+const emailInput =
+    document.getElementById("email");
+
+
+const phoneInput =
+    document.getElementById("phone");
+
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+
+const message =
+    document.getElementById("message");
+
+
+const updateProfileBtn =
+    document.getElementById("updateProfileBtn");
+
+
 
 let currentUser = null;
 
 
 
-// ======================================
-// CHECK LOGIN
-// ======================================
+/* ==========================================
+   MESSAGE
+========================================== */
+
+function showMessage(text, type) {
+
+    message.textContent = text;
+
+    message.className =
+        "profile-message " + type;
+
+}
+
+
+
+/* ==========================================
+   CHECK LOGIN
+========================================== */
 
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
 
-        window.location.href = "login.html";
+        window.location.href = "../login.html";
+
         return;
 
     }
 
+
     currentUser = user;
 
-    loadProfile(user.uid);
+
+    await loadProfile(user.uid);
 
 });
 
 
 
-// ======================================
-// LOAD PROFILE
-// ======================================
+/* ==========================================
+   LOAD PROFILE
+========================================== */
 
 async function loadProfile(uid) {
 
     try {
 
-        const snapshot = await get(ref(db, "users/" + uid));
+        const snapshot =
+            await get(
+                ref(db, "users/" + uid)
+            );
 
-        if (!snapshot.exists()) {
 
-            message.style.color = "red";
-            message.innerHTML = "Profile not found.";
+        if (snapshot.exists()) {
 
-            return;
+            const data =
+                snapshot.val();
+
+
+            nameInput.value =
+                data.name || userDisplayName();
+
+
+            emailInput.value =
+                data.email ||
+                currentUser.email ||
+                "";
+
+
+            phoneInput.value =
+                data.phone || "";
 
         }
 
-        const data = snapshot.val();
+        else {
 
-        nameInput.value = data.name || "";
-        emailInput.value = data.email || "";
-        phoneInput.value = data.phone || "";
+            nameInput.value =
+                userDisplayName();
+
+
+            emailInput.value =
+                currentUser.email ||
+                "";
+
+        }
 
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Profile Loading Error:",
+            error
+        );
 
-        message.style.color = "red";
-        message.innerHTML = "Unable to load profile.";
+
+        showMessage(
+            "Unable to load profile.",
+            "error"
+        );
 
     }
 
@@ -235,68 +618,252 @@ async function loadProfile(uid) {
 
 
 
-// ======================================
-// UPDATE PROFILE
-// ======================================
+/* ==========================================
+   USER DISPLAY NAME
+========================================== */
 
-profileForm.addEventListener("submit", async (e) => {
+function userDisplayName() {
 
-    e.preventDefault();
+    if (currentUser.displayName) {
 
-    if (!currentUser) return;
-
-    try {
-
-        await update(ref(db, "users/" + currentUser.uid), {
-
-            name: nameInput.value.trim(),
-
-            email: emailInput.value,
-
-            phone: phoneInput.value.trim()
-
-        });
-
-        message.style.color = "green";
-        message.innerHTML = "Profile updated successfully.";
+        return currentUser.displayName;
 
     }
 
-    catch (error) {
 
-        console.error(error);
+    if (currentUser.email) {
 
-        message.style.color = "red";
-        message.innerHTML = "Unable to update profile.";
-
-    }
-
-});
-
-
-
-// ======================================
-// LOGOUT
-// ======================================
-
-logoutBtn.addEventListener("click", async () => {
-
-    try {
-
-        await signOut(auth);
-
-        window.location.href = "login.html";
+        return currentUser.email
+            .split("@")[0];
 
     }
 
-    catch (error) {
 
-        console.error(error);
+    return "User";
 
-        alert("Logout failed.");
+}
+
+
+
+/* ==========================================
+   UPDATE PROFILE
+========================================== */
+
+profileForm.addEventListener(
+    "submit",
+    async (e) => {
+
+        e.preventDefault();
+
+
+        if (!currentUser) {
+
+            return;
+
+        }
+
+
+        const name =
+            nameInput.value.trim();
+
+
+        const phone =
+            phoneInput.value.trim();
+
+
+
+        /* -----------------------------
+           VALIDATION
+        ----------------------------- */
+
+        if (!name) {
+
+            showMessage(
+                "Please enter your name.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            phone &&
+            !/^[0-9]{10}$/.test(phone)
+        ) {
+
+            showMessage(
+                "Please enter a valid 10-digit phone number.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+
+        /* -----------------------------
+           BUTTON LOADING
+        ----------------------------- */
+
+        updateProfileBtn.disabled =
+            true;
+
+
+        updateProfileBtn.innerHTML = `
+
+            <i class="fa-solid fa-spinner fa-spin"></i>
+
+            Updating...
+
+        `;
+
+
+
+        try {
+
+
+            /* -----------------------------
+               UPDATE FIREBASE AUTH
+            ----------------------------- */
+
+            await updateProfile(
+                currentUser,
+                {
+                    displayName: name
+                }
+            );
+
+
+
+            /* -----------------------------
+               UPDATE REALTIME DATABASE
+            ----------------------------- */
+
+            await update(
+
+                ref(
+                    db,
+                    "users/" + currentUser.uid
+                ),
+
+                {
+
+                    name: name,
+
+                    email:
+                        currentUser.email || "",
+
+                    phone: phone
+
+                }
+
+            );
+
+
+
+            showMessage(
+                "Profile updated successfully.",
+                "success"
+            );
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Profile Update Error:",
+                error
+            );
+
+
+            showMessage(
+                "Unable to update profile. Please try again.",
+                "error"
+            );
+
+        }
+
+
+        finally {
+
+            updateProfileBtn.disabled =
+                false;
+
+
+            updateProfileBtn.innerHTML = `
+
+                <i class="fa-solid fa-save"></i>
+
+                Update Profile
+
+            `;
+
+        }
 
     }
 
-});
+);
+
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+logoutBtn.addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            logoutBtn.disabled =
+                true;
+
+
+            logoutBtn.textContent =
+                "Logging out...";
+
+
+            await signOut(auth);
+
+
+            window.location.href =
+                "../login.html";
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Logout Error:",
+                error
+            );
+
+
+            logoutBtn.disabled =
+                false;
+
+
+            logoutBtn.textContent =
+                "Logout";
+
+
+            alert(
+                "Logout failed. Please try again."
+            );
+
+        }
+
+    }
+);
+
 
 </script>
+
+</body>
+
+</html>
