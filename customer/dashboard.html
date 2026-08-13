@@ -13,186 +13,265 @@
     <link rel="stylesheet"
         href="../css/style.css">
 
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <style>
 
-        /* ==========================================
-           SERVORA CUSTOMER DASHBOARD
-        ========================================== */
+        /* =========================================
+           CUSTOMER DASHBOARD
+        ========================================= */
 
         .customer-dashboard {
-            min-height: calc(100vh - 80px);
             background: #f8fafc;
-            padding: 45px 20px 70px;
+            min-height: calc(100vh - 80px);
+            padding: 40px 20px 70px;
         }
 
-        .customer-dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-
-        /* ==========================================
-           NAVBAR
-        ========================================== */
-
-        .customer-navbar {
-            background: #ffffff;
-            border-bottom: 1px solid #e5e7eb;
-            box-shadow: 0 3px 15px rgba(15, 23, 42, 0.05);
-        }
-
-        .customer-navbar-inner {
+        .customer-container {
             max-width: 1200px;
             margin: auto;
-            min-height: 76px;
-
-            padding: 0 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 25px;
-        }
-
-        .customer-navbar .logo h2 {
-            margin: 0;
-            color: #111827;
-            font-size: 26px;
-            font-weight: 800;
-        }
-
-        .customer-navbar nav {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .customer-navbar nav a {
-            text-decoration: none;
-            color: #475569;
-
-            padding: 10px 13px;
-
-            border-radius: 8px;
-
-            font-size: 14px;
-            font-weight: 600;
-
-            transition: 0.2s;
-        }
-
-        .customer-navbar nav a:hover {
-            color: #2563eb;
-            background: #eff6ff;
-        }
-
-        .customer-navbar nav a.active {
-            color: #2563eb;
-            background: #eff6ff;
-        }
-
-        #logoutBtn {
-            border: none;
-
-            background: #111827;
-            color: white;
-
-            padding: 10px 16px;
-
-            border-radius: 8px;
-
-            font-size: 14px;
-            font-weight: 600;
-
-            cursor: pointer;
-
-            transition: 0.2s;
-        }
-
-        #logoutBtn:hover {
-            background: #dc2626;
         }
 
 
-        /* ==========================================
-           WELCOME
-        ========================================== */
+        /* =========================================
+           WELCOME HERO
+        ========================================= */
 
         .dashboard-welcome {
-            background: linear-gradient(
-                135deg,
-                #2563eb,
-                #1d4ed8
-            );
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #1d4ed8
+                );
+
+            border-radius: 22px;
+
+            padding: 35px 40px;
 
             color: white;
 
-            border-radius: 20px;
+            display: flex;
 
-            padding: 35px 40px;
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 30px;
 
             margin-bottom: 30px;
 
             box-shadow:
-                0 12px 30px rgba(37, 99, 235, 0.20);
+                0 15px 35px
+                rgba(37,99,235,0.20);
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 30px;
         }
 
-        .dashboard-welcome h1 {
-            margin: 0 0 8px;
+        .welcome-content h1 {
+
+            margin: 0 0 10px;
 
             font-size: 32px;
-            font-weight: 800;
+
+            font-weight: 700;
+
         }
 
-        .dashboard-welcome p {
+        .welcome-content p {
+
             margin: 5px 0;
-            opacity: 0.9;
+
+            opacity: .92;
+
         }
 
-        .dashboard-welcome-email {
+        .welcome-email {
+
             font-size: 14px;
+
         }
+
 
         .welcome-action {
+
             flex-shrink: 0;
+
         }
 
         .welcome-action a {
-            display: inline-block;
 
-            background: white;
-            color: #2563eb;
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 9px;
 
             padding: 13px 20px;
 
-            border-radius: 9px;
+            background: white;
+
+            color: #2563eb;
+
+            border-radius: 10px;
 
             text-decoration: none;
 
             font-weight: 700;
 
-            transition: 0.2s;
+            transition: .25s;
+
         }
 
         .welcome-action a:hover {
+
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+
+            box-shadow:
+                0 8px 20px
+                rgba(0,0,0,.15);
+
         }
 
 
-        /* ==========================================
-           QUICK STATS
-        ========================================== */
+        /* =========================================
+           STATISTICS
+        ========================================= */
 
         .dashboard-stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 35px;
+
+        }
+
+        .stat-card {
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 23px;
+
+            border: 1px solid #e2e8f0;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 17px;
+
+            transition: .25s;
+
+        }
+
+        .stat-card:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(15,23,42,.08);
+
+        }
+
+        .stat-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 21px;
+
+            flex-shrink: 0;
+
+        }
+
+        .stat-card h3 {
+
+            margin: 0 0 4px;
+
+            font-size: 25px;
+
+            color: #111827;
+
+        }
+
+        .stat-card p {
+
+            margin: 0;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================================
+           SECTION HEADER
+        ========================================= */
+
+        .dashboard-section-title {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+
+        }
+
+        .dashboard-section-title h2 {
+
+            margin: 0;
+
+            color: #111827;
+
+            font-size: 23px;
+
+        }
+
+        .dashboard-section-title a {
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =========================================
+           QUICK ACTIONS
+        ========================================= */
+
+        .quick-actions {
+
             display: grid;
 
             grid-template-columns:
@@ -200,150 +279,121 @@
 
             gap: 18px;
 
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+
         }
 
-        .stat-card {
+        .quick-action {
+
             background: white;
 
-            border: 1px solid #e5e7eb;
+            border: 1px solid #e2e8f0;
 
-            border-radius: 15px;
+            border-radius: 16px;
 
             padding: 23px;
 
+            text-decoration: none;
+
+            transition: .25s;
+
+        }
+
+        .quick-action:hover {
+
+            transform: translateY(-5px);
+
+            border-color: #93c5fd;
+
             box-shadow:
-                0 5px 18px rgba(15, 23, 42, 0.05);
+                0 10px 25px
+                rgba(15,23,42,.08);
+
         }
 
-        .stat-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .quick-action-icon {
 
-            margin-bottom: 15px;
-        }
+            width: 46px;
 
-        .stat-icon {
-            width: 44px;
-            height: 44px;
+            height: 46px;
 
             border-radius: 11px;
 
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
             background: #eff6ff;
 
-            font-size: 21px;
+            color: #2563eb;
+
+            margin-bottom: 15px;
+
+            font-size: 19px;
+
         }
 
-        .stat-card h3 {
-            margin: 0;
+        .quick-action h3 {
+
+            margin: 0 0 7px;
 
             color: #111827;
 
-            font-size: 28px;
+            font-size: 17px;
+
         }
 
-        .stat-card p {
-            margin: 4px 0 0;
+        .quick-action p {
+
+            margin: 0;
 
             color: #64748b;
 
-            font-size: 14px;
+            font-size: 13px;
+
+            line-height: 1.5;
+
         }
 
 
-        /* ==========================================
+        /* =========================================
            MAIN GRID
-        ========================================== */
+        ========================================= */
 
         .dashboard-main-grid {
+
             display: grid;
 
             grid-template-columns:
-                1.5fr 1fr;
+                1.6fr 1fr;
 
             gap: 25px;
+
+            margin-bottom: 40px;
+
         }
 
-        .dashboard-panel {
+
+        /* =========================================
+           RECENT BOOKINGS
+        ========================================= */
+
+        .recent-bookings {
+
             background: white;
 
-            border: 1px solid #e5e7eb;
+            border: 1px solid #e2e8f0;
 
             border-radius: 18px;
 
-            padding: 28px;
+            padding: 25px;
 
-            box-shadow:
-                0 5px 20px rgba(15, 23, 42, 0.05);
         }
 
-        .panel-header {
-            display: flex;
+        .booking-item {
 
-            justify-content: space-between;
-            align-items: center;
-
-            gap: 15px;
-
-            margin-bottom: 22px;
-        }
-
-        .panel-header h2 {
-            margin: 0;
-
-            color: #111827;
-
-            font-size: 21px;
-        }
-
-        .panel-header a {
-            color: #2563eb;
-
-            text-decoration: none;
-
-            font-size: 14px;
-
-            font-weight: 600;
-        }
-
-        .panel-header a:hover {
-            text-decoration: underline;
-        }
-
-
-        /* ==========================================
-           RECENT BOOKINGS
-        ========================================== */
-
-        .recent-booking {
-            border: 1px solid #e5e7eb;
-
-            border-radius: 12px;
-
-            padding: 17px;
-
-            margin-bottom: 12px;
-
-            transition: 0.2s;
-        }
-
-        .recent-booking:hover {
-            border-color: #93c5fd;
-
-            box-shadow:
-                0 4px 12px rgba(15, 23, 42, 0.05);
-        }
-
-        .recent-booking:last-child {
-            margin-bottom: 0;
-        }
-
-        .recent-booking-top {
             display: flex;
 
             justify-content: space-between;
@@ -352,29 +402,39 @@
 
             gap: 15px;
 
-            margin-bottom: 8px;
+            padding: 17px 0;
+
+            border-bottom: 1px solid #e2e8f0;
+
         }
 
-        .recent-booking h3 {
-            margin: 0;
+        .booking-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+        .booking-info h4 {
+
+            margin: 0 0 5px;
 
             color: #111827;
 
-            font-size: 16px;
         }
 
-        .recent-booking p {
-            margin: 5px 0;
+        .booking-info p {
+
+            margin: 3px 0;
 
             color: #64748b;
 
-            font-size: 14px;
+            font-size: 13px;
+
         }
 
-        .status-badge {
-            display: inline-block;
+        .booking-status {
 
-            padding: 5px 10px;
+            padding: 6px 11px;
 
             border-radius: 20px;
 
@@ -383,283 +443,390 @@
             font-weight: 700;
 
             white-space: nowrap;
+
         }
 
         .status-pending {
+
             background: #fef3c7;
+
             color: #92400e;
+
         }
 
         .status-confirmed {
+
             background: #dbeafe;
+
             color: #1d4ed8;
+
         }
 
         .status-progress {
+
             background: #e0e7ff;
+
             color: #4338ca;
+
         }
 
         .status-completed {
+
             background: #dcfce7;
+
             color: #166534;
-        }
 
-        .status-cancelled {
-            background: #fee2e2;
-            color: #991b1b;
         }
 
 
-        /* ==========================================
-           QUICK ACTIONS
-        ========================================== */
+        .empty-bookings {
 
-        .quick-actions {
-            display: grid;
+            text-align: center;
 
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 13px;
-        }
-
-        .quick-action {
-            display: block;
-
-            padding: 18px;
-
-            border: 1px solid #e5e7eb;
-
-            border-radius: 12px;
-
-            text-decoration: none;
-
-            transition: 0.2s;
-
-            background: #ffffff;
-        }
-
-        .quick-action:hover {
-            border-color: #93c5fd;
-
-            background: #eff6ff;
-
-            transform: translateY(-2px);
-        }
-
-        .quick-action-icon {
-            font-size: 24px;
-
-            margin-bottom: 9px;
-        }
-
-        .quick-action h3 {
-            margin: 0 0 5px;
-
-            color: #111827;
-
-            font-size: 15px;
-        }
-
-        .quick-action p {
-            margin: 0;
+            padding: 35px 15px;
 
             color: #64748b;
 
-            font-size: 12px;
+        }
 
-            line-height: 1.5;
+        .empty-bookings i {
+
+            font-size: 35px;
+
+            color: #94a3b8;
+
+            margin-bottom: 12px;
+
         }
 
 
-        /* ==========================================
-           VEHICLE NOTICE
-        ========================================== */
+        /* =========================================
+           VEHICLE CARD
+        ========================================= */
 
-        .vehicle-notice {
-            margin-top: 25px;
+        .vehicle-summary {
+
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+        }
+
+        .vehicle-summary-content {
+
+            background: #f8fafc;
+
+            border-radius: 13px;
+
+            padding: 18px;
+
+            margin-top: 10px;
+
+        }
+
+        .vehicle-summary-content h3 {
+
+            margin: 0 0 7px;
+
+            color: #111827;
+
+        }
+
+        .vehicle-summary-content p {
+
+            margin: 4px 0;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+        }
+
+        .vehicle-summary-btn {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            padding: 11px;
+
+            border-radius: 9px;
 
             background: #eff6ff;
 
-            border: 1px solid #bfdbfe;
+            color: #2563eb;
 
-            border-radius: 14px;
+            text-decoration: none;
 
-            padding: 20px;
+            font-weight: 600;
+
+        }
+
+
+        /* =========================================
+           SERVICES
+        ========================================= */
+
+        .services-section {
+
+            margin-bottom: 40px;
+
+        }
+
+        .services-grid-dashboard {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+        }
+
+        .dashboard-service-card {
+
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 16px;
+
+            padding: 22px;
+
+            transition: .25s;
+
+        }
+
+        .dashboard-service-card:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(15,23,42,.07);
+
+        }
+
+        .service-dashboard-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 11px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
 
             display: flex;
 
             align-items: center;
 
-            justify-content: space-between;
+            justify-content: center;
 
-            gap: 20px;
+            margin-bottom: 14px;
+
         }
 
-        .vehicle-notice h3 {
-            margin: 0 0 5px;
-
-            color: #1e3a8a;
+        .dashboard-service-card h3 {
 
             font-size: 16px;
+
+            margin: 0 0 7px;
+
+            color: #111827;
+
         }
 
-        .vehicle-notice p {
-            margin: 0;
-
-            color: #475569;
-
-            font-size: 14px;
-        }
-
-        .vehicle-notice a {
-            flex-shrink: 0;
-
-            background: #2563eb;
-
-            color: white;
-
-            padding: 10px 16px;
-
-            border-radius: 8px;
-
-            text-decoration: none;
+        .dashboard-service-card p {
 
             font-size: 13px;
 
-            font-weight: 700;
-        }
-
-
-        /* ==========================================
-           EMPTY STATE
-        ========================================== */
-
-        .empty-dashboard {
-            text-align: center;
-
-            padding: 30px 15px;
+            line-height: 1.5;
 
             color: #64748b;
-        }
 
-        .empty-dashboard-icon {
-            font-size: 38px;
-
-            margin-bottom: 10px;
-        }
-
-        .empty-dashboard h3 {
-            margin: 0 0 6px;
-
-            color: #334155;
-        }
-
-        .empty-dashboard p {
             margin: 0;
+
         }
 
 
-        /* ==========================================
-           LOADING
-        ========================================== */
+        /* =========================================
+           ROAD ASSISTANCE
+        ========================================= */
 
-        .dashboard-loading {
-            color: #64748b;
+        .assistance-card {
 
-            text-align: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #1e293b
+                );
 
-            padding: 25px;
+            color: white;
+
+            border-radius: 18px;
+
+            padding: 28px 30px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 25px;
+
+            margin-bottom: 25px;
+
+        }
+
+        .assistance-content h2 {
+
+            margin: 0 0 8px;
+
+            font-size: 22px;
+
+        }
+
+        .assistance-content p {
+
+            margin: 0;
+
+            color: #cbd5e1;
+
+            line-height: 1.5;
+
+            font-size: 14px;
+
+        }
+
+        .assistance-btn {
+
+            background: #ef4444;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 12px 18px;
+
+            border-radius: 9px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
         }
 
 
-        /* ==========================================
+        /* =========================================
            RESPONSIVE
-        ========================================== */
+        ========================================= */
 
-        @media (max-width: 1000px) {
-
-            .customer-navbar-inner {
-                flex-direction: column;
-
-                padding: 15px 20px;
-            }
+        @media(max-width: 1000px) {
 
             .dashboard-stats {
+
                 grid-template-columns:
                     repeat(2, 1fr);
-            }
 
-            .dashboard-main-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-
-        @media (max-width: 700px) {
-
-            .customer-dashboard {
-                padding: 30px 15px 50px;
-            }
-
-            .customer-navbar nav {
-                justify-content: center;
-            }
-
-            .customer-navbar nav a {
-                padding: 8px 9px;
-                font-size: 13px;
-            }
-
-            .dashboard-welcome {
-                padding: 27px 23px;
-
-                flex-direction: column;
-
-                align-items: flex-start;
-            }
-
-            .dashboard-welcome h1 {
-                font-size: 26px;
-            }
-
-            .dashboard-stats {
-                grid-template-columns: 1fr 1fr;
-
-                gap: 12px;
-            }
-
-            .stat-card {
-                padding: 18px;
-            }
-
-            .stat-card h3 {
-                font-size: 24px;
-            }
-
-            .dashboard-panel {
-                padding: 20px;
             }
 
             .quick-actions {
-                grid-template-columns: 1fr;
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
             }
 
-            .vehicle-notice {
-                flex-direction: column;
+            .services-grid-dashboard {
 
-                align-items: flex-start;
+                grid-template-columns:
+                    repeat(2, 1fr);
+
             }
 
         }
 
 
-        @media (max-width: 450px) {
+        @media(max-width: 800px) {
+
+            .dashboard-main-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .dashboard-welcome {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                padding: 28px;
+
+            }
+
+        }
+
+
+        @media(max-width: 600px) {
+
+            .customer-dashboard {
+
+                padding:
+                    25px 15px 50px;
+
+            }
 
             .dashboard-stats {
+
                 grid-template-columns: 1fr;
+
+            }
+
+            .quick-actions {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .services-grid-dashboard {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .welcome-content h1 {
+
+                font-size: 25px;
+
+            }
+
+            .assistance-card {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+            .booking-item {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
             }
 
         }
@@ -672,97 +839,94 @@
 <body>
 
 
-<!-- =====================================================
-     CUSTOMER NAVBAR
-===================================================== -->
+<!-- =========================================
+     NAVBAR
+========================================= -->
 
-<header class="customer-navbar">
+<header class="navbar">
 
-    <div class="customer-navbar-inner">
+    <div class="logo">
 
-        <div class="logo">
-
-            <h2>
-                Servora
-            </h2>
-
-        </div>
-
-
-        <nav>
-
-            <a href="dashboard.html"
-               class="active">
-                Dashboard
-            </a>
-
-            <a href="my-vehicles.html">
-                My Vehicles
-            </a>
-
-            <a href="book-service.html">
-                Book Service
-            </a>
-
-            <a href="bookings.html">
-                My Bookings
-            </a>
-
-            <a href="history.html">
-                History
-            </a>
-
-            <a href="invoice.html">
-                Invoices
-            </a>
-
-            <a href="profile.html">
-                Profile
-            </a>
-
-            <button id="logoutBtn">
-                Logout
-            </button>
-
-        </nav>
+        <h2>Servora</h2>
 
     </div>
+
+    <nav>
+
+        <a href="dashboard.html"
+           class="active">
+
+            Dashboard
+
+        </a>
+
+        <a href="book-service.html">
+
+            Book Service
+
+        </a>
+
+        <a href="bookings.html">
+
+            Bookings
+
+        </a>
+
+        <a href="profile.html">
+
+            Profile
+
+        </a>
+
+        <button id="logoutBtn">
+
+            Logout
+
+        </button>
+
+    </nav>
 
 </header>
 
 
-
-<!-- =====================================================
+<!-- =========================================
      DASHBOARD
-===================================================== -->
+========================================= -->
 
-<main class="customer-dashboard">
+<section class="customer-dashboard">
 
-    <div class="customer-dashboard-container">
+    <div class="customer-container">
 
 
-        <!-- Welcome -->
+        <!-- WELCOME -->
 
         <div class="dashboard-welcome">
 
-            <div>
+            <div class="welcome-content">
 
                 <h1>
+
                     Welcome back,
                     <span id="userName">
                         Customer
-                    </span>
+                    </span> 👋
+
                 </h1>
 
                 <p>
-                    Manage your vehicles, services and bookings
-                    from one place.
+
+                    Manage your vehicles,
+                    book services and track
+                    your vehicle care in one place.
+
                 </p>
 
-                <p class="dashboard-welcome-email">
+                <p class="welcome-email">
+
+                    <i class="fa-solid fa-envelope"></i>
 
                     <span id="userEmail">
-                        Loading email...
+                        Loading...
                     </span>
 
                 </p>
@@ -773,7 +937,11 @@
             <div class="welcome-action">
 
                 <a href="book-service.html">
-                    + Book a Service
+
+                    <i class="fa-solid fa-calendar-plus"></i>
+
+                    Book a Service
+
                 </a>
 
             </div>
@@ -781,97 +949,101 @@
         </div>
 
 
-
-        <!-- =================================================
+        <!-- =====================================
              STATISTICS
-        ================================================== -->
+        ====================================== -->
 
         <div class="dashboard-stats">
 
 
             <div class="stat-card">
 
-                <div class="stat-top">
+                <div class="stat-icon">
 
-                    <div class="stat-icon">
-                        🚗
-                    </div>
+                    <i class="fa-solid fa-car"></i>
 
                 </div>
 
-                <h3 id="vehicleCount">
-                    0
-                </h3>
+                <div>
 
-                <p>
-                    Registered Vehicles
-                </p>
+                    <h3 id="vehicleCount">
+                        0
+                    </h3>
+
+                    <p>
+                        Registered Vehicles
+                    </p>
+
+                </div>
 
             </div>
 
 
-
             <div class="stat-card">
 
-                <div class="stat-top">
+                <div class="stat-icon">
 
-                    <div class="stat-icon">
-                        📋
-                    </div>
+                    <i class="fa-solid fa-calendar-check"></i>
 
                 </div>
 
-                <h3 id="totalBookings">
-                    0
-                </h3>
+                <div>
 
-                <p>
-                    Total Bookings
-                </p>
+                    <h3 id="activeBookings">
+                        0
+                    </h3>
+
+                    <p>
+                        Active Bookings
+                    </p>
+
+                </div>
 
             </div>
 
 
-
             <div class="stat-card">
 
-                <div class="stat-top">
+                <div class="stat-icon">
 
-                    <div class="stat-icon">
-                        🔧
-                    </div>
+                    <i class="fa-solid fa-clock"></i>
 
                 </div>
 
-                <h3 id="activeServices">
-                    0
-                </h3>
+                <div>
 
-                <p>
-                    Active Services
-                </p>
+                    <h3 id="pendingBookings">
+                        0
+                    </h3>
+
+                    <p>
+                        Pending Requests
+                    </p>
+
+                </div>
 
             </div>
 
 
-
             <div class="stat-card">
 
-                <div class="stat-top">
+                <div class="stat-icon">
 
-                    <div class="stat-icon">
-                        ✅
-                    </div>
+                    <i class="fa-solid fa-circle-check"></i>
 
                 </div>
 
-                <h3 id="completedServices">
-                    0
-                </h3>
+                <div>
 
-                <p>
-                    Completed Services
-                </p>
+                    <h3 id="completedServices">
+                        0
+                    </h3>
+
+                    <p>
+                        Completed Services
+                    </p>
+
+                </div>
 
             </div>
 
@@ -879,19 +1051,121 @@
         </div>
 
 
+        <!-- =====================================
+             QUICK ACTIONS
+        ====================================== -->
 
-        <!-- =================================================
-             MAIN CONTENT
-        ================================================== -->
+        <div class="dashboard-section-title">
+
+            <h2>
+                Quick Actions
+            </h2>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+
+            <a href="my-vehicles.html"
+               class="quick-action">
+
+                <div class="quick-action-icon">
+
+                    <i class="fa-solid fa-car"></i>
+
+                </div>
+
+                <h3>
+                    My Vehicles
+                </h3>
+
+                <p>
+                    Register and manage your
+                    cars and bikes.
+                </p>
+
+            </a>
+
+
+            <a href="book-service.html"
+               class="quick-action">
+
+                <div class="quick-action-icon">
+
+                    <i class="fa-solid fa-wrench"></i>
+
+                </div>
+
+                <h3>
+                    Book Service
+                </h3>
+
+                <p>
+                    Schedule a service for
+                    your vehicle.
+                </p>
+
+            </a>
+
+
+            <a href="history.html"
+               class="quick-action">
+
+                <div class="quick-action-icon">
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                </div>
+
+                <h3>
+                    Service History
+                </h3>
+
+                <p>
+                    View your previous
+                    completed services.
+                </p>
+
+            </a>
+
+
+            <a href="invoice.html"
+               class="quick-action">
+
+                <div class="quick-action-icon">
+
+                    <i class="fa-solid fa-file-invoice"></i>
+
+                </div>
+
+                <h3>
+                    Invoices
+                </h3>
+
+                <p>
+                    View invoices and
+                    service charges.
+                </p>
+
+            </a>
+
+
+        </div>
+
+
+        <!-- =====================================
+             BOOKINGS + VEHICLES
+        ====================================== -->
 
         <div class="dashboard-main-grid">
 
 
-            <!-- Recent Bookings -->
+            <!-- RECENT BOOKINGS -->
 
-            <div class="dashboard-panel">
+            <div class="recent-bookings">
 
-                <div class="panel-header">
+                <div class="dashboard-section-title">
 
                     <h2>
                         Recent Bookings
@@ -903,11 +1177,16 @@
 
                 </div>
 
-
                 <div id="recentBookings">
 
-                    <div class="dashboard-loading">
-                        Loading bookings...
+                    <div class="empty-bookings">
+
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+
+                        <p>
+                            Loading bookings...
+                        </p>
+
                     </div>
 
                 </div>
@@ -915,136 +1194,35 @@
             </div>
 
 
+            <!-- VEHICLES -->
 
-            <!-- Quick Actions -->
+            <div class="vehicle-summary">
 
-            <div class="dashboard-panel">
-
-                <div class="panel-header">
+                <div class="dashboard-section-title">
 
                     <h2>
-                        Quick Actions
+                        My Vehicles
                     </h2>
+
+                    <a href="my-vehicles.html">
+                        Manage
+                    </a>
 
                 </div>
 
+                <div id="vehicleSummary">
 
-                <div class="quick-actions">
-
-
-                    <a href="my-vehicles.html"
-                       class="quick-action">
-
-                        <div class="quick-action-icon">
-                            🚗
-                        </div>
+                    <div class="vehicle-summary-content">
 
                         <h3>
-                            My Vehicles
+                            Loading...
                         </h3>
 
                         <p>
-                            Add or manage your registered
-                            vehicles.
+                            Checking your registered vehicles.
                         </p>
 
-                    </a>
-
-
-
-                    <a href="book-service.html"
-                       class="quick-action">
-
-                        <div class="quick-action-icon">
-                            🔧
-                        </div>
-
-                        <h3>
-                            Book Service
-                        </h3>
-
-                        <p>
-                            Schedule a service for your vehicle.
-                        </p>
-
-                    </a>
-
-
-
-                    <a href="history.html"
-                       class="quick-action">
-
-                        <div class="quick-action-icon">
-                            📜
-                        </div>
-
-                        <h3>
-                            Service History
-                        </h3>
-
-                        <p>
-                            View your completed services.
-                        </p>
-
-                    </a>
-
-
-
-                    <a href="invoice.html"
-                       class="quick-action">
-
-                        <div class="quick-action-icon">
-                            🧾
-                        </div>
-
-                        <h3>
-                            Invoices
-                        </h3>
-
-                        <p>
-                            View completed service invoices.
-                        </p>
-
-                    </a>
-
-
-
-                    <a href="profile.html"
-                       class="quick-action">
-
-                        <div class="quick-action-icon">
-                            👤
-                        </div>
-
-                        <h3>
-                            My Profile
-                        </h3>
-
-                        <p>
-                            Manage your account information.
-                        </p>
-
-                    </a>
-
-
-
-                    <a href="bookings.html"
-                       class="quick-action">
-
-                        <div class="quick-action-icon">
-                            📅
-                        </div>
-
-                        <h3>
-                            My Bookings
-                        </h3>
-
-                        <p>
-                            Track current and previous bookings.
-                        </p>
-
-                    </a>
-
+                    </div>
 
                 </div>
 
@@ -1054,31 +1232,235 @@
         </div>
 
 
+        <!-- =====================================
+             SERVORA SERVICES
+        ====================================== -->
 
-        <!-- =================================================
-             VEHICLE NOTICE
-        ================================================== -->
+        <div class="services-section">
 
-        <div id="vehicleNotice"
-             class="vehicle-notice"
-             style="display:none;">
+            <div class="dashboard-section-title">
 
-            <div>
+                <h2>
+                    Servora Services
+                </h2>
 
-                <h3>
-                    🚗 Register your vehicle first
-                </h3>
+                <a href="book-service.html">
+                    Book Service
+                </a>
+
+            </div>
+
+
+            <div class="services-grid-dashboard">
+
+
+                <div class="dashboard-service-card">
+
+                    <div class="service-dashboard-icon">
+
+                        <i class="fa-solid fa-car"></i>
+
+                    </div>
+
+                    <h3>
+                        Complete Car Service
+                    </h3>
+
+                    <p>
+                        Comprehensive inspection,
+                        engine diagnostics, oil change,
+                        brake check and preventive
+                        maintenance.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-service-card">
+
+                    <div class="service-dashboard-icon">
+
+                        <i class="fa-solid fa-motorcycle"></i>
+
+                    </div>
+
+                    <h3>
+                        Bike Service
+                    </h3>
+
+                    <p>
+                        Complete two-wheeler servicing
+                        including engine tuning, chain
+                        lubrication and brake service.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-service-card">
+
+                    <div class="service-dashboard-icon">
+
+                        <i class="fa-solid fa-oil-can"></i>
+
+                    </div>
+
+                    <h3>
+                        Oil Change
+                    </h3>
+
+                    <p>
+                        Premium engine oil replacement
+                        with genuine oil filters and
+                        fluid inspection.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-service-card">
+
+                    <div class="service-dashboard-icon">
+
+                        <i class="fa-solid fa-microchip"></i>
+
+                    </div>
+
+                    <h3>
+                        Engine Diagnostics
+                    </h3>
+
+                    <p>
+                        Computerized diagnostics to
+                        identify engine faults and
+                        performance problems.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-service-card">
+
+                    <div class="service-dashboard-icon">
+
+                        <i class="fa-solid fa-car-burst"></i>
+
+                    </div>
+
+                    <h3>
+                        Brake Repair
+                    </h3>
+
+                    <p>
+                        Brake pad replacement,
+                        brake fluid inspection and
+                        complete braking maintenance.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-service-card">
+
+                    <div class="service-dashboard-icon">
+
+                        <i class="fa-solid fa-car-battery"></i>
+
+                    </div>
+
+                    <h3>
+                        Battery Replacement
+                    </h3>
+
+                    <p>
+                        Battery testing, replacement,
+                        charging checks and warranty
+                        support.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-service-card">
+
+                    <div class="service-dashboard-icon">
+
+                        <i class="fa-solid fa-arrows-left-right"></i>
+
+                    </div>
+
+                    <h3>
+                        Wheel Alignment
+                    </h3>
+
+                    <p>
+                        Precision alignment, wheel
+                        balancing, tyre inspection and
+                        suspension checks.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-service-card">
+
+                    <div class="service-dashboard-icon">
+
+                        <i class="fa-solid fa-truck-pickup"></i>
+
+                    </div>
+
+                    <h3>
+                        Roadside Assistance
+                    </h3>
+
+                    <p>
+                        Emergency support for breakdowns,
+                        punctures, battery failures and
+                        towing assistance.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             ROAD SIDE ASSISTANCE
+        ====================================== -->
+
+        <div class="assistance-card">
+
+            <div class="assistance-content">
+
+                <h2>
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    Need Emergency Roadside Assistance?
+
+                </h2>
 
                 <p>
-                    Before booking a service, add your vehicle
-                    to Servora. Your registered vehicle will then
-                    appear automatically when you book a service.
+
+                    Get help for breakdowns, flat tyres,
+                    battery failures, towing and other
+                    urgent vehicle problems.
+
                 </p>
 
             </div>
 
-            <a href="my-vehicles.html">
-                Add Vehicle
+            <a href="book-service.html"
+               class="assistance-btn">
+
+                <i class="fa-solid fa-phone"></i>
+
+                Get Assistance
+
             </a>
 
         </div>
@@ -1086,22 +1468,25 @@
 
     </div>
 
-</main>
+</section>
 
 
-
-<!-- =====================================================
+<!-- =========================================
      FOOTER
-===================================================== -->
+========================================= -->
 
 <footer class="footer">
 
     <div class="footer-bottom">
 
         <p>
-            © 2026 Servora. Developed by Vedantika Deshmukh
-            from Arvind Gavali College of Engineering, Satara
-            in Inplant Training 2026. All Rights Reserved.
+
+            © 2026 Servora. Developed by
+            Vedantika Deshmukh from Arvind Gavali
+            College of Engineering, Satara in
+            Inplant Training 2026.
+            All Rights Reserved.
+
         </p>
 
     </div>
@@ -1109,50 +1494,35 @@
 </footer>
 
 
-
-<!-- =====================================================
-     FIREBASE / DASHBOARD JAVASCRIPT
-===================================================== -->
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
 
 <script type="module">
 
-
-/* ==========================================
-   FIREBASE
-========================================== */
-
 import {
-
     auth,
     db
-
 } from "../js/firebase-config.js";
 
 
-
 import {
-
     onAuthStateChanged,
     signOut
-
 } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-
 import {
-
     ref,
-    onValue
-
+    get
 } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-
-/* ==========================================
+/* =========================================
    ELEMENTS
-========================================== */
+========================================= */
 
 const userName =
     document.getElementById("userName");
@@ -1160,14 +1530,17 @@ const userName =
 const userEmail =
     document.getElementById("userEmail");
 
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
 const vehicleCount =
     document.getElementById("vehicleCount");
 
-const totalBookings =
-    document.getElementById("totalBookings");
+const activeBookings =
+    document.getElementById("activeBookings");
 
-const activeServices =
-    document.getElementById("activeServices");
+const pendingBookings =
+    document.getElementById("pendingBookings");
 
 const completedServices =
     document.getElementById("completedServices");
@@ -1175,27 +1548,18 @@ const completedServices =
 const recentBookings =
     document.getElementById("recentBookings");
 
-const vehicleNotice =
-    document.getElementById("vehicleNotice");
+const vehicleSummary =
+    document.getElementById("vehicleSummary");
 
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-
-
-/* ==========================================
-   CURRENT USER
-========================================== */
 
 let currentUser = null;
 
 
+/* =========================================
+   AUTH CHECK
+========================================= */
 
-/* ==========================================
-   AUTHENTICATION
-========================================== */
-
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
 
@@ -1206,224 +1570,293 @@ onAuthStateChanged(auth, (user) => {
 
     }
 
-
     currentUser = user;
-
 
     userEmail.textContent =
         user.email || "";
 
+    userName.textContent =
+        user.displayName ||
+        user.email.split("@")[0];
 
-    loadUserProfile(user.uid);
-
-    loadVehicles(user.uid);
-
-    loadBookings(user.uid);
+    await loadUserData();
 
 });
 
 
+/* =========================================
+   LOAD ALL DASHBOARD DATA
+========================================= */
 
-/* ==========================================
-   LOAD USER PROFILE
-========================================== */
+async function loadUserData() {
 
-function loadUserProfile(uid) {
+    try {
 
-    const userRef =
-        ref(db, "users/" + uid);
-
-
-    onValue(
-        userRef,
-        (snapshot) => {
-
-            if (snapshot.exists()) {
-
-                const data =
-                    snapshot.val();
-
-                userName.textContent =
-                    data.name ||
-                    currentUser.displayName ||
-                    currentUser.email
-                        .split("@")[0];
-
-            }
-
-            else {
-
-                userName.textContent =
-                    currentUser.displayName ||
-                    currentUser.email
-                        .split("@")[0];
-
-            }
-
-        },
-        (error) => {
-
-            console.error(
-                "Profile loading error:",
-                error
+        const userSnapshot =
+            await get(
+                ref(
+                    db,
+                    "users/" + currentUser.uid
+                )
             );
+
+
+        if (userSnapshot.exists()) {
+
+            const userData =
+                userSnapshot.val();
 
             userName.textContent =
-                currentUser.email
-                    .split("@")[0];
+                userData.name ||
+                currentUser.displayName ||
+                currentUser.email.split("@")[0];
 
         }
-    );
+
+
+        await loadVehicles();
+
+        await loadBookings();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Dashboard loading error:",
+            error
+        );
+
+    }
 
 }
 
 
-
-/* ==========================================
+/* =========================================
    LOAD VEHICLES
-   REAL-TIME
-========================================== */
+========================================= */
 
-function loadVehicles(uid) {
+async function loadVehicles() {
 
-    const vehiclesRef =
-        ref(db, "vehicles");
+    try {
 
-
-    onValue(
-        vehiclesRef,
-        (snapshot) => {
-
-            let count = 0;
-
-
-            if (snapshot.exists()) {
-
-                snapshot.forEach((child) => {
-
-                    const vehicle =
-                        child.val();
-
-
-                    if (
-                        vehicle.userId === uid
-                    ) {
-
-                        count++;
-
-                    }
-
-                });
-
-            }
-
-
-            vehicleCount.textContent =
-                count;
-
-
-            if (count === 0) {
-
-                vehicleNotice.style.display =
-                    "flex";
-
-            }
-
-            else {
-
-                vehicleNotice.style.display =
-                    "none";
-
-            }
-
-        },
-        (error) => {
-
-            console.error(
-                "Vehicle loading error:",
-                error
+        const snapshot =
+            await get(
+                ref(db, "vehicles")
             );
 
+
+        let count = 0;
+
+        let firstVehicle = null;
+
+
+        if (snapshot.exists()) {
+
+            const vehicles =
+                snapshot.val();
+
+
+            Object.keys(vehicles).forEach((id) => {
+
+                const vehicle =
+                    vehicles[id];
+
+
+                if (
+                    vehicle.userId ===
+                    currentUser.uid
+                ) {
+
+                    count++;
+
+
+                    if (!firstVehicle) {
+
+                        firstVehicle =
+                            vehicle;
+
+                    }
+
+                }
+
+            });
+
         }
-    );
+
+
+        vehicleCount.textContent =
+            count;
+
+
+        if (count === 0) {
+
+            vehicleSummary.innerHTML = `
+
+                <div class="vehicle-summary-content">
+
+                    <h3>
+                        No vehicle registered
+                    </h3>
+
+                    <p>
+                        Register your car or bike
+                        before booking a service.
+                    </p>
+
+                    <a
+                        href="my-vehicles.html"
+                        class="vehicle-summary-btn">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Register Vehicle
+
+                    </a>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        vehicleSummary.innerHTML = `
+
+            <div class="vehicle-summary-content">
+
+                <h3>
+
+                    <i class="fa-solid fa-car"></i>
+
+                    ${firstVehicle.vehicleName || "My Vehicle"}
+
+                </h3>
+
+                <p>
+
+                    <strong>
+                        Registration:
+                    </strong>
+
+                    ${firstVehicle.vehicleNumber || "Not Available"}
+
+                </p>
+
+                <p>
+
+                    ${count}
+                    registered vehicle${count > 1 ? "s" : ""}
+
+                </p>
+
+                <a
+                    href="my-vehicles.html"
+                    class="vehicle-summary-btn">
+
+                    View My Vehicles
+
+                </a>
+
+            </div>
+
+        `;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Vehicle loading error:",
+            error
+        );
+
+    }
 
 }
 
 
-
-/* ==========================================
+/* =========================================
    LOAD BOOKINGS
-   REAL-TIME
-========================================== */
+========================================= */
 
-function loadBookings(uid) {
+async function loadBookings() {
 
-    const bookingsRef =
-        ref(db, "bookings");
+    try {
 
-
-    onValue(
-        bookingsRef,
-        (snapshot) => {
+        const snapshot =
+            await get(
+                ref(db, "bookings")
+            );
 
 
-            let bookings = [];
+        let active = 0;
+
+        let pending = 0;
+
+        let completed = 0;
+
+        let userBookings = [];
 
 
-            if (snapshot.exists()) {
+        if (snapshot.exists()) {
 
-                snapshot.forEach((child) => {
-
-                    const booking =
-                        child.val();
+            const bookings =
+                snapshot.val();
 
 
-                    if (
-                        booking.customerId === uid
-                    ) {
+            Object.keys(bookings).forEach((id) => {
 
-                        bookings.push({
+                const booking =
+                    bookings[id];
 
-                            id: child.key,
 
-                            ...booking
+                if (
+                    booking.customerId !==
+                    currentUser.uid
+                ) {
 
-                        });
+                    return;
 
-                    }
+                }
+
+
+                userBookings.push({
+
+                    id: id,
+
+                    ...booking
 
                 });
 
-            }
-
-
-
-            /* ======================================
-               STATISTICS
-            ====================================== */
-
-            let total = bookings.length;
-
-            let active = 0;
-
-            let completed = 0;
-
-
-            bookings.forEach((booking) => {
 
                 if (
-                    booking.status === "Pending" ||
-                    booking.status === "Confirmed" ||
-                    booking.status === "In Progress"
+                    booking.status ===
+                    "Pending"
+                ) {
+
+                    pending++;
+
+                    active++;
+
+                }
+
+                else if (
+                    booking.status ===
+                    "Confirmed" ||
+                    booking.status ===
+                    "In Progress"
                 ) {
 
                     active++;
 
                 }
 
-
-                if (
-                    booking.status === "Completed"
+                else if (
+                    booking.status ===
+                    "Completed"
                 ) {
 
                     completed++;
@@ -1432,285 +1865,204 @@ function loadBookings(uid) {
 
             });
 
-
-            totalBookings.textContent =
-                total;
-
-            activeServices.textContent =
-                active;
-
-            completedServices.textContent =
-                completed;
+        }
 
 
+        activeBookings.textContent =
+            active;
 
-            /* ======================================
-               SORT LATEST FIRST
-            ====================================== */
+        pendingBookings.textContent =
+            pending;
 
-            bookings.sort((a, b) => {
-
-                const timeA =
-                    Number(a.createdAt) || 0;
-
-                const timeB =
-                    Number(b.createdAt) || 0;
-
-                return timeB - timeA;
-
-            });
+        completedServices.textContent =
+            completed;
 
 
+        /* Sort newest first */
 
-            /* ======================================
-               SHOW ONLY RECENT 5
-            ====================================== */
+        userBookings.sort((a, b) => {
 
-            const recent =
-                bookings.slice(0, 5);
-
-
-            if (recent.length === 0) {
-
-                recentBookings.innerHTML = `
-
-                    <div class="empty-dashboard">
-
-                        <div class="empty-dashboard-icon">
-                            📅
-                        </div>
-
-                        <h3>
-                            No bookings yet
-                        </h3>
-
-                        <p>
-                            Your service bookings will
-                            appear here.
-                        </p>
-
-                    </div>
-
-                `;
-
-                return;
-
-            }
-
-
-
-            recentBookings.innerHTML = "";
-
-
-            recent.forEach((booking) => {
-
-                recentBookings.innerHTML +=
-                    createBookingCard(booking);
-
-            });
-
-
-        },
-        (error) => {
-
-            console.error(
-                "Booking loading error:",
-                error
+            return (
+                (b.createdAt || 0) -
+                (a.createdAt || 0)
             );
 
+        });
 
-            recentBookings.innerHTML = `
 
-                <div class="empty-dashboard">
+        displayRecentBookings(
+            userBookings.slice(0, 5)
+        );
 
-                    <div class="empty-dashboard-icon">
-                        ⚠️
-                    </div>
+    }
 
-                    <h3>
-                        Unable to load bookings
-                    </h3>
+    catch (error) {
+
+        console.error(
+            "Booking loading error:",
+            error
+        );
+
+        recentBookings.innerHTML = `
+
+            <div class="empty-bookings">
+
+                <i class="fa-solid fa-circle-exclamation"></i>
+
+                <p>
+                    Unable to load bookings.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   DISPLAY RECENT BOOKINGS
+========================================= */
+
+function displayRecentBookings(bookings) {
+
+
+    if (bookings.length === 0) {
+
+        recentBookings.innerHTML = `
+
+            <div class="empty-bookings">
+
+                <i class="fa-solid fa-calendar-xmark"></i>
+
+                <p>
+                    You have no bookings yet.
+                </p>
+
+                <a
+                    href="book-service.html"
+                    style="
+                        color:#2563eb;
+                        font-weight:600;
+                        text-decoration:none;
+                    ">
+
+                    Book your first service
+
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    recentBookings.innerHTML = "";
+
+
+    bookings.forEach((booking) => {
+
+
+        let statusClass =
+            "status-pending";
+
+
+        if (
+            booking.status ===
+            "Confirmed"
+        ) {
+
+            statusClass =
+                "status-confirmed";
+
+        }
+
+        else if (
+            booking.status ===
+            "In Progress"
+        ) {
+
+            statusClass =
+                "status-progress";
+
+        }
+
+        else if (
+            booking.status ===
+            "Completed"
+        ) {
+
+            statusClass =
+                "status-completed";
+
+        }
+
+
+        recentBookings.innerHTML += `
+
+            <div class="booking-item">
+
+                <div class="booking-info">
+
+                    <h4>
+
+                        ${booking.serviceType ||
+                        "Vehicle Service"}
+
+                    </h4>
 
                     <p>
-                        Please refresh the page and try again.
+
+                        <i class="fa-solid fa-car"></i>
+
+                        ${booking.vehicleName ||
+                        "Vehicle"}
+
+                        -
+
+                        ${booking.vehicleNumber ||
+                        ""}
+
+                    </p>
+
+                    <p>
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                        ${booking.bookingDate ||
+                        "Date not available"}
+
                     </p>
 
                 </div>
 
-            `;
 
-        }
-    );
+                <span
+                    class="booking-status
+                    ${statusClass}">
 
-}
+                    ${booking.status ||
+                    "Pending"}
 
-
-
-/* ==========================================
-   CREATE BOOKING CARD
-========================================== */
-
-function createBookingCard(booking) {
-
-
-    const status =
-        booking.status || "Pending";
-
-
-    let statusClass =
-        "status-pending";
-
-
-    if (status === "Confirmed") {
-
-        statusClass =
-            "status-confirmed";
-
-    }
-
-    else if (
-        status === "In Progress"
-    ) {
-
-        statusClass =
-            "status-progress";
-
-    }
-
-    else if (
-        status === "Completed"
-    ) {
-
-        statusClass =
-            "status-completed";
-
-    }
-
-    else if (
-        status === "Cancelled"
-    ) {
-
-        statusClass =
-            "status-cancelled";
-
-    }
-
-
-
-    return `
-
-        <div class="recent-booking">
-
-            <div class="recent-booking-top">
-
-                <h3>
-                    ${escapeHTML(
-                        booking.serviceType ||
-                        "Vehicle Service"
-                    )}
-                </h3>
-
-                <span class="status-badge ${statusClass}">
-                    ${escapeHTML(status)}
                 </span>
 
             </div>
 
+        `;
 
-            <p>
-
-                🚗
-
-                <strong>
-                    ${escapeHTML(
-                        booking.vehicleName ||
-                        "Vehicle"
-                    )}
-                </strong>
-
-                ${
-                    booking.vehicleNumber
-                    ?
-                    ` - ${escapeHTML(
-                        booking.vehicleNumber
-                    )}`
-                    :
-                    ""
-                }
-
-            </p>
-
-
-            <p>
-
-                📅
-
-                ${
-                    escapeHTML(
-                        booking.bookingDate ||
-                        "Date not available"
-                    )
-                }
-
-            </p>
-
-
-            ${
-                booking.mechanicName
-                ?
-                `
-                <p>
-
-                    👨‍🔧 Mechanic:
-
-                    <strong>
-                        ${escapeHTML(
-                            booking.mechanicName
-                        )}
-                    </strong>
-
-                </p>
-                `
-                :
-                `
-                <p>
-                    👨‍🔧 Mechanic:
-                    Waiting for assignment
-                </p>
-                `
-            }
-
-        </div>
-
-    `;
+    });
 
 }
 
 
-
-/* ==========================================
-   HTML SAFETY
-========================================== */
-
-function escapeHTML(value) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        value == null
-        ? ""
-        : String(value);
-
-    return div.innerHTML;
-
-}
-
-
-
-/* ==========================================
+/* =========================================
    LOGOUT
-========================================== */
+========================================= */
 
 if (logoutBtn) {
 
@@ -1720,15 +2072,7 @@ if (logoutBtn) {
 
             try {
 
-                logoutBtn.disabled =
-                    true;
-
-                logoutBtn.textContent =
-                    "Logging out...";
-
-
                 await signOut(auth);
-
 
                 window.location.href =
                     "../login.html";
@@ -1742,17 +2086,9 @@ if (logoutBtn) {
                     error
                 );
 
-
                 alert(
                     "Unable to logout. Please try again."
                 );
-
-
-                logoutBtn.disabled =
-                    false;
-
-                logoutBtn.textContent =
-                    "Logout";
 
             }
 
@@ -1762,8 +2098,22 @@ if (logoutBtn) {
 }
 
 
-</script>
+/* =========================================
+   AUTO REFRESH
+========================================= */
 
+setInterval(() => {
+
+    if (currentUser) {
+
+        loadUserData();
+
+    }
+
+}, 30000);
+
+
+</script>
 
 </body>
 
