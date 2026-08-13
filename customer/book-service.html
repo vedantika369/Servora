@@ -1498,47 +1498,420 @@
                 </div>
 
                 <!-- Service selection section (SECOND) -->
-                <div class="service-section">
-                    <h3>2. Select a Service</h3>
-                    <p>Select the service your vehicle needs.</p>
+                <!-- ==========================================
+     2. SELECT A SERVICE
+========================================== -->
 
-                    <div class="service-grid">
-                        <label class="service-option">
-                            <input type="radio" name="service" value="general">
-                            <h4>🔧 General Service</h4>
-                            <p>Complete vehicle inspection, basic maintenance and servicing.</p>
-                            <div class="service-price">Starting from ₹999</div>
-                        </label>
+<div class="form-section">
 
-                        <label class="service-option">
-                            <input type="radio" name="service" value="engine">
-                            <h4>⚙️ Engine Repair</h4>
-                            <p>Diagnose and repair engine-related problems and performance issues.</p>
-                            <div class="service-price">Inspection from ₹499</div>
-                        </label>
+    <div class="section-heading">
 
-                        <label class="service-option">
-                            <input type="radio" name="service" value="oil-change">
-                            <h4>🛢️ Oil Change</h4>
-                            <p>Engine oil replacement with basic vehicle checks.</p>
-                            <div class="service-price">Starting from ₹699</div>
-                        </label>
+        <h3>2. Select a Service</h3>
 
-                        <label class="service-option">
-                            <input type="radio" name="service" value="cleaning">
-                            <h4>✨ Car Cleaning</h4>
-                            <p>Interior and exterior cleaning for a fresh, clean vehicle.</p>
-                            <div class="service-price">Starting from ₹399</div>
-                        </label>
+        <p>
+            Choose the service your vehicle needs.
+            The displayed price is an estimated starting price.
+        </p>
 
-                        <label class="service-option">
-                            <input type="radio" name="service" value="emergency">
-                            <h4>🚨 Emergency Repair</h4>
-                            <p>Urgent repair services for unexpected vehicle issues.</p>
-                            <div class="service-price">Call for price</div>
-                        </label>
-                    </div>
-                </div>
+    </div>
+
+
+    <div class="service-grid">
+
+
+        <!-- Full Vehicle Service -->
+
+        <label class="service-option">
+
+            <input
+                type="radio"
+                name="service"
+                value="full-service"
+                data-car-price="2999"
+                data-bike-price="1499"
+                required
+            >
+
+            <div class="service-icon">
+                🔧
+            </div>
+
+            <h4>
+                Full Vehicle Service
+            </h4>
+
+            <p>
+                Complete inspection and preventive maintenance
+                performed by experienced mechanics.
+            </p>
+
+            <ul>
+
+                <li>✓ Comprehensive Vehicle Inspection</li>
+
+                <li>✓ Engine Check</li>
+
+                <li>✓ Brake Inspection</li>
+
+                <li>✓ Suspension Check</li>
+
+            </ul>
+
+            <div class="service-price">
+
+                <span class="car-price">
+                    Car: From ₹2,999
+                </span>
+
+                <span class="bike-price">
+                    Bike: From ₹1,499
+                </span>
+
+            </div>
+
+        </label>
+
+
+
+        <!-- Oil Change -->
+
+        <label class="service-option">
+
+            <input
+                type="radio"
+                name="service"
+                value="oil-change"
+                data-car-price="999"
+                data-bike-price="499"
+            >
+
+            <div class="service-icon">
+                🛢️
+            </div>
+
+            <h4>
+                Oil Change
+            </h4>
+
+            <p>
+                Engine oil replacement with oil filter
+                replacement and basic fluid inspection.
+            </p>
+
+            <ul>
+
+                <li>✓ Premium Engine Oil</li>
+
+                <li>✓ Oil Filter Replacement</li>
+
+                <li>✓ Fluid Level Inspection</li>
+
+                <li>✓ Performance Check</li>
+
+            </ul>
+
+            <div class="service-price">
+
+                <span class="car-price">
+                    Car: From ₹999
+                </span>
+
+                <span class="bike-price">
+                    Bike: From ₹499
+                </span>
+
+            </div>
+
+        </label>
+
+
+
+        <!-- Battery Service -->
+
+        <label class="service-option">
+
+            <input
+                type="radio"
+                name="service"
+                value="battery-service"
+                data-car-price="799"
+                data-bike-price="599"
+            >
+
+            <div class="service-icon">
+                🔋
+            </div>
+
+            <h4>
+                Battery Service
+            </h4>
+
+            <p>
+                Battery testing, charging inspection and
+                replacement support.
+            </p>
+
+            <ul>
+
+                <li>✓ Battery Health Check</li>
+
+                <li>✓ Charging Test</li>
+
+                <li>✓ Terminal Inspection</li>
+
+                <li>✓ Replacement Support</li>
+
+            </ul>
+
+            <div class="service-price">
+
+                <span class="car-price">
+                    Car: From ₹799
+                </span>
+
+                <span class="bike-price">
+                    Bike: From ₹599
+                </span>
+
+            </div>
+
+        </label>
+
+
+
+        <!-- Wheel Alignment -->
+
+        <label class="service-option">
+
+            <input
+                type="radio"
+                name="service"
+                value="wheel-alignment"
+                data-car-price="699"
+                data-bike-price="0"
+            >
+
+            <div class="service-icon">
+                🚗
+            </div>
+
+            <h4>
+                Wheel Alignment
+            </h4>
+
+            <p>
+                Precision alignment and wheel balancing to
+                improve stability and tyre life.
+            </p>
+
+            <ul>
+
+                <li>✓ Wheel Alignment</li>
+
+                <li>✓ Wheel Balancing</li>
+
+                <li>✓ Tyre Inspection</li>
+
+                <li>✓ Steering Check</li>
+
+            </ul>
+
+            <div class="service-price">
+
+                <span class="car-price">
+                    Car: From ₹699
+                </span>
+
+                <span class="bike-price">
+                    Available for applicable vehicles
+                </span>
+
+            </div>
+
+        </label>
+
+
+
+        <!-- AC Service -->
+
+        <label class="service-option">
+
+            <input
+                type="radio"
+                name="service"
+                value="ac-service"
+                data-car-price="1499"
+                data-bike-price="0"
+            >
+
+            <div class="service-icon">
+                ❄️
+            </div>
+
+            <h4>
+                AC Service
+            </h4>
+
+            <p>
+                Vehicle AC inspection, cooling test,
+                cleaning and gas refill support.
+            </p>
+
+            <ul>
+
+                <li>✓ Cooling Test</li>
+
+                <li>✓ Gas Inspection</li>
+
+                <li>✓ AC Filter Cleaning</li>
+
+                <li>✓ Performance Check</li>
+
+            </ul>
+
+            <div class="service-price">
+
+                <span class="car-price">
+                    Car: From ₹1,499
+                </span>
+
+                <span class="bike-price">
+                    Not applicable for bikes
+                </span>
+
+            </div>
+
+        </label>
+
+
+
+        <!-- Brake Service -->
+
+        <label class="service-option">
+
+            <input
+                type="radio"
+                name="service"
+                value="brake-service"
+                data-car-price="1299"
+                data-bike-price="599"
+            >
+
+            <div class="service-icon">
+                🛠️
+            </div>
+
+            <h4>
+                Brake Service
+            </h4>
+
+            <p>
+                Complete brake inspection, cleaning and
+                replacement support when required.
+            </p>
+
+            <ul>
+
+                <li>✓ Brake Pad Inspection</li>
+
+                <li>✓ Disc Inspection</li>
+
+                <li>✓ Brake Fluid Check</li>
+
+                <li>✓ Safety Inspection</li>
+
+            </ul>
+
+            <div class="service-price">
+
+                <span class="car-price">
+                    Car: From ₹1,299
+                </span>
+
+                <span class="bike-price">
+                    Bike: From ₹599
+                </span>
+
+            </div>
+
+        </label>
+
+
+
+        <!-- Emergency Roadside Assistance -->
+
+        <label class="service-option emergency-service">
+
+            <input
+                type="radio"
+                name="service"
+                value="emergency-assistance"
+                data-car-price="0"
+                data-bike-price="0"
+            >
+
+            <div class="service-icon">
+                🚨
+            </div>
+
+            <h4>
+                Emergency Roadside Assistance
+            </h4>
+
+            <p>
+                Immediate roadside support for breakdowns,
+                punctures, battery failures and towing.
+            </p>
+
+            <ul>
+
+                <li>✓ 24/7 Breakdown Support</li>
+
+                <li>✓ Flat Tyre Assistance</li>
+
+                <li>✓ Battery Jump Start</li>
+
+                <li>✓ Towing Support</li>
+
+            </ul>
+
+            <div class="service-price">
+
+                Call for Estimate
+
+            </div>
+
+        </label>
+
+
+    </div>
+
+
+    <!-- Pricing Notice -->
+
+    <div class="pricing-notice">
+
+        <strong>
+            ℹ️ Please note
+        </strong>
+
+        <p>
+            Prices shown above are starting estimates.
+            The final cost may vary depending on your
+            vehicle model, condition, parts required and
+            additional repairs.
+        </p>
+
+        <p>
+            If the mechanic finds any additional problem,
+            you will receive a revised estimate and the
+            additional work will only be performed after
+            your approval.
+        </p>
+
+    </div>
+
+</div>
 
                 <!-- Additional information section -->
                 <div class="form-section">
