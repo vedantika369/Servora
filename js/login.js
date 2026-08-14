@@ -240,6 +240,10 @@ if(userData.role === "admin"){
     window.location.href = "admin/dashboard.html";
 }
 
+if(userData.role === "mechanic"){
+    window.location.href = "mechanic/dashboard.html";
+}           
+
 
             showSuccess(
                 "Login Successful! Redirecting..."
