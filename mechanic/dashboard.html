@@ -1,105 +1,639 @@
-<!DOCTYPE html> 
-<html lang="en"> 
+<!DOCTYPE html>
+<html lang="en">
 
-<head> 
-<meta charset="UTF-8"> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<title> Mechanic Dashboard | Servora </title> 
-<link rel="stylesheet"
-href="../css/style.css"> 
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mechanic Dashboard | Servora</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        /* ==========================================
+           MECHANIC DASHBOARD
+        ========================================== */
+
+        .mechanic-dashboard {
+            min-height: calc(100vh - 80px);
+            background: #f8fafc;
+            padding: 45px 20px 60px;
+        }
+
+        .mechanic-container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Welcome */
+
+        .mechanic-welcome {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.18);
+        }
+
+        .mechanic-welcome h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .mechanic-welcome p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+
+        /* Stats */
+
+        .mechanic-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #eff6ff;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 4px;
+            font-size: 25px;
+            color: #111827;
+        }
+
+        .stat-card p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* Section */
+
+        .mechanic-section {
+            margin-bottom: 40px;
+        }
+
+        .mechanic-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .mechanic-section-header h2 {
+            margin: 0;
+            color: #111827;
+            font-size: 24px;
+        }
+
+        .live-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #16a34a;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+        }
+
+        /* Jobs */
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .mechanic-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        .mechanic-card:hover {
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+        }
+
+        .job-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .job-top h3 {
+            margin: 0 0 5px;
+            color: #111827;
+            font-size: 20px;
+        }
+
+        .job-id {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .status-badge {
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .status-pending {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .status-accepted {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .status-progress {
+            background: #fefce8;
+            color: #a16207;
+        }
+
+        .status-completed {
+            background: #f0fdf4;
+            color: #15803d;
+        }
+
+        .detail-group {
+            padding: 15px 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .detail-group h4 {
+            margin: 0 0 10px;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 7px 0;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            color: #64748b;
+        }
+
+        .detail-value {
+            color: #111827;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .problem-box {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 12px;
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Actions */
+
+        .job-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .job-btn {
+            border: none;
+            border-radius: 9px;
+            padding: 11px 17px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .accept-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .accept-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .progress-btn {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .complete-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+        .job-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Update form */
+
+        .update-panel {
+            display: none;
+            margin-top: 18px;
+            padding: 18px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .update-panel.show {
+            display: block;
+        }
+
+        .update-panel label {
+            display: block;
+            margin-bottom: 7px;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .update-panel textarea,
+        .update-panel input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .update-panel textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .update-panel textarea:focus,
+        .update-panel input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Empty */
+
+        .empty-state {
+            background: white;
+            border: 1px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 45px 20px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 12px;
+            color: #94a3b8;
+        }
+
+        .empty-state h3 {
+            color: #334155;
+            margin: 5px 0 8px;
+        }
+
+        .loading-state {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 900px) {
+
+            .mechanic-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .mechanic-dashboard {
+                padding: 30px 15px;
+            }
+
+            .mechanic-welcome {
+                padding: 25px 20px;
+            }
+
+            .mechanic-welcome h1 {
+                font-size: 24px;
+            }
+
+            .mechanic-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .mechanic-section-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .mechanic-card {
+                padding: 20px;
+            }
+
+            .detail-row {
+                flex-direction: column;
+                gap: 3px;
+            }
+
+            .detail-value {
+                text-align: left;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-<!-- ==========================
+
+<!-- ==========================================
      NAVBAR
-========================== -->
+========================================== -->
 
-<header class="navbar">
+<nav class="navbar">
 
-    <div class="logo">
+    <div class="container">
 
-        <h2>Servora Mechanic</h2>
+        <a href="dashboard.html" class="logo">
+
+            <img src="../images/logo.png"
+                 alt="Servora Logo">
+
+            <div class="logo-text">
+
+                <h2>Servora</h2>
+
+                <span>Drive Smart. Service Smarter.</span>
+
+            </div>
+
+        </a>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="dashboard.html"
+                   class="active">
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="services.html">
+                    Services
+                </a>
+            </li>
+
+            <li>
+                <a href="profile.html">
+                    Profile
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="nav-buttons">
+
+            <button
+                id="logoutBtn"
+                class="btn-login">
+
+                Logout
+
+            </button>
+
+        </div>
 
     </div>
 
-    <nav>
-
-        <a href="mechanic/dashboard.html" class="active">
-            Dashboard
-        </a>
-
-        <button id="logoutBtn">
-            Logout
-        </button>
-
-    </nav>
-
-</header>
+</nav>
 
 
-<!-- ==========================
+<!-- ==========================================
      DASHBOARD
-========================== -->
+========================================== -->
 
-<section class="mechanic-section">
+<section class="mechanic-dashboard">
 
     <div class="mechanic-container">
 
-        <h1>
-            Mechanic Dashboard
-        </h1>
 
-        <p>
-            Accept new service requests and manage your assigned jobs.
-        </p>
+        <!-- Welcome -->
 
+        <div class="mechanic-welcome">
 
-        <!-- ==========================
-             AVAILABLE JOBS
-        ========================== -->
-
-        <div class="dashboard-block">
-
-            <h2>
-                🔧 Available Service Requests
-            </h2>
+            <h1>
+                Welcome, <span id="mechanicName">Mechanic</span>
+            </h1>
 
             <p>
-                Accept a pending booking to start working on it.
+                Manage assigned vehicle services and keep customers
+                updated in real time.
             </p>
 
-            <div id="availableJobs">
+            <p id="mechanicEmail"></p>
 
-                <p class="loading-text">
-                    Loading available jobs...
-                </p>
+        </div>
+
+
+        <!-- Statistics -->
+
+        <div class="mechanic-stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-inbox"></i>
+                </div>
+
+                <div>
+                    <h3 id="pendingCount">0</h3>
+                    <p>Pending Requests</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-wrench"></i>
+                </div>
+
+                <div>
+                    <h3 id="acceptedCount">0</h3>
+                    <p>Accepted Jobs</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                </div>
+
+                <div>
+                    <h3 id="progressCount">0</h3>
+                    <p>In Progress</p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+
+                <div>
+                    <h3 id="completedCount">0</h3>
+                    <p>Completed</p>
+                </div>
 
             </div>
 
         </div>
 
 
+        <!-- Available Requests -->
 
-        <!-- ==========================
-             MY ASSIGNED JOBS
-        ========================== -->
+        <div class="mechanic-section">
 
-        <div class="dashboard-block">
+            <div class="mechanic-section-header">
 
-            <h2>
-                🚗 My Assigned Services
-            </h2>
+                <h2>
+                    New Service Requests
+                </h2>
 
-            <p>
-                Update the progress of services you have accepted.
-            </p>
+                <div class="live-status">
 
-            <div id="myJobs">
+                    <span class="live-dot"></span>
 
-                <p class="loading-text">
-                    Loading your assigned jobs...
-                </p>
+                    Live Updates
+
+                </div>
+
+            </div>
+
+
+            <div id="availableJobs"
+                 class="jobs-grid">
+
+                <div class="loading-state">
+
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+
+                    <h3>
+                        Loading service requests...
+                    </h3>
+
+                    <p>
+                        Please wait while we fetch the latest bookings.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- My Assigned Services -->
+
+        <div class="mechanic-section">
+
+            <div class="mechanic-section-header">
+
+                <h2>
+                    My Assigned Services
+                </h2>
+
+            </div>
+
+
+            <div id="myJobs"
+                 class="jobs-grid">
+
+                <div class="loading-state">
+
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+
+                    <h3>
+                        Loading your assigned services...
+                    </h3>
+
+                </div>
 
             </div>
 
@@ -110,16 +644,18 @@ href="../css/style.css">
 </section>
 
 
-<!-- ==========================
+<!-- ==========================================
      FOOTER
-========================== -->
+========================================== -->
 
 <footer class="footer">
 
     <div class="footer-bottom">
 
         <p>
-            © 2026 Servora. All Rights Reserved.
+            © 2026 Servora. Developed by Vedantika Deshmukh
+            from Arvind Gavali College of Engineering, Satara
+            in Inplant Training 2026. All Rights Reserved.
         </p>
 
     </div>
@@ -127,823 +663,1161 @@ href="../css/style.css">
 </footer>
 
 
-<!-- ==========================
-     SCRIPT
-========================== -->
+<!-- ==========================================
+     FIREBASE SCRIPT
+========================================== -->
 
 <script type="module">
-
-/* ==========================================
-   IMPORTS
-========================================== */
 
 import {
     auth,
     db
-}
-from "/static/js/firebase-config.js";
-
-import {
-    checkRole
-}
-from "/static/js/auth-guard.js";
+} from "../js/firebase-config.js";
 
 import {
     onAuthStateChanged,
     signOut
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
     ref,
-    get,
+    onValue,
     update
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
 /* ==========================================
    ELEMENTS
 ========================================== */
 
+const mechanicNameElement =
+    document.getElementById("mechanicName");
+
+const mechanicEmailElement =
+    document.getElementById("mechanicEmail");
+
 const availableJobs =
-document.getElementById("availableJobs");
+    document.getElementById("availableJobs");
 
 const myJobs =
-document.getElementById("myJobs");
+    document.getElementById("myJobs");
 
 const logoutBtn =
-document.getElementById("logoutBtn");
+    document.getElementById("logoutBtn");
+
+const pendingCount =
+    document.getElementById("pendingCount");
+
+const acceptedCount =
+    document.getElementById("acceptedCount");
+
+const progressCount =
+    document.getElementById("progressCount");
+
+const completedCount =
+    document.getElementById("completedCount");
 
 
 /* ==========================================
    VARIABLES
 ========================================== */
 
-let mechanicUID = "";
-
-let mechanicName = "";
-
-let mechanicEmail = "";
-
-
-/* ==========================================
-   ROLE PROTECTION
-========================================== */
-
-checkRole(
-    "mechanic",
-    "/login"
-);
+let currentUser = null;
+let mechanicName = "Mechanic";
+let allBookings = {};
 
 
 /* ==========================================
    AUTHENTICATION
 ========================================== */
 
-onAuthStateChanged(auth, async(user)=>{
+onAuthStateChanged(auth, async (user) => {
 
-    if(!user){
+    if (!user) {
 
-        window.location.href="login.html";
+        window.location.href = "../login.html";
+        return;
+
+    }
+
+    currentUser = user;
+
+    try {
+
+        const userRef =
+            ref(db, "users/" + user.uid);
+
+        onValue(userRef, (snapshot) => {
+
+            if (snapshot.exists()) {
+
+                const data = snapshot.val();
+
+                mechanicName =
+                    data.name ||
+                    user.displayName ||
+                    "Mechanic";
+
+                mechanicNameElement.textContent =
+                    mechanicName;
+
+                mechanicEmailElement.textContent =
+                    data.email || user.email || "";
+
+            }
+            else {
+
+                mechanicName =
+                    user.displayName ||
+                    "Mechanic";
+
+                mechanicNameElement.textContent =
+                    mechanicName;
+
+                mechanicEmailElement.textContent =
+                    user.email || "";
+
+            }
+
+        });
+
+        loadBookings();
+
+    }
+    catch (error) {
+
+        console.error(
+            "Mechanic authentication error:",
+            error
+        );
+
+    }
+
+});
+
+
+/* ==========================================
+   LOAD BOOKINGS IN REAL TIME
+========================================== */
+
+function loadBookings() {
+
+    const bookingsRef =
+        ref(db, "bookings");
+
+    onValue(
+        bookingsRef,
+
+        (snapshot) => {
+
+            allBookings = {};
+
+            if (snapshot.exists()) {
+
+                allBookings =
+                    snapshot.val();
+
+            }
+
+            updateStatistics();
+
+            renderAvailableJobs();
+
+            renderMyJobs();
+
+        },
+
+        (error) => {
+
+            console.error(
+                "Booking loading error:",
+                error
+            );
+
+            availableJobs.innerHTML = `
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <h3>
+                        Unable to load service requests
+                    </h3>
+
+                    <p>
+                        Please refresh the page and try again.
+                    </p>
+
+                </div>
+
+            `;
+
+            myJobs.innerHTML = "";
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   STATISTICS
+========================================== */
+
+function updateStatistics() {
+
+    let pending = 0;
+    let accepted = 0;
+    let progress = 0;
+    let completed = 0;
+
+    Object.values(allBookings).forEach((booking) => {
+
+        if (!booking) return;
+
+        const isMine =
+            booking.mechanicId === currentUser.uid;
+
+        if (booking.status === "Pending") {
+
+            pending++;
+
+        }
+
+        if (
+            isMine &&
+            booking.status === "Accepted"
+        ) {
+
+            accepted++;
+
+        }
+
+        if (
+            isMine &&
+            booking.status === "In Progress"
+        ) {
+
+            progress++;
+
+        }
+
+        if (
+            isMine &&
+            booking.status === "Completed"
+        ) {
+
+            completed++;
+
+        }
+
+    });
+
+    pendingCount.textContent = pending;
+    acceptedCount.textContent = accepted;
+    progressCount.textContent = progress;
+    completedCount.textContent = completed;
+
+}
+
+
+/* ==========================================
+   RENDER AVAILABLE JOBS
+========================================== */
+
+function renderAvailableJobs() {
+
+    availableJobs.innerHTML = "";
+
+    const jobs = Object.entries(allBookings)
+        .filter(([id, booking]) =>
+            booking &&
+            booking.status === "Pending"
+        );
+
+    if (jobs.length === 0) {
+
+        availableJobs.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+                <h3>
+                    No New Service Requests
+                </h3>
+
+                <p>
+                    New customer bookings will appear here automatically.
+                </p>
+
+            </div>
+
+        `;
 
         return;
 
     }
 
-    mechanicUID = user.uid;
+    jobs.forEach(([id, booking]) => {
 
-    const snapshot =
-    await get(
-        ref(
-            db,
-            "users/"+mechanicUID
-        )
-    );
+        availableJobs.innerHTML +=
+            createAvailableJobCard(
+                id,
+                booking
+            );
 
-    if(snapshot.exists()){
+    });
 
-        const data = snapshot.val();
+}
 
-        mechanicName = data.name || "";
-
-        mechanicEmail = data.email || "";
-
-    }
-
-    loadAvailableJobs();
-
-    loadMyJobs();
-
-});
 
 /* ==========================================
-   LOAD AVAILABLE JOBS
+   AVAILABLE JOB CARD
 ========================================== */
 
-async function loadAvailableJobs(){
+function createAvailableJobCard(id, booking) {
 
-    try{
+    return `
 
-        const snapshot =
-        await get(
-            ref(db,"bookings")
-        );
+        <div class="mechanic-card">
 
-        availableJobs.innerHTML = "";
+            <div class="job-top">
 
-        if(!snapshot.exists()){
+                <div>
 
-            availableJobs.innerHTML = `
+                    <h3>
+                        ${escapeHTML(
+                            booking.serviceType ||
+                            "Vehicle Service"
+                        )}
+                    </h3>
 
-            <div class="mechanic-card">
+                    <span class="job-id">
+                        Booking ID: ${id}
+                    </span>
 
-                <h3>No Service Requests</h3>
+                </div>
 
-                <p>
-                    There are currently no pending bookings.
-                </p>
+                <span class="status-badge status-pending">
+                    Pending
+                </span>
 
             </div>
 
-            `;
 
-            return;
+            <div class="detail-group">
 
-        }
+                <h4>
+                    <i class="fa-solid fa-user"></i>
+                    Customer
+                </h4>
 
-        const bookings = snapshot.val();
+                <div class="detail-row">
 
-        let found = false;
+                    <span class="detail-label">
+                        Name
+                    </span>
 
-        Object.keys(bookings).forEach((id)=>{
+                    <span class="detail-value">
+                        ${escapeHTML(
+                            booking.customerName ||
+                            "Not Available"
+                        )}
+                    </span>
 
-            const booking = bookings[id];
+                </div>
 
-            if(booking.status !== "Pending")
-                return;
+                <div class="detail-row">
 
-            found = true;
+                    <span class="detail-label">
+                        Email
+                    </span>
 
-            availableJobs.innerHTML += `
+                    <span class="detail-value">
+                        ${escapeHTML(
+                            booking.customerEmail ||
+                            "Not Available"
+                        )}
+                    </span>
 
-            <div class="mechanic-card">
+                </div>
 
-                <h2>
+            </div>
 
-                    ${booking.serviceType}
 
-                </h2>
+            <div class="detail-group">
 
-                <hr>
+                <h4>
+                    <i class="fa-solid fa-car"></i>
+                    Vehicle
+                </h4>
 
-                <h3>
+                <div class="detail-row">
 
-                    Customer Details
+                    <span class="detail-label">
+                        Vehicle
+                    </span>
 
-                </h3>
+                    <span class="detail-value">
+                        ${escapeHTML(
+                            booking.vehicleName ||
+                            "Not Available"
+                        )}
+                    </span>
 
-                <p>
+                </div>
 
-                    <strong>Name:</strong>
+                <div class="detail-row">
 
-                    ${booking.customerName}
+                    <span class="detail-label">
+                        Number
+                    </span>
 
-                </p>
+                    <span class="detail-value">
+                        ${escapeHTML(
+                            booking.vehicleNumber ||
+                            "Not Available"
+                        )}
+                    </span>
 
-                <p>
+                </div>
 
-                    <strong>Email:</strong>
+            </div>
 
-                    ${booking.customerEmail}
 
-                </p>
+            <div class="detail-group">
 
-                <h3>
+                <h4>
+                    <i class="fa-solid fa-calendar"></i>
+                    Service Details
+                </h4>
 
-                    Vehicle Details
+                <div class="detail-row">
 
-                </h3>
+                    <span class="detail-label">
+                        Preferred Date
+                    </span>
 
-                <p>
+                    <span class="detail-value">
+                        ${escapeHTML(
+                            booking.bookingDate ||
+                            "Not Available"
+                        )}
+                    </span>
 
-                    <strong>Vehicle:</strong>
+                </div>
 
-                    ${booking.vehicleName}
+            </div>
 
-                </p>
 
-                <p>
+            <div class="detail-group">
 
-                    <strong>Number:</strong>
+                <h4>
+                    Problem Description
+                </h4>
 
-                    ${booking.vehicleNumber}
+                <div class="problem-box">
 
-                </p>
+                    ${escapeHTML(
+                        booking.problemDescription ||
+                        "No problem description provided."
+                    )}
 
-                <p>
+                </div>
 
-                    <strong>Booking Date:</strong>
+            </div>
 
-                    ${booking.bookingDate}
 
-                </p>
-
-                <h3>
-
-                    Problem
-
-                </h3>
-
-                <p>
-
-                    ${booking.problemDescription}
-
-                </p>
+            <div class="job-actions">
 
                 <button
+                    class="job-btn accept-btn"
                     onclick="acceptJob('${id}')">
 
-                    Accept Job
+                    <i class="fa-solid fa-check"></i>
+
+                    Accept Service
 
                 </button>
 
             </div>
 
-            `;
+        </div>
+
+    `;
+
+}
+
+
+/* ==========================================
+   RENDER MY JOBS
+========================================== */
+
+function renderMyJobs() {
+
+    myJobs.innerHTML = "";
+
+    const jobs = Object.entries(allBookings)
+        .filter(([id, booking]) =>
+            booking &&
+            booking.mechanicId === currentUser.uid
+        )
+        .sort((a, b) => {
+
+            const timeA =
+                Number(a[1].createdAt) || 0;
+
+            const timeB =
+                Number(b[1].createdAt) || 0;
+
+            return timeB - timeA;
 
         });
 
-        if(!found){
+    if (jobs.length === 0) {
 
-            availableJobs.innerHTML = `
+        myJobs.innerHTML = `
 
-            <div class="mechanic-card">
+            <div class="empty-state">
+
+                <i class="fa-solid fa-wrench"></i>
 
                 <h3>
-
-                    No Pending Jobs
-
+                    No Assigned Services
                 </h3>
 
                 <p>
-
-                    All service requests have been accepted.
-
+                    Services you accept will appear here.
                 </p>
 
             </div>
 
-            `;
+        `;
 
-        }
+        return;
 
     }
 
-    catch(error){
+    jobs.forEach(([id, booking]) => {
 
-        console.error(error);
+        myJobs.innerHTML +=
+            createMyJobCard(
+                id,
+                booking
+            );
 
-        availableJobs.innerHTML = `
+    });
 
-        <div class="mechanic-card">
+}
 
-            <h3>
 
-                Error Loading Jobs
+/* ==========================================
+   MY JOB CARD
+========================================== */
 
-            </h3>
+function createMyJobCard(id, booking) {
 
-        </div>
+    const status =
+        booking.status || "Accepted";
+
+    let statusClass =
+        "status-accepted";
+
+    if (status === "In Progress") {
+
+        statusClass =
+            "status-progress";
+
+    }
+
+    if (status === "Completed") {
+
+        statusClass =
+            "status-completed";
+
+    }
+
+
+    let actions = "";
+
+
+    if (status === "Accepted") {
+
+        actions += `
+
+            <button
+                class="job-btn progress-btn"
+                onclick="startService('${id}')">
+
+                <i class="fa-solid fa-play"></i>
+
+                Start Service
+
+            </button>
 
         `;
 
     }
 
+
+    if (status === "In Progress") {
+
+        actions += `
+
+            <button
+                class="job-btn complete-btn"
+                onclick="showCompleteForm('${id}')">
+
+                <i class="fa-solid fa-check-double"></i>
+
+                Complete Service
+
+            </button>
+
+        `;
+
+    }
+
+
+    if (status === "Completed") {
+
+        actions += `
+
+            <span style="
+                color:#15803d;
+                font-weight:600;
+                padding:10px 0;
+            ">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Service Completed
+
+            </span>
+
+        `;
+
+    }
+
+
+    return `
+
+        <div class="mechanic-card">
+
+            <div class="job-top">
+
+                <div>
+
+                    <h3>
+                        ${escapeHTML(
+                            booking.serviceType ||
+                            "Vehicle Service"
+                        )}
+                    </h3>
+
+                    <span class="job-id">
+                        Booking ID: ${id}
+                    </span>
+
+                </div>
+
+                <span class="status-badge ${statusClass}">
+                    ${escapeHTML(status)}
+                </span>
+
+            </div>
+
+
+            <div class="detail-group">
+
+                <h4>
+                    <i class="fa-solid fa-user"></i>
+                    Customer
+                </h4>
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Name
+                    </span>
+
+                    <span class="detail-value">
+                        ${escapeHTML(
+                            booking.customerName ||
+                            "Not Available"
+                        )}
+                    </span>
+
+                </div>
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Email
+                    </span>
+
+                    <span class="detail-value">
+                        ${escapeHTML(
+                            booking.customerEmail ||
+                            "Not Available"
+                        )}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="detail-group">
+
+                <h4>
+                    <i class="fa-solid fa-car"></i>
+                    Vehicle
+                </h4>
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Vehicle
+                    </span>
+
+                    <span class="detail-value">
+                        ${escapeHTML(
+                            booking.vehicleName ||
+                            "Not Available"
+                        )}
+                    </span>
+
+                </div>
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Number
+                    </span>
+
+                    <span class="detail-value">
+                        ${escapeHTML(
+                            booking.vehicleNumber ||
+                            "Not Available"
+                        )}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="detail-group">
+
+                <h4>
+                    <i class="fa-solid fa-calendar"></i>
+                    Appointment
+                </h4>
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Date
+                    </span>
+
+                    <span class="detail-value">
+                        ${escapeHTML(
+                            booking.bookingDate ||
+                            "Not Available"
+                        )}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="detail-group">
+
+                <h4>
+                    Problem Description
+                </h4>
+
+                <div class="problem-box">
+
+                    ${escapeHTML(
+                        booking.problemDescription ||
+                        "No problem description provided."
+                    )}
+
+                </div>
+
+            </div>
+
+
+            ${
+                booking.mechanicNote
+                ?
+                `
+
+                <div class="detail-group">
+
+                    <h4>
+                        Mechanic Notes
+                    </h4>
+
+                    <div class="problem-box">
+
+                        ${escapeHTML(
+                            booking.mechanicNote
+                        )}
+
+                    </div>
+
+                </div>
+
+                `
+                :
+                ""
+            }
+
+
+            ${
+                status === "Completed"
+                ?
+                `
+
+                <div class="detail-group">
+
+                    <h4>
+                        Payment
+                    </h4>
+
+                    <div class="detail-row">
+
+                        <span class="detail-label">
+                            Final Amount
+                        </span>
+
+                        <span class="detail-value">
+                            ₹${escapeHTML(
+                                String(
+                                    booking.finalAmount ||
+                                    booking.estimatedCost ||
+                                    0
+                                )
+                            )}
+                        </span>
+
+                    </div>
+
+                    <div class="detail-row">
+
+                        <span class="detail-label">
+                            Payment Status
+                        </span>
+
+                        <span class="detail-value">
+                            ${escapeHTML(
+                                booking.paymentStatus ||
+                                "Pending"
+                            )}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                `
+                :
+                ""
+            }
+
+
+            <div class="job-actions">
+
+                ${actions}
+
+            </div>
+
+
+            <div
+                id="complete-form-${id}"
+                class="update-panel">
+
+                <label>
+                    Service / Repair Notes
+                </label>
+
+                <textarea
+                    id="note-${id}"
+                    placeholder="Describe the work completed, replaced parts, defects found, etc."></textarea>
+
+
+                <label>
+                    Estimated / Final Cost (₹)
+                </label>
+
+                <input
+                    type="number"
+                    id="cost-${id}"
+                    min="0"
+                    placeholder="Enter final service amount">
+
+
+                <button
+                    class="job-btn complete-btn"
+                    onclick="completeService('${id}')">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Confirm Completion
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
 }
 
 
 /* ==========================================
-   ACCEPT JOB
+   ACCEPT SERVICE
 ========================================== */
 
-window.acceptJob = async(id)=>{
+window.acceptJob = async function (id) {
 
-    try{
+    if (!currentUser) return;
+
+    try {
 
         await update(
-
-            ref(db,"bookings/"+id),
-
+            ref(db, "bookings/" + id),
             {
 
-                mechanicId: mechanicUID,
+                mechanicId:
+                    currentUser.uid,
 
-                mechanicName: mechanicName,
+                mechanicName:
+                    mechanicName,
 
-                status: "Accepted"
+                status:
+                    "Accepted"
 
             }
-
         );
-
-        alert(
-
-            "Service Accepted Successfully."
-
-        );
-
-        loadAvailableJobs();
-
-        loadMyJobs();
 
     }
+    catch (error) {
 
-    catch(error){
-
-        console.error(error);
+        console.error(
+            "Accept service error:",
+            error
+        );
 
         alert(
-
-            "Unable to accept service."
-
+            "Unable to accept this service. Please try again."
         );
 
     }
 
 };
 
-/* ==========================================
-   LOAD MY ASSIGNED JOBS
-========================================== */
-
-async function loadMyJobs(){
-
-    try{
-
-        const snapshot =
-        await get(
-            ref(db,"bookings")
-        );
-
-        myJobs.innerHTML = "";
-
-        if(!snapshot.exists()){
-
-            showNoAssignedJobs();
-
-            return;
-
-        }
-
-        const bookings = snapshot.val();
-
-        let found = false;
-
-        Object.keys(bookings).forEach((id)=>{
-
-            const booking = bookings[id];
-
-            if(booking.mechanicId !== mechanicUID)
-                return;
-
-            found = true;
-
-            myJobs.innerHTML += `
-
-<div class="mechanic-card">
-
-<h2>
-
-${booking.serviceType}
-
-</h2>
-
-<hr>
-
-<h3>
-
-Customer Details
-
-</h3>
-
-<p>
-
-<strong>Name:</strong>
-
-${booking.customerName}
-
-</p>
-
-<p>
-
-<strong>Email:</strong>
-
-${booking.customerEmail}
-
-</p>
-
-<h3>
-
-Vehicle Details
-
-</h3>
-
-<p>
-
-<strong>Vehicle:</strong>
-
-${booking.vehicleName}
-
-</p>
-
-<p>
-
-<strong>Vehicle Number:</strong>
-
-${booking.vehicleNumber}
-
-</p>
-
-<p>
-
-<strong>Booking Date:</strong>
-
-${booking.bookingDate}
-
-</p>
-
-<h3>
-
-Problem Description
-
-</h3>
-
-<p>
-
-${booking.problemDescription}
-
-</p>
-
-<label>
-
-Service Status
-
-</label>
-
-<select id="status-${id}">
-
-<option value="Accepted"
-${booking.status==="Accepted"?"selected":""}>
-
-Accepted
-
-</option>
-
-<option value="In Progress"
-${booking.status==="In Progress"?"selected":""}>
-
-In Progress
-
-</option>
-
-<option value="Completed"
-${booking.status==="Completed"?"selected":""}>
-
-Completed
-
-</option>
-
-</select>
-
-<label>
-
-Repair Notes
-
-</label>
-
-<textarea
-id="note-${id}"
-placeholder="Enter repair details">${booking.mechanicNote || ""}</textarea>
-
-<label>
-
-Estimated Cost
-
-</label>
-
-<input
-type="number"
-id="cost-${id}"
-value="${booking.estimatedCost || ""}"
-placeholder="Estimated Cost">
-
-<label>
-
-Final Amount
-
-</label>
-
-<input
-type="number"
-id="final-${id}"
-value="${booking.finalAmount || ""}"
-placeholder="Final Amount">
-
-<button
-onclick="updateService('${id}')">
-
-Update Service
-
-</button>
-
-</div>
-
-`;
-
-        });
-
-        if(!found){
-
-            showNoAssignedJobs();
-
-        }
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        myJobs.innerHTML = `
-
-<div class="mechanic-card">
-
-<h3>
-
-Unable to load assigned services.
-
-</h3>
-
-</div>
-
-`;
-
-    }
-
-}
-
 
 /* ==========================================
-   NO ASSIGNED JOBS
+   START SERVICE
 ========================================== */
 
-function showNoAssignedJobs(){
+window.startService = async function (id) {
 
-    myJobs.innerHTML = `
-
-<div class="mechanic-card">
-
-<h3>
-
-No Assigned Services
-
-</h3>
-
-<p>
-
-Accept a pending booking to start working on it.
-
-</p>
-
-</div>
-
-`;
-
-}
-
-/* ==========================================
-   UPDATE SERVICE
-========================================== */
-
-window.updateService = async(id)=>{
-
-    try{
-
-        const status =
-        document.getElementById(
-            "status-"+id
-        ).value;
-
-        const note =
-        document.getElementById(
-            "note-"+id
-        ).value.trim();
-
-        const estimatedCost =
-        Number(
-            document.getElementById(
-                "cost-"+id
-            ).value
-        );
-
-        const finalAmount =
-        Number(
-            document.getElementById(
-                "final-"+id
-            ).value
-        );
-
-        let paymentStatus = "Pending";
-
-        if(status === "Completed"){
-
-            paymentStatus = "Pending";
-
-        }
+    try {
 
         await update(
-
-            ref(db,"bookings/"+id),
-
+            ref(db, "bookings/" + id),
             {
 
-                status: status,
-
-                mechanicNote: note,
-
-                estimatedCost: estimatedCost,
-
-                finalAmount: finalAmount,
-
-                paymentStatus: paymentStatus,
-
-                completedAt: Date.now()
+                status:
+                    "In Progress"
 
             }
-
         );
-
-        alert(
-            "Service Updated Successfully."
-        );
-
-        loadMyJobs();
-
-        loadAvailableJobs();
 
     }
+    catch (error) {
 
-    catch(error){
-
-        console.error(error);
+        console.error(
+            "Start service error:",
+            error
+        );
 
         alert(
-            "Unable to update service."
+            "Unable to start service."
         );
 
     }
 
 };
+
+
+/* ==========================================
+   SHOW COMPLETE FORM
+========================================== */
+
+window.showCompleteForm = function (id) {
+
+    const form =
+        document.getElementById(
+            "complete-form-" + id
+        );
+
+    if (!form) return;
+
+    form.classList.toggle("show");
+
+};
+
+
+/* ==========================================
+   COMPLETE SERVICE
+========================================== */
+
+window.completeService = async function (id) {
+
+    const noteElement =
+        document.getElementById(
+            "note-" + id
+        );
+
+    const costElement =
+        document.getElementById(
+            "cost-" + id
+        );
+
+    const note =
+        noteElement
+            ? noteElement.value.trim()
+            : "";
+
+    const cost =
+        costElement
+            ? Number(costElement.value)
+            : 0;
+
+
+    if (!note) {
+
+        alert(
+            "Please enter service or repair notes."
+        );
+
+        return;
+
+    }
+
+
+    if (cost < 0) {
+
+        alert(
+            "Please enter a valid amount."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        await update(
+            ref(db, "bookings/" + id),
+            {
+
+                status:
+                    "Completed",
+
+                mechanicNote:
+                    note,
+
+                estimatedCost:
+                    cost,
+
+                finalAmount:
+                    cost,
+
+                paymentStatus:
+                    "Pending"
+
+            }
+        );
+
+        alert(
+            "Service completed successfully."
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Complete service error:",
+            error
+        );
+
+        alert(
+            "Unable to complete the service."
+        );
+
+    }
+
+};
+
 
 /* ==========================================
    LOGOUT
 ========================================== */
 
-logoutBtn.addEventListener("click", async()=>{
+logoutBtn.addEventListener(
+    "click",
+    async () => {
 
-    try{
+        try {
 
-        await signOut(auth);
+            await signOut(auth);
 
-        sessionStorage.clear();
+            window.location.href =
+                "../login.html";
 
-        window.location.href="login.html";
+        }
+        catch (error) {
 
-    }
+            console.error(error);
 
-    catch(error){
-
-        console.error(error);
-
-        alert("Unable to logout.");
-
-    }
-
-});
-
-
-/* ==========================================
-   AUTO REFRESH
-========================================== */
-
-setInterval(()=>{
-
-    if(mechanicUID){
-
-        loadAvailableJobs();
-
-        loadMyJobs();
-
-    }
-
-},30000);
-
-
-/* ==========================================
-   PAGE VISIBILITY REFRESH
-========================================== */
-
-document.addEventListener(
-
-    "visibilitychange",
-
-    ()=>{
-
-        if(
-
-            !document.hidden &&
-
-            mechanicUID
-
-        ){
-
-            loadAvailableJobs();
-
-            loadMyJobs();
+            alert(
+                "Logout failed. Please try again."
+            );
 
         }
 
     }
-
 );
 
 
 /* ==========================================
-   PAGE SHOW
+   ESCAPE HTML
 ========================================== */
 
-window.addEventListener(
+function escapeHTML(value) {
 
-    "pageshow",
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
-    ()=>{
+}
 
-        if(mechanicUID){
+</script>
 
-            loadAvailableJobs();
+</body>
 
-            loadMyJobs();
-
-        }
-
-    }
-
-);
-
-
-/* ==========================================
-   DOM LOADED
-========================================== */
-
-document.addEventListener(
-
-    "DOMContentLoaded",
-
-    ()=>{
-
-        availableJobs.innerHTML =
-
-        `
-
-        <p class="loading-text">
-
-            Loading available services...
-
-        </p>
-
-        `;
-
-
-        myJobs.innerHTML =
-
-        `
-
-        <p class="loading-text">
-
-            Loading assigned services...
-
-        </p>
-
-        `;
-
-    }
-
-);
-
-
-/* ==========================================
-   END OF MECHANIC DASHBOARD
-========================================== */
+</html>
