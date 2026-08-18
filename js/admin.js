@@ -22,6 +22,20 @@ import {
     remove
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    ref,
+    get,
+    update
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 /* =========================================================
    GLOBAL VARIABLES
@@ -1212,7 +1226,353 @@ async function loadMechanics() {
 
 }
 
+/* =========================================================
+   ADD MECHANIC
+   ADMIN DASHBOARD
+========================================================= */
 
+const addMechanicForm =
+    document.getElementById("addMechanicForm");
+
+const mechanicCountElement =
+    document.getElementById("mechanicCount");
+
+const mechanicList =
+    document.getElementById("mechanicList");
+
+
+/* =========================================================
+   ADD MECHANIC FORM
+========================================================= */
+
+if (addMechanicForm) {
+
+    addMechanicForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document
+                    .getElementById("mechanicName")
+                    .value
+                    .trim();
+
+
+            const email =
+                document
+                    .getElementById("mechanicEmail")
+                    .value
+                    .trim();
+
+
+            const phone =
+                document
+                    .getElementById("mechanicPhone")
+                    .value
+                    .trim();
+
+
+            const experience =
+                document
+                    .getElementById("mechanicExperience")
+                    .value;
+
+
+            const specialization =
+                document
+                    .getElementById("mechanicSpecialization")
+                    .value;
+
+
+            const password =
+                document
+                    .getElementById("mechanicPassword")
+                    .value;
+
+
+            const addButton =
+                document.getElementById(
+                    "addMechanicBtn"
+                );
+
+
+            /* -----------------------------------------
+               VALIDATION
+            ----------------------------------------- */
+
+            if (
+                !name ||
+                !email ||
+                !phone ||
+                !experience ||
+                !specialization ||
+                !password
+            ) {
+
+                alert(
+                    "Please fill in all mechanic details."
+                );
+
+                return;
+            }
+
+
+            if (!/^[0-9]{10}$/.test(phone)) {
+
+                alert(
+                    "Please enter a valid 10-digit phone number."
+                );
+
+                return;
+            }
+
+
+            if (password.length < 6) {
+
+                alert(
+                    "Password must contain at least 6 characters."
+                );
+
+                return;
+            }
+
+
+            try {
+
+                /* -----------------------------------------
+                   DISABLE BUTTON
+                ----------------------------------------- */
+
+                addButton.disabled = true;
+
+                addButton.innerHTML = `
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Adding Mechanic...
+                `;
+
+
+                /* -----------------------------------------
+                   CREATE SECONDARY FIREBASE APP
+
+                   This prevents the admin from being
+                   logged out when creating the mechanic.
+                ----------------------------------------- */
+
+                const secondaryApp =
+                    initializeApp(
+                        auth.app.options,
+                        "mechanicCreator"
+                    );
+
+
+                const secondaryAuth =
+                    getAuth(
+                        secondaryApp
+                    );
+
+
+                /* -----------------------------------------
+                   CREATE FIREBASE AUTH ACCOUNT
+                ----------------------------------------- */
+
+                const credential =
+                    await createUserWithEmailAndPassword(
+                        secondaryAuth,
+                        email,
+                        password
+                    );
+
+
+                const mechanicUID =
+                    credential.user.uid;
+
+
+                /* -----------------------------------------
+                   SAVE MECHANIC PROFILE
+                   IN REALTIME DATABASE
+                ----------------------------------------- */
+
+                await update(
+
+                    ref(
+                        db,
+                        "users/" + mechanicUID
+                    ),
+
+                    {
+
+                        uid: mechanicUID,
+
+                        name: name,
+
+                        email: email,
+
+                        phone: phone,
+
+                        experience: experience,
+
+                        specialization: specialization,
+
+                        role: "mechanic",
+
+                        status: "active",
+
+                        createdAt:
+                            new Date().toISOString()
+
+                    }
+
+                );
+
+
+                /* -----------------------------------------
+                   SUCCESS
+                ----------------------------------------- */
+
+                alert(
+                    "Mechanic added successfully!"
+                );
+
+
+                /* -----------------------------------------
+                   RESET FORM
+                ----------------------------------------- */
+
+                addMechanicForm.reset();
+
+
+                /* -----------------------------------------
+                   RELOAD MECHANIC LIST
+                ----------------------------------------- */
+
+                if (
+                    typeof loadMechanics ===
+                    "function"
+                ) {
+
+                    loadMechanics();
+
+                }
+
+
+                /* -----------------------------------------
+                   RELOAD DASHBOARD
+                ----------------------------------------- */
+
+                if (
+                    typeof loadDashboard ===
+                    "function"
+                ) {
+
+                    loadDashboard();
+
+                }
+
+
+                /* -----------------------------------------
+                   CLEAN UP SECONDARY APP
+                ----------------------------------------- */
+
+                if (
+                    typeof deleteApp ===
+                    "function"
+                ) {
+
+                    await deleteApp(
+                        secondaryApp
+                    );
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error adding mechanic:",
+                    error
+                );
+
+
+                let message =
+                    "Unable to add mechanic.";
+
+
+                if (
+                    error.code ===
+                    "auth/email-already-in-use"
+                ) {
+
+                    message =
+                        "This email is already registered.";
+
+                }
+
+                else if (
+                    error.code ===
+                    "auth/invalid-email"
+                ) {
+
+                    message =
+                        "Please enter a valid email address.";
+
+                }
+
+                else if (
+                    error.code ===
+                    "auth/weak-password"
+                ) {
+
+                    message =
+                        "Password is too weak. Use at least 6 characters.";
+
+                }
+
+                else if (
+                    error.code ===
+                    "auth/network-request-failed"
+                ) {
+
+                    message =
+                        "Network error. Please check your internet connection.";
+
+                }
+
+                else if (error.message) {
+
+                    message =
+                        error.message;
+
+                }
+
+
+                alert(message);
+
+            }
+
+            finally {
+
+                /* -----------------------------------------
+                   ENABLE BUTTON
+                ----------------------------------------- */
+
+                addButton.disabled = false;
+
+                addButton.innerHTML = `
+                    <i class="fas fa-user-plus"></i>
+                    Add Mechanic
+                `;
+
+            }
+
+        }
+
+    );
+
+}
 /* =========================================================
    RENDER MECHANICS
 ========================================================= */
