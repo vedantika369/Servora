@@ -3,173 +3,593 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>Admin Dashboard | Servora</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="/css/style.css">
+    <title>Admin Dashboard | Servora</title>
+
+    <link rel="stylesheet"
+        href="../css/style.css">
 
 </head>
 
+
 <body>
 
-<!-- ===========================
-        NAVBAR
-=========================== -->
 
-<header class="navbar">
+<!-- =========================================
+     ADMIN NAVBAR
+========================================= -->
 
-<div class="logo">
+<nav class="navbar">
 
-<h2>Servora Admin</h2>
+    <div class="container">
 
-</div>
+        <!-- Logo -->
 
-<nav>
+        <a href="dashboard.html"
+            class="logo">
 
-<a href="admin/dashboard.html">
-Dashboard
-</a>
+            <img src="../images/logo.png"
+                alt="Servora Logo">
 
-<button id="logoutBtn">
-Logout
-</button>
+            <div class="logo-text">
+
+                <h2>Servora</h2>
+
+                <span>
+                    Drive Smart. Service Smarter.
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- Navigation -->
+
+        <ul class="nav-links">
+
+            <li>
+
+                <a href="dashboard.html"
+                    class="active">
+
+                    Dashboard
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="../services.html">
+
+                    Services
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="../contact.html">
+
+                    Contact
+
+                </a>
+
+            </li>
+
+        </ul>
+
+
+        <!-- Right Buttons -->
+
+        <div class="nav-buttons">
+
+            <button id="logoutBtn"
+                class="btn-login">
+
+                Logout
+
+            </button>
+
+        </div>
+
+
+        <!-- Mobile Menu -->
+
+        <div class="menu-btn">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </div>
+
+    </div>
 
 </nav>
 
-</header>
 
-<!-- ===========================
-      ADMIN DASHBOARD
-=========================== -->
+
+<!-- =========================================
+     ADMIN DASHBOARD
+========================================= -->
 
 <section class="admin-section">
 
-<div class="admin-container">
+    <div class="admin-container">
 
-<h1>
-Admin Dashboard
-</h1>
 
-<p>
-Manage users, mechanics and service bookings.
-</p>
+        <!-- Welcome -->
 
-<!-- Dashboard Cards -->
+        <div class="admin-welcome">
 
-<div class="admin-cards">
+            <div>
 
-<div class="admin-card">
+                <span class="section-tag">
 
-<h2 id="userCount">
-0
-</h2>
+                    <i class="fas fa-user-shield"></i>
 
-<p>
-Total Users
-</p>
+                    Administration
 
-</div>
+                </span>
 
-<div class="admin-card">
+                <h1>
 
-<h2 id="bookingCount">
-0
-</h2>
+                    Admin Dashboard
 
-<p>
-Total Bookings
-</p>
+                </h1>
 
-</div>
+                <p>
 
-<div class="admin-card">
+                    Manage customers, mechanics and
+                    vehicle service bookings from one place.
 
-<h2 id="pendingCount">
-0
-</h2>
+                </p>
 
-<p>
-Pending Services
-</p>
+            </div>
 
-</div>
+        </div>
 
-</div>
 
-<!-- Booking Management -->
 
-<div class="booking-management">
+        <!-- =====================================
+             DASHBOARD STATISTICS
+        ====================================== -->
 
-<h2>
-Service Management
-</h2>
+        <div class="admin-cards">
 
-<div id="bookingList">
 
-<p>
-Loading bookings...
-</p>
+            <!-- Users -->
 
-</div>
+            <div class="admin-card">
 
-</div>
+                <div class="admin-card-icon">
 
-</div>
+                    <i class="fas fa-users"></i>
+
+                </div>
+
+                <div>
+
+                    <h2 id="userCount">
+                        0
+                    </h2>
+
+                    <p>
+                        Total Customers & Users
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Bookings -->
+
+            <div class="admin-card">
+
+                <div class="admin-card-icon">
+
+                    <i class="fas fa-calendar-check"></i>
+
+                </div>
+
+                <div>
+
+                    <h2 id="bookingCount">
+                        0
+                    </h2>
+
+                    <p>
+                        Total Bookings
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Pending -->
+
+            <div class="admin-card">
+
+                <div class="admin-card-icon">
+
+                    <i class="fas fa-clock"></i>
+
+                </div>
+
+                <div>
+
+                    <h2 id="pendingCount">
+                        0
+                    </h2>
+
+                    <p>
+                        Pending Services
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================
+             ADMIN QUICK INFORMATION
+        ====================================== -->
+
+        <div class="admin-info-grid">
+
+
+            <div class="admin-info-card">
+
+                <div class="admin-info-icon">
+
+                    <i class="fas fa-user-gear"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>
+                        Mechanic Management
+                    </h3>
+
+                    <p>
+
+                        Assign available mechanics to
+                        customer service bookings and
+                        manage service progress.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="admin-info-card">
+
+                <div class="admin-info-icon">
+
+                    <i class="fas fa-car"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>
+                        Service Management
+                    </h3>
+
+                    <p>
+
+                        Review customer requests,
+                        assign mechanics and update
+                        service status.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================
+             BOOKING MANAGEMENT
+        ====================================== -->
+
+        <div class="booking-management">
+
+
+            <div class="management-header">
+
+                <div>
+
+                    <span class="section-tag">
+
+                        <i class="fas fa-screwdriver-wrench"></i>
+
+                        Management
+
+                    </span>
+
+                    <h2>
+                        Service Bookings
+                    </h2>
+
+                    <p>
+
+                        Review and manage customer
+                        service requests.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Booking List -->
+
+            <div id="bookingList">
+
+                <div class="admin-booking-card">
+
+                    <p>
+                        Loading bookings...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
 
 </section>
 
-<!-- ===========================
-        FOOTER
-=========================== -->
+
+
+<!-- =========================================
+     ADMIN FOOTER
+========================================= -->
 
 <footer class="footer">
 
-<div class="footer-bottom">
+    <div class="footer-container">
 
-<p>
-© 2026 Servora. All Rights Reserved.
-</p>
 
-</div>
+        <!-- Brand -->
+
+        <div class="footer-brand">
+
+            <a href="dashboard.html"
+                class="footer-logo">
+
+                <img src="../images/logo.png"
+                    alt="Servora Logo">
+
+                <div class="logo-text">
+
+                    <h2>
+                        Servora
+                    </h2>
+
+                    <span>
+                        Drive Smart. Service Smarter.
+                    </span>
+
+                </div>
+
+            </a>
+
+            <p>
+
+                Smart vehicle service management
+                made simple, transparent and convenient.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- Administration -->
+
+        <div class="footer-column">
+
+            <h3>
+                Administration
+            </h3>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="../services.html">
+                Services
+            </a>
+
+            <a href="../contact.html">
+                Contact
+            </a>
+
+        </div>
+
+
+
+        <!-- Servora -->
+
+        <div class="footer-column">
+
+            <h3>
+                Servora
+            </h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../about.html">
+                About Us
+            </a>
+
+            <a href="../services.html">
+                Services
+            </a>
+
+            <a href="../contact.html">
+                Contact
+            </a>
+
+        </div>
+
+
+
+        <!-- Contact -->
+
+        <div class="footer-column footer-contact">
+
+            <h3>
+                Support
+            </h3>
+
+            <p>
+
+                <i class="fas fa-phone"></i>
+
+                +91 XXXXX XXXXX
+
+            </p>
+
+            <p>
+
+                <i class="fas fa-envelope"></i>
+
+                support@servora.com
+
+            </p>
+
+            <p>
+
+                <i class="fas fa-location-dot"></i>
+
+                Satara, Maharashtra, India
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- Footer Bottom -->
+
+    <div class="footer-bottom">
+
+        <p>
+
+            © 2026 Servora. All Rights Reserved.
+
+        </p>
+
+        <p>
+
+            Developed by Vedantika Deshmukh from
+            Arvind Gavali College of Engineering,
+            Satara in Inplant Training 2026.
+
+        </p>
+
+    </div>
 
 </footer>
 
-<!-- ===========================
-      JAVASCRIPT
-=========================== -->
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
 
 <script type="module">
 
+
 /* ==========================================
    SERVORA ADMIN DASHBOARD
-   REALTIME DATABASE
+   FIREBASE REALTIME DATABASE
 ========================================== */
 
+
 import {
+
     auth,
+
     db
+
 }
+
 from "/static/js/firebase-config.js";
 
+
+
 import {
+
     checkRole
+
 }
+
 from "/static/js/auth-guard.js";
 
-import {
-    signOut,
-    onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 import {
-    ref,
-    get,
-    update
+
+    signOut,
+
+    onAuthStateChanged
+
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+import {
+
+    ref,
+
+    get,
+
+    update
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
 
 
 /* ==========================================
@@ -177,9 +597,13 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 ========================================== */
 
 checkRole(
+
     "admin",
+
     "login.html"
+
 );
+
 
 
 /* ==========================================
@@ -202,6 +626,7 @@ const logoutBtn =
     document.getElementById("logoutBtn");
 
 
+
 /* ==========================================
    VARIABLES
 ========================================== */
@@ -215,6 +640,7 @@ let users = {};
 let currentAdmin = null;
 
 
+
 /* ==========================================
    AUTHENTICATION
 ========================================== */
@@ -223,7 +649,8 @@ onAuthStateChanged(auth, (user) => {
 
     if (!user) {
 
-        window.location.href = "login.html";
+        window.location.href =
+            "login.html";
 
         return;
 
@@ -235,6 +662,8 @@ onAuthStateChanged(auth, (user) => {
 
 });
 
+
+
 /* ==========================================
    LOAD DASHBOARD DATA
 ========================================== */
@@ -243,32 +672,45 @@ async function loadDashboard() {
 
     try {
 
+
         mechanics = [];
+
         bookings = {};
+
         users = {};
 
-        /* -------------------------
+
+
+        /* ======================================
            LOAD USERS
-        ------------------------- */
+        ====================================== */
 
         const usersSnapshot =
             await get(ref(db, "users"));
 
+
         if (usersSnapshot.exists()) {
 
-            users = usersSnapshot.val();
+            users =
+                usersSnapshot.val();
+
 
             const totalUsers =
                 Object.keys(users).length;
 
+
             userCount.textContent =
                 totalUsers;
 
-            // Find Mechanics
+
+
+            /* Find Mechanics */
 
             Object.keys(users).forEach((uid) => {
 
-                const user = users[uid];
+                const user =
+                    users[uid];
+
 
                 if (user.role === "mechanic") {
 
@@ -276,7 +718,9 @@ async function loadDashboard() {
 
                         uid: uid,
 
-                        name: user.name || "Mechanic"
+                        name:
+                            user.name ||
+                            "Mechanic"
 
                     });
 
@@ -288,55 +732,83 @@ async function loadDashboard() {
 
         else {
 
-            userCount.textContent = "0";
+            userCount.textContent =
+                "0";
 
         }
 
 
-        /* -------------------------
+
+        /* ======================================
            LOAD BOOKINGS
-        ------------------------- */
+        ====================================== */
 
         const bookingSnapshot =
             await get(ref(db, "bookings"));
 
-        bookingList.innerHTML = "";
 
-        let totalBookings = 0;
-        let pendingBookings = 0;
+        bookingList.innerHTML =
+            "";
+
+
+        let totalBookings =
+            0;
+
+
+        let pendingBookings =
+            0;
+
+
 
         if (bookingSnapshot.exists()) {
 
-            bookings = bookingSnapshot.val();
+            bookings =
+                bookingSnapshot.val();
+
 
             totalBookings =
                 Object.keys(bookings).length;
 
+
             bookingCount.textContent =
                 totalBookings;
 
-            Object.keys(bookings).forEach((bookingId) => {
 
-                const booking =
-                    bookings[bookingId];
 
-                if (booking.status === "Pending") {
+            Object.keys(bookings).forEach(
+                (bookingId) => {
 
-                    pendingBookings++;
+                    const booking =
+                        bookings[bookingId];
+
+
+                    if (
+                        booking.status ===
+                        "Pending"
+                    ) {
+
+                        pendingBookings++;
+
+                    }
 
                 }
-
-            });
+            );
 
         }
+
+
 
         bookingCount.textContent =
             totalBookings;
 
+
         pendingCount.textContent =
             pendingBookings;
 
+
+
         renderBookings();
+
 
     }
 
@@ -344,13 +816,18 @@ async function loadDashboard() {
 
         console.error(error);
 
+
         bookingList.innerHTML = `
 
             <div class="admin-booking-card">
 
-                <h3>Unable to load dashboard.</h3>
+                <h3>
+                    Unable to load dashboard
+                </h3>
 
-                <p>${error.message}</p>
+                <p>
+                    ${error.message}
+                </p>
 
             </div>
 
@@ -359,6 +836,8 @@ async function loadDashboard() {
     }
 
 }
+
+
 
 /* ==========================================
    RENDER BOOKINGS
@@ -368,15 +847,33 @@ function renderBookings() {
 
     bookingList.innerHTML = "";
 
-    if (Object.keys(bookings).length === 0) {
+
+    if (
+        Object.keys(bookings).length === 0
+    ) {
 
         bookingList.innerHTML = `
 
             <div class="admin-booking-card">
 
-                <h3>No Bookings Found</h3>
+                <div class="empty-state">
 
-                <p>No service requests available.</p>
+                    <div class="empty-icon">
+
+                        <i class="fas fa-calendar-xmark"></i>
+
+                    </div>
+
+                    <h3>
+                        No Bookings Found
+                    </h3>
+
+                    <p>
+                        No customer service requests
+                        are available at the moment.
+                    </p>
+
+                </div>
 
             </div>
 
@@ -386,123 +883,325 @@ function renderBookings() {
 
     }
 
-    Object.keys(bookings).forEach((bookingId) => {
 
-        const booking = bookings[bookingId];
 
-        let mechanicOptions =
-            `<option value="">Select Mechanic</option>`;
+    Object.keys(bookings).forEach(
+        (bookingId) => {
 
-        mechanics.forEach((mechanic) => {
 
-            mechanicOptions += `
+        const booking =
+            bookings[bookingId];
 
-                <option
-                    value="${mechanic.uid}"
-                    ${booking.mechanicId === mechanic.uid ? "selected" : ""}
-                >
 
-                    ${mechanic.name}
 
-                </option>
+        /* ======================================
+           MECHANIC OPTIONS
+        ====================================== */
 
-            `;
+        let mechanicOptions = `
 
-        });
+            <option value="">
+                Select Mechanic
+            </option>
+
+        `;
+
+
+
+        mechanics.forEach(
+            (mechanic) => {
+
+                mechanicOptions += `
+
+                    <option
+
+                        value="${mechanic.uid}"
+
+                        ${
+                            booking.mechanicId ===
+                            mechanic.uid
+                            ? "selected"
+                            : ""
+                        }
+
+                    >
+
+                        ${mechanic.name}
+
+                    </option>
+
+                `;
+
+            }
+        );
+
+
+
+        /* ======================================
+           BOOKING CARD
+        ====================================== */
 
         bookingList.innerHTML += `
 
-        <div class="admin-booking-card">
+            <div class="admin-booking-card">
 
-            <h2>${booking.serviceType}</h2>
 
-            <hr>
+                <div class="booking-card-header">
 
-            <h3>Customer Details</h3>
+                    <div>
 
-            <p>
-                <strong>Name:</strong>
-                ${booking.customerName}
-            </p>
+                        <span class="booking-label">
 
-            <p>
-                <strong>Email:</strong>
-                ${booking.customerEmail}
-            </p>
+                            Service Request
 
-            <h3>Vehicle Details</h3>
+                        </span>
 
-            <p>
-                <strong>Vehicle:</strong>
-                ${booking.vehicleName}
-            </p>
+                        <h2>
 
-            <p>
-                <strong>Number:</strong>
-                ${booking.vehicleNumber}
-            </p>
+                            ${booking.serviceType ||
+                            "Vehicle Service"}
 
-            <p>
-                <strong>Date:</strong>
-                ${booking.bookingDate}
-            </p>
+                        </h2>
 
-            <p>
-                <strong>Problem:</strong>
-                ${booking.problemDescription}
-            </p>
+                    </div>
 
-            <label>
-                Assign Mechanic
-            </label>
 
-            <select id="mechanic-${bookingId}">
+                    <span class="booking-status">
 
-                ${mechanicOptions}
+                        ${booking.status ||
+                        "Pending"}
 
-            </select>
+                    </span>
 
-            <label>
-                Update Status
-            </label>
+                </div>
 
-            <select id="status-${bookingId}">
 
-                <option value="Pending"
-                    ${booking.status === "Pending" ? "selected" : ""}>
-                    Pending
-                </option>
 
-                <option value="Assigned"
-                    ${booking.status === "Assigned" ? "selected" : ""}>
-                    Assigned
-                </option>
+                <hr>
 
-                <option value="Confirmed"
-                    ${booking.status === "Confirmed" ? "selected" : ""}>
-                    Confirmed
-                </option>
 
-                <option value="In Progress"
-                    ${booking.status === "In Progress" ? "selected" : ""}>
-                    In Progress
-                </option>
 
-                <option value="Completed"
-                    ${booking.status === "Completed" ? "selected" : ""}>
-                    Completed
-                </option>
+                <!-- Customer -->
 
-            </select>
+                <h3>
+                    <i class="fas fa-user"></i>
+                    Customer Details
+                </h3>
 
-            <button
-                onclick="updateBooking('${bookingId}')">
 
-                Save Changes
+                <p>
 
-            </button>
+                    <strong>Name:</strong>
 
-        </div>
+                    ${booking.customerName ||
+                    "Not Available"}
+
+                </p>
+
+
+                <p>
+
+                    <strong>Email:</strong>
+
+                    ${booking.customerEmail ||
+                    "Not Available"}
+
+                </p>
+
+
+
+                <!-- Vehicle -->
+
+                <h3>
+                    <i class="fas fa-car"></i>
+                    Vehicle Details
+                </h3>
+
+
+                <p>
+
+                    <strong>Vehicle:</strong>
+
+                    ${booking.vehicleName ||
+                    "Not Available"}
+
+                </p>
+
+
+                <p>
+
+                    <strong>Number:</strong>
+
+                    ${booking.vehicleNumber ||
+                    "Not Available"}
+
+                </p>
+
+
+
+                <p>
+
+                    <strong>Service Date:</strong>
+
+                    ${booking.bookingDate ||
+                    "Not Available"}
+
+                </p>
+
+
+
+                <!-- Problem -->
+
+                <h3>
+                    <i class="fas fa-triangle-exclamation"></i>
+                    Customer Requirement
+                </h3>
+
+
+                <p>
+
+                    ${
+                        booking.problemDescription ||
+                        "No problem description provided."
+                    }
+
+                </p>
+
+
+
+                <!-- Mechanic -->
+
+                <div class="admin-form-group">
+
+                    <label
+                        for="mechanic-${bookingId}">
+
+                        Assign Mechanic
+
+                    </label>
+
+
+                    <select
+                        id="mechanic-${bookingId}">
+
+                        ${mechanicOptions}
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Status -->
+
+                <div class="admin-form-group">
+
+                    <label
+                        for="status-${bookingId}">
+
+                        Update Service Status
+
+                    </label>
+
+
+                    <select
+                        id="status-${bookingId}">
+
+                        <option
+                            value="Pending"
+                            ${
+                                booking.status ===
+                                "Pending"
+                                ? "selected"
+                                : ""
+                            }>
+
+                            Pending
+
+                        </option>
+
+
+                        <option
+                            value="Assigned"
+                            ${
+                                booking.status ===
+                                "Assigned"
+                                ? "selected"
+                                : ""
+                            }>
+
+                            Assigned
+
+                        </option>
+
+
+                        <option
+                            value="Confirmed"
+                            ${
+                                booking.status ===
+                                "Confirmed"
+                                ? "selected"
+                                : ""
+                            }>
+
+                            Confirmed
+
+                        </option>
+
+
+                        <option
+                            value="In Progress"
+                            ${
+                                booking.status ===
+                                "In Progress"
+                                ? "selected"
+                                : ""
+                            }>
+
+                            In Progress
+
+                        </option>
+
+
+                        <option
+                            value="Completed"
+                            ${
+                                booking.status ===
+                                "Completed"
+                                ? "selected"
+                                : ""
+                            }>
+
+                            Completed
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Save -->
+
+                <button
+
+                    class="admin-save-btn"
+
+                    onclick="
+                        updateBooking(
+                            '${bookingId}'
+                        )
+                    ">
+
+                    <i class="fas fa-save"></i>
+
+                    Save Changes
+
+                </button>
+
+
+            </div>
 
         `;
 
@@ -510,66 +1209,102 @@ function renderBookings() {
 
 }
 
+
+
 /* ==========================================
    UPDATE BOOKING
 ========================================== */
 
-window.updateBooking = async function (bookingId) {
+window.updateBooking =
+async function (bookingId) {
 
     try {
 
+
         const mechanicId =
             document.getElementById(
-                "mechanic-" + bookingId
+                "mechanic-" +
+                bookingId
             ).value;
+
+
 
         const status =
             document.getElementById(
-                "status-" + bookingId
+                "status-" +
+                bookingId
             ).value;
 
-        let mechanicName = "";
 
-        // Find selected mechanic name
+
+        let mechanicName =
+            "";
+
+
+
+        /* Find mechanic */
 
         if (mechanicId !== "") {
 
             const mechanic =
-                mechanics.find(m => m.uid === mechanicId);
+                mechanics.find(
+                    m =>
+                    m.uid ===
+                    mechanicId
+                );
+
 
             if (mechanic) {
 
-                mechanicName = mechanic.name;
+                mechanicName =
+                    mechanic.name;
 
             }
 
         }
 
-        // Update Realtime Database
+
+
+        /* Update Realtime Database */
 
         await update(
 
-            ref(db, "bookings/" + bookingId),
+            ref(
+                db,
+                "bookings/" +
+                bookingId
+            ),
 
             {
 
-                mechanicId: mechanicId,
+                mechanicId:
+                    mechanicId,
 
-                mechanicName: mechanicName,
+                mechanicName:
+                    mechanicName,
 
-                status: status,
+                status:
+                    status,
 
-                updatedAt: Date.now()
+                updatedAt:
+                    Date.now()
 
             }
 
         );
 
-        alert("Booking updated successfully.");
 
-        // Refresh dashboard
+
+        alert(
+            "Booking updated successfully."
+        );
+
+
+
+        /* Refresh dashboard */
 
         await loadDashboard();
+
 
     }
 
@@ -577,11 +1312,17 @@ window.updateBooking = async function (bookingId) {
 
         console.error(error);
 
-        alert("Unable to update booking.\n\n" + error.message);
+
+        alert(
+            "Unable to update booking.\n\n" +
+            error.message
+        );
 
     }
 
 };
+
+
 
 /* ==========================================
    LOGOUT
@@ -589,20 +1330,31 @@ window.updateBooking = async function (bookingId) {
 
 if (logoutBtn) {
 
-    logoutBtn.addEventListener("click", async () => {
+    logoutBtn.addEventListener(
+        "click",
+        async () => {
+
 
         const confirmLogout =
-            confirm("Are you sure you want to logout?");
+            confirm(
+                "Are you sure you want to logout?"
+            );
 
-        if (!confirmLogout) return;
+
+        if (!confirmLogout)
+            return;
+
 
         try {
 
             await signOut(auth);
 
+
             sessionStorage.clear();
 
-            window.location.href = "login.html";
+
+            window.location.href =
+                "login.html";
 
         }
 
@@ -610,7 +1362,10 @@ if (logoutBtn) {
 
             console.error(error);
 
-            alert("Logout failed.");
+
+            alert(
+                "Logout failed."
+            );
 
         }
 
@@ -619,28 +1374,43 @@ if (logoutBtn) {
 }
 
 
+
 /* ==========================================
    INITIALIZE
 ========================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    userCount.textContent = "0";
-    bookingCount.textContent = "0";
-    pendingCount.textContent = "0";
+        userCount.textContent =
+            "0";
 
-    bookingList.innerHTML = `
-        <p>Loading dashboard...</p>
-    `;
+        bookingCount.textContent =
+            "0";
 
-});
+        pendingCount.textContent =
+            "0";
 
 
-/* ==========================================
-   END OF ADMIN DASHBOARD
-========================================== */
+        bookingList.innerHTML = `
+
+            <div class="admin-booking-card">
+
+                <p>
+                    Loading dashboard...
+                </p>
+
+            </div>
+
+        `;
+
+    }
+);
+
 
 </script>
+
 
 </body>
 
