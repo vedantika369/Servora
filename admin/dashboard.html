@@ -6,16 +6,15 @@
     <meta charset="UTF-8">
 
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+        content="width=device-width, initial-scale=1.0">
 
     <title>Admin Dashboard | Servora</title>
 
-    <link rel="stylesheet" href="../css/style.css">
-
-    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="../css/style.css">
 
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
@@ -35,12 +34,13 @@
         <!-- Logo -->
 
         <a href="dashboard.html"
-           class="admin-logo">
+            class="admin-logo">
 
-            <img src="../images/logo.png"
-                 alt="Servora Logo">
+            <img
+                src="../images/logo.png"
+                alt="Servora Logo">
 
-            <div class="admin-logo-text">
+            <div>
 
                 <h2>Servora</h2>
 
@@ -57,47 +57,42 @@
 
         <nav class="admin-nav-links">
 
-            <a href="dashboard.html"
-               class="active">
+            <a href="#dashboard"
+                class="active">
 
-                <i class="fa-solid fa-chart-line"></i>
+                <i class="fas fa-chart-line"></i>
 
                 Dashboard
 
             </a>
 
-
             <a href="#bookings">
 
-                <i class="fa-solid fa-calendar-check"></i>
+                <i class="fas fa-calendar-check"></i>
 
                 Bookings
 
             </a>
 
-
             <a href="#customers">
 
-                <i class="fa-solid fa-users"></i>
+                <i class="fas fa-users"></i>
 
                 Customers
 
             </a>
 
-
             <a href="#mechanics">
 
-                <i class="fa-solid fa-user-gear"></i>
+                <i class="fas fa-user-gear"></i>
 
                 Mechanics
 
             </a>
 
+            <button id="logoutBtn">
 
-            <button id="logoutBtn"
-                    class="admin-logout">
-
-                <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fas fa-right-from-bracket"></i>
 
                 Logout
 
@@ -119,835 +114,413 @@
 <main class="admin-main">
 
 
-    <!-- =================================================
-         PAGE HEADER
-    ================================================== -->
+<!-- =====================================================
+     WELCOME
+===================================================== -->
 
-    <section class="admin-page-header">
+<section
+    id="dashboard"
+    class="admin-welcome">
+
+    <div>
+
+        <span class="admin-section-tag">
+
+            <i class="fas fa-shield-halved"></i>
+
+            Admin Control Center
+
+        </span>
+
+        <h1>
+
+            Servora
+            <span>Admin Dashboard</span>
+
+        </h1>
+
+        <p>
+
+            Manage bookings, customers, mechanics,
+            service progress and vehicle service operations
+            from one place.
+
+        </p>
+
+    </div>
+
+
+    <button
+        id="refreshDashboard"
+        class="admin-refresh-btn">
+
+        <i class="fas fa-arrows-rotate"></i>
+
+        Refresh Data
+
+    </button>
+
+</section>
+
+
+
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
+
+<section class="admin-stats">
+
+
+    <div class="admin-stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-calendar-check"></i>
+
+        </div>
+
+        <div>
+
+            <span>Total Bookings</span>
+
+            <h2 id="totalBookings">
+                0
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="admin-stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-clock"></i>
+
+        </div>
+
+        <div>
+
+            <span>Pending</span>
+
+            <h2 id="pendingBookings">
+                0
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="admin-stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-screwdriver-wrench"></i>
+
+        </div>
+
+        <div>
+
+            <span>In Progress</span>
+
+            <h2 id="inProgressBookings">
+                0
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="admin-stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-circle-check"></i>
+
+        </div>
+
+        <div>
+
+            <span>Completed</span>
+
+            <h2 id="completedBookings">
+                0
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="admin-stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-users"></i>
+
+        </div>
+
+        <div>
+
+            <span>Customers</span>
+
+            <h2 id="totalCustomers">
+                0
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="admin-stat-card">
+
+        <div class="stat-icon">
+
+            <i class="fas fa-user-gear"></i>
+
+        </div>
+
+        <div>
+
+            <span>Mechanics</span>
+
+            <h2 id="totalMechanics">
+                0
+            </h2>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     BOOKING MANAGEMENT
+===================================================== -->
+
+<section
+    id="bookings"
+    class="admin-panel-section">
+
+
+    <div class="admin-section-header">
 
         <div>
 
             <span class="admin-section-tag">
 
-                <i class="fa-solid fa-shield-halved"></i>
+                <i class="fas fa-calendar-days"></i>
 
-                Administration
+                Service Management
 
             </span>
 
-
-            <h1>
-
-                Admin Dashboard
-
-            </h1>
-
+            <h2>
+                Service Bookings
+            </h2>
 
             <p>
 
-                Manage Servora bookings, customers, mechanics,
-                services and payments from one place.
+                View, assign, inspect and manage
+                customer service bookings.
 
             </p>
 
         </div>
 
 
-        <div class="admin-header-actions">
+        <div class="booking-tools">
 
-            <button id="refreshDashboard"
-                    class="admin-btn secondary">
-
-                <i class="fa-solid fa-arrows-rotate"></i>
-
-                Refresh
-
-            </button>
-
-        </div>
-
-    </section>
+            <input
+                type="text"
+                id="searchBooking"
+                placeholder="Search customer, vehicle or booking...">
 
 
+            <select id="statusFilter">
 
-    <!-- =================================================
-         STATISTICS
-    ================================================== -->
+                <option value="all">
+                    All Status
+                </option>
 
-    <section class="admin-stats-grid">
-
-
-        <!-- Total Bookings -->
-
-        <div class="admin-stat-card">
-
-            <div class="admin-stat-icon">
-
-                <i class="fa-solid fa-calendar-check"></i>
-
-            </div>
-
-            <div>
-
-                <span>
-                    Total Bookings
-                </span>
-
-                <h2 id="totalBookings">
-                    0
-                </h2>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- Pending -->
-
-        <div class="admin-stat-card">
-
-            <div class="admin-stat-icon">
-
-                <i class="fa-solid fa-clock"></i>
-
-            </div>
-
-            <div>
-
-                <span>
+                <option value="Pending">
                     Pending
-                </span>
+                </option>
 
-                <h2 id="pendingBookings">
-                    0
-                </h2>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- Confirmed -->
-
-        <div class="admin-stat-card">
-
-            <div class="admin-stat-icon">
-
-                <i class="fa-solid fa-circle-check"></i>
-
-            </div>
-
-            <div>
-
-                <span>
+                <option value="Confirmed">
                     Confirmed
-                </span>
+                </option>
 
-                <h2 id="confirmedBookings">
-                    0
-                </h2>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- In Progress -->
-
-        <div class="admin-stat-card">
-
-            <div class="admin-stat-icon">
-
-                <i class="fa-solid fa-screwdriver-wrench"></i>
-
-            </div>
-
-            <div>
-
-                <span>
+                <option value="In Progress">
                     In Progress
-                </span>
+                </option>
 
-                <h2 id="inProgressBookings">
-                    0
-                </h2>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- Completed -->
-
-        <div class="admin-stat-card">
-
-            <div class="admin-stat-icon">
-
-                <i class="fa-solid fa-check-double"></i>
-
-            </div>
-
-            <div>
-
-                <span>
+                <option value="Completed">
                     Completed
-                </span>
+                </option>
 
-                <h2 id="completedBookings">
-                    0
-                </h2>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- Customers -->
-
-        <div class="admin-stat-card">
-
-            <div class="admin-stat-icon">
-
-                <i class="fa-solid fa-users"></i>
-
-            </div>
-
-            <div>
-
-                <span>
-                    Customers
-                </span>
-
-                <h2 id="totalCustomers">
-                    0
-                </h2>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- Mechanics -->
-
-        <div class="admin-stat-card">
-
-            <div class="admin-stat-icon">
-
-                <i class="fa-solid fa-user-gear"></i>
-
-            </div>
-
-            <div>
-
-                <span>
-                    Mechanics
-                </span>
-
-                <h2 id="totalMechanics">
-                    0
-                </h2>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- Revenue -->
-
-        <div class="admin-stat-card">
-
-            <div class="admin-stat-icon">
-
-                <i class="fa-solid fa-indian-rupee-sign"></i>
-
-            </div>
-
-            <div>
-
-                <span>
-                    Revenue
-                </span>
-
-                <h2 id="totalRevenue">
-                    ₹0
-                </h2>
-
-            </div>
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- =================================================
-         QUICK ACTIONS
-    ================================================== -->
-
-    <section class="admin-quick-actions">
-
-        <div class="admin-section-heading">
-
-            <div>
-
-                <span class="admin-small-label">
-                    Management
-                </span>
-
-                <h2>
-                    Quick Actions
-                </h2>
-
-            </div>
-
-        </div>
-
-
-        <div class="quick-action-grid">
-
-
-            <a href="#bookings"
-               class="quick-action-card">
-
-                <i class="fa-solid fa-calendar-check"></i>
-
-                <div>
-
-                    <h3>
-                        Manage Bookings
-                    </h3>
-
-                    <p>
-                        View and update customer bookings.
-                    </p>
-
-                </div>
-
-            </a>
-
-
-
-            <a href="#customers"
-               class="quick-action-card">
-
-                <i class="fa-solid fa-users"></i>
-
-                <div>
-
-                    <h3>
-                        Customers
-                    </h3>
-
-                    <p>
-                        View registered Servora customers.
-                    </p>
-
-                </div>
-
-            </a>
-
-
-
-            <a href="#mechanics"
-               class="quick-action-card">
-
-                <i class="fa-solid fa-user-gear"></i>
-
-                <div>
-
-                    <h3>
-                        Mechanics
-                    </h3>
-
-                    <p>
-                        Manage mechanics and assignments.
-                    </p>
-
-                </div>
-
-            </a>
-
-
-
-            <a href="#payments"
-               class="quick-action-card">
-
-                <i class="fa-solid fa-wallet"></i>
-
-                <div>
-
-                    <h3>
-                        Payments
-                    </h3>
-
-                    <p>
-                        Monitor service payments.
-                    </p>
-
-                </div>
-
-            </a>
+            </select>
 
 
         </div>
 
-    </section>
+    </div>
+
+
+    <div
+        id="bookingContainer"
+        class="admin-booking-container">
+
+        <div class="admin-loading">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            Loading bookings...
+
+        </div>
+
+    </div>
+
+
+</section>
 
 
 
-    <!-- =================================================
-         BOOKINGS
-    ================================================== -->
+<!-- =====================================================
+     CUSTOMER MANAGEMENT
+===================================================== -->
 
-    <section class="admin-content-section"
-             id="bookings">
-
-
-        <div class="admin-section-heading">
+<section
+    id="customers"
+    class="admin-panel-section">
 
 
-            <div>
+    <div class="admin-section-header">
 
-                <span class="admin-small-label">
-                    Service Management
-                </span>
+        <div>
 
-                <h2>
-                    Customer Bookings
-                </h2>
+            <span class="admin-section-tag">
 
-                <p>
-                    Manage every service booking from Servora customers.
-                </p>
+                <i class="fas fa-users"></i>
 
-            </div>
+                Customer Management
 
+            </span>
 
-            <!-- Search -->
+            <h2>
+                Registered Customers
+            </h2>
 
-            <div class="admin-search">
+            <p>
 
-                <i class="fa-solid fa-magnifying-glass"></i>
+                View customer accounts and
+                contact information.
 
-                <input
-                    type="search"
-                    id="searchBooking"
-                    placeholder="Search customer, vehicle, service..."
-                >
-
-            </div>
-
+            </p>
 
         </div>
 
 
-        <!-- Booking Container -->
+        <input
+            type="text"
+            id="searchCustomer"
+            class="admin-search"
+            placeholder="Search customers...">
 
-        <div id="bookingContainer"
-             class="admin-booking-container">
+    </div>
 
-            <div class="admin-loading">
 
-                <i class="fa-solid fa-spinner fa-spin"></i>
+    <div
+        id="customerContainer"
+        class="admin-people-grid">
 
-                <p>
-                    Loading bookings...
-                </p>
+        <div class="admin-loading">
 
-            </div>
+            <i class="fas fa-spinner fa-spin"></i>
+
+            Loading customers...
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     MECHANIC MANAGEMENT
+===================================================== -->
+
+<section
+    id="mechanics"
+    class="admin-panel-section">
+
+
+    <div class="admin-section-header">
+
+        <div>
+
+            <span class="admin-section-tag">
+
+                <i class="fas fa-user-gear"></i>
+
+                Staff Management
+
+            </span>
+
+            <h2>
+                Mechanics
+            </h2>
+
+            <p>
+
+                View available mechanics and
+                their service assignments.
+
+            </p>
 
         </div>
 
 
-    </section>
+        <input
+            type="text"
+            id="searchMechanic"
+            class="admin-search"
+            placeholder="Search mechanics...">
+
+    </div>
 
 
+    <div
+        id="mechanicContainer"
+        class="admin-people-grid">
 
-    <!-- =================================================
-         CUSTOMERS
-    ================================================== -->
+        <div class="admin-loading">
 
-    <section class="admin-content-section"
-             id="customers">
+            <i class="fas fa-spinner fa-spin"></i>
 
-
-        <div class="admin-section-heading">
-
-            <div>
-
-                <span class="admin-small-label">
-                    Customer Management
-                </span>
-
-                <h2>
-                    Customers
-                </h2>
-
-                <p>
-                    View registered Servora customers.
-                </p>
-
-            </div>
+            Loading mechanics...
 
         </div>
 
+    </div>
 
-        <div id="customerContainer"
-             class="admin-cards-grid">
 
-            <div class="admin-loading">
-
-                <i class="fa-solid fa-spinner fa-spin"></i>
-
-                <p>
-                    Loading customers...
-                </p>
-
-            </div>
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- =================================================
-         MECHANICS
-    ================================================== -->
-
-    <section class="admin-content-section"
-             id="mechanics">
-
-
-        <div class="admin-section-heading">
-
-            <div>
-
-                <span class="admin-small-label">
-                    Team Management
-                </span>
-
-                <h2>
-                    Mechanics
-                </h2>
-
-                <p>
-                    Manage mechanics responsible for customer vehicle services.
-                </p>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="admin-btn primary"
-                id="addMechanicBtn">
-
-                <i class="fa-solid fa-user-plus"></i>
-
-                Add Mechanic
-
-            </button>
-
-
-        </div>
-
-
-        <div id="mechanicContainer"
-             class="admin-cards-grid">
-
-            <div class="admin-loading">
-
-                <i class="fa-solid fa-spinner fa-spin"></i>
-
-                <p>
-                    Loading mechanics...
-                </p>
-
-            </div>
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- =================================================
-         PAYMENT OVERVIEW
-    ================================================== -->
-
-    <section class="admin-content-section"
-             id="payments">
-
-
-        <div class="admin-section-heading">
-
-            <div>
-
-                <span class="admin-small-label">
-                    Financial Overview
-                </span>
-
-                <h2>
-                    Payment Overview
-                </h2>
-
-                <p>
-                    Monitor estimated and final service amounts.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="payment-overview-grid">
-
-
-            <div class="payment-card">
-
-                <div class="payment-icon">
-
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-
-                </div>
-
-                <div>
-
-                    <span>
-                        Total Revenue
-                    </span>
-
-                    <h3 id="paymentTotalRevenue">
-                        ₹0
-                    </h3>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="payment-card">
-
-                <div class="payment-icon">
-
-                    <i class="fa-solid fa-hourglass-half"></i>
-
-                </div>
-
-                <div>
-
-                    <span>
-                        Pending Payments
-                    </span>
-
-                    <h3 id="pendingPayments">
-                        ₹0
-                    </h3>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="payment-card">
-
-                <div class="payment-icon">
-
-                    <i class="fa-solid fa-circle-check"></i>
-
-                </div>
-
-                <div>
-
-                    <span>
-                        Completed Payments
-                    </span>
-
-                    <h3 id="completedPayments">
-                        ₹0
-                    </h3>
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- =================================================
-         SERVICE MANAGEMENT
-    ================================================== -->
-
-    <section class="admin-content-section"
-             id="services">
-
-
-        <div class="admin-section-heading">
-
-            <div>
-
-                <span class="admin-small-label">
-                    Servora Services
-                </span>
-
-                <h2>
-                    Service Management
-                </h2>
-
-                <p>
-                    Manage the vehicle services offered by Servora.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="admin-service-grid">
-
-
-            <div class="admin-service-card">
-
-                <i class="fa-solid fa-car"></i>
-
-                <h3>
-                    Complete Car Service
-                </h3>
-
-                <p>
-                    Complete inspection and preventive maintenance.
-                </p>
-
-                <span>
-                    Starting Price
-                </span>
-
-            </div>
-
-
-
-            <div class="admin-service-card">
-
-                <i class="fa-solid fa-motorcycle"></i>
-
-                <h3>
-                    Bike Service
-                </h3>
-
-                <p>
-                    Complete two-wheeler servicing and inspection.
-                </p>
-
-                <span>
-                    Starting Price
-                </span>
-
-            </div>
-
-
-
-            <div class="admin-service-card">
-
-                <i class="fa-solid fa-oil-can"></i>
-
-                <h3>
-                    Oil Change
-                </h3>
-
-                <p>
-                    Engine oil and filter replacement.
-                </p>
-
-                <span>
-                    Starting Price
-                </span>
-
-            </div>
-
-
-
-            <div class="admin-service-card">
-
-                <i class="fa-solid fa-gears"></i>
-
-                <h3>
-                    Engine Diagnostics
-                </h3>
-
-                <p>
-                    Computerized engine fault diagnosis.
-                </p>
-
-                <span>
-                    Inspection Based
-                </span>
-
-            </div>
-
-
-
-            <div class="admin-service-card">
-
-                <i class="fa-solid fa-car-crash"></i>
-
-                <h3>
-                    Brake Repair
-                </h3>
-
-                <p>
-                    Brake inspection, repair and replacement.
-                </p>
-
-                <span>
-                    Inspection Based
-                </span>
-
-            </div>
-
-
-
-            <div class="admin-service-card">
-
-                <i class="fa-solid fa-truck-pickup"></i>
-
-                <h3>
-                    Roadside Assistance
-                </h3>
-
-                <p>
-                    Emergency breakdown and roadside support.
-                </p>
-
-                <span>
-                    Contact Based
-                </span>
-
-            </div>
-
-
-        </div>
-
-
-    </section>
-
+</section>
 
 
 </main>
@@ -955,7 +528,7 @@
 
 
 <!-- =====================================================
-     ADMIN FOOTER
+     FOOTER
 ===================================================== -->
 
 <footer class="footer">
@@ -963,15 +536,17 @@
     <div class="footer-container">
 
 
+        <!-- Brand -->
+
         <div class="footer-brand">
 
-            <a href="dashboard.html"
-               class="footer-logo">
+            <a
+                href="dashboard.html"
+                class="footer-logo">
 
                 <img
                     src="../images/logo.png"
-                    alt="Servora Logo"
-                >
+                    alt="Servora Logo">
 
                 <div class="logo-text">
 
@@ -989,21 +564,25 @@
 
 
             <p>
-                Smart vehicle service management made simple,
-                transparent, and convenient.
+
+                Smart vehicle service management
+                made simple, transparent, and convenient.
+
             </p>
 
         </div>
 
 
 
+        <!-- Admin -->
+
         <div class="footer-column">
 
             <h3>
-                Admin
+                Admin Panel
             </h3>
 
-            <a href="dashboard.html">
+            <a href="#dashboard">
                 Dashboard
             </a>
 
@@ -1022,6 +601,8 @@
         </div>
 
 
+
+        <!-- Servora -->
 
         <div class="footer-column">
 
@@ -1049,25 +630,36 @@
 
 
 
+        <!-- Contact -->
+
         <div class="footer-column footer-contact">
 
             <h3>
-                Administration
+                Contact
             </h3>
 
             <p>
-                <i class="fas fa-location-dot"></i>
-                Satara, Maharashtra, India
+
+                <i class="fas fa-phone"></i>
+
+                +91 XXXXX XXXXX
+
             </p>
 
             <p>
+
                 <i class="fas fa-envelope"></i>
+
                 support@servora.com
+
             </p>
 
             <p>
-                <i class="fas fa-headset"></i>
-                Servora Admin Support
+
+                <i class="fas fa-location-dot"></i>
+
+                Satara, Maharashtra, India
+
             </p>
 
         </div>
@@ -1076,15 +668,20 @@
     </div>
 
 
+
     <div class="footer-bottom">
 
         <p>
+
             © 2026 Servora. All Rights Reserved.
+
         </p>
 
         <p>
+
             Developed by Vedantika Deshmukh from Arvind Gavali
             College of Engineering, Satara in Inplant Training 2026.
+
         </p>
 
     </div>
@@ -1094,11 +691,217 @@
 
 
 <!-- =====================================================
-     ADMIN JAVASCRIPT
+     BOOKING MANAGEMENT MODAL
+===================================================== -->
+
+<div
+    id="bookingModal"
+    class="admin-modal">
+
+
+    <div class="admin-modal-content">
+
+
+        <div class="admin-modal-header">
+
+            <h2>
+                Manage Service Booking
+            </h2>
+
+            <button
+                id="closeBookingModal"
+                class="modal-close">
+
+                <i class="fas fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <div
+            id="bookingDetails"
+            class="booking-details">
+
+        </div>
+
+
+
+        <!-- Status -->
+
+        <div class="admin-form-group">
+
+            <label>
+                Service Status
+            </label>
+
+            <select id="modalStatus">
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Confirmed">
+                    Confirmed
+                </option>
+
+                <option value="In Progress">
+                    In Progress
+                </option>
+
+                <option value="Completed">
+                    Completed
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- Mechanic -->
+
+        <div class="admin-form-group">
+
+            <label>
+                Assign Mechanic
+            </label>
+
+            <select id="modalMechanic">
+
+                <option value="">
+                    Select Mechanic
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <!-- Inspection Note -->
+
+        <div class="admin-form-group">
+
+            <label>
+                Mechanic / Inspection Notes
+            </label>
+
+            <textarea
+                id="modalNote"
+                rows="4"
+                placeholder="Enter inspection findings, repair details or service notes..."></textarea>
+
+        </div>
+
+
+
+        <!-- Additional Charges -->
+
+        <div class="admin-form-group">
+
+            <label>
+                Additional Charges
+            </label>
+
+            <input
+                type="number"
+                id="modalAdditionalCharges"
+                min="0"
+                placeholder="₹ 0">
+
+            <small>
+
+                Use this only when additional repair,
+                parts or work is identified after inspection.
+
+            </small>
+
+        </div>
+
+
+
+        <!-- Final Amount -->
+
+        <div class="admin-form-group">
+
+            <label>
+                Final Amount
+            </label>
+
+            <input
+                type="number"
+                id="modalFinalAmount"
+                min="0"
+                placeholder="Final service amount">
+
+        </div>
+
+
+
+        <!-- Payment -->
+
+        <div class="admin-form-group">
+
+            <label>
+                Payment Status
+            </label>
+
+            <select id="modalPaymentStatus">
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Paid">
+                    Paid
+                </option>
+
+            </select>
+
+        </div>
+
+
+
+        <div class="admin-modal-actions">
+
+            <button
+                id="saveBookingChanges"
+                class="admin-primary-btn">
+
+                <i class="fas fa-save"></i>
+
+                Save Changes
+
+            </button>
+
+
+            <button
+                id="deleteBookingModal"
+                class="admin-danger-btn">
+
+                <i class="fas fa-trash"></i>
+
+                Delete Booking
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
 ===================================================== -->
 
 <script type="module"
-        src="../js/admin.js"></script>
+    src="../js/admin.js"></script>
 
 
 </body>
