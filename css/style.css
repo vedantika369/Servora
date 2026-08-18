@@ -5354,12 +5354,39 @@ background:#004bcc;
 
 /* =========================================================
    SERVORA ADMIN DASHBOARD
-   Single Page Admin Panel
+   COMPLETE ADMIN CSS
 ========================================================= */
 
-.admin-dashboard {
-    min-height: 100vh;
+
+/* =========================================================
+   RESET
+========================================================= */
+
+.admin-page *,
+.admin-page *::before,
+.admin-page *::after {
+    box-sizing: border-box;
+}
+
+.admin-page {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", Arial, sans-serif;
     background: #f5f7fb;
+    color: #172033;
+    min-height: 100vh;
+}
+
+.admin-page a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.admin-page button,
+.admin-page input,
+.admin-page select,
+.admin-page textarea {
+    font-family: inherit;
 }
 
 
@@ -5368,20 +5395,19 @@ background:#004bcc;
 ========================================================= */
 
 .admin-navbar {
+    width: 100%;
     background: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #e7ebf2;
+    box-shadow: 0 3px 15px rgba(20, 30, 50, 0.06);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-.admin-navbar .container {
-    max-width: 1400px;
-    margin: auto;
-    padding: 0 25px;
-
+.admin-nav-container {
+    width: min(1400px, 94%);
     min-height: 78px;
+    margin: auto;
 
     display: flex;
     align-items: center;
@@ -5392,74 +5418,50 @@ background:#004bcc;
 
 /* Logo */
 
-.admin-navbar .logo {
+.admin-logo {
     display: flex;
     align-items: center;
     gap: 12px;
-
-    text-decoration: none;
-    color: inherit;
-
     flex-shrink: 0;
 }
 
-.admin-navbar .logo img {
-    width: 48px;
-    height: 48px;
-
+.admin-logo img {
+    width: 52px;
+    height: 52px;
     object-fit: contain;
 }
 
-.admin-navbar .logo-text h2 {
+.admin-logo-text h2 {
     margin: 0;
-
     font-size: 24px;
     font-weight: 700;
+    color: #2563eb;
 }
 
-.admin-navbar .logo-text span {
+.admin-logo-text span {
     display: block;
-
-    margin-top: 2px;
-
-    font-size: 11px;
-    color: #777;
+    margin-top: 1px;
+    font-size: 10px;
+    color: #64748b;
+    letter-spacing: 0.2px;
 }
 
 
-/* Navigation */
+/* Admin label */
 
-.admin-nav-links {
-    display: flex;
+.admin-label {
+    display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
 
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+    padding: 7px 13px;
+    border-radius: 20px;
 
-.admin-nav-links a {
-    display: block;
+    background: #eff6ff;
+    color: #2563eb;
 
-    padding: 10px 14px;
-
-    text-decoration: none;
-
-    color: #555;
-
-    font-size: 14px;
-    font-weight: 500;
-
-    border-radius: 7px;
-
-    transition: 0.25s ease;
-}
-
-.admin-nav-links a:hover,
-.admin-nav-links a.active {
-    color: #ffffff;
-    background: #111827;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 
@@ -5467,12 +5469,13 @@ background:#004bcc;
 
 .admin-logout {
     border: none;
+    outline: none;
 
-    padding: 10px 17px;
+    padding: 11px 20px;
 
-    border-radius: 7px;
+    border-radius: 9px;
 
-    background: #dc2626;
+    background: #ef3d4f;
     color: #ffffff;
 
     font-size: 14px;
@@ -5484,104 +5487,76 @@ background:#004bcc;
 }
 
 .admin-logout:hover {
-    background: #b91c1c;
+    background: #d92f42;
+    transform: translateY(-1px);
 }
 
 
 /* =========================================================
-   ADMIN MAIN
+   MAIN
 ========================================================= */
 
 .admin-main {
-    max-width: 1400px;
-
-    margin: auto;
-
-    padding: 35px 25px 60px;
-}
-
-
-/* Page Header */
-
-.admin-page-header {
-    margin-bottom: 30px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-}
-
-.admin-page-header h1 {
-    margin: 0 0 7px;
-
-    font-size: 30px;
-    font-weight: 700;
-
-    color: #1f2937;
-}
-
-.admin-page-header p {
-    margin: 0;
-
-    color: #6b7280;
-
-    font-size: 14px;
-}
-
-
-/* Refresh */
-
-#refreshDashboard {
-    border: none;
-
-    padding: 11px 18px;
-
-    border-radius: 7px;
-
-    background: #111827;
-    color: #ffffff;
-
-    cursor: pointer;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    transition: 0.25s ease;
-}
-
-#refreshDashboard:hover {
-    background: #374151;
+    width: min(1400px, 94%);
+    margin: 0 auto;
+    padding: 40px 0 60px;
 }
 
 
 /* =========================================================
-   STATISTICS CARDS
+   WELCOME SECTION
 ========================================================= */
 
-.admin-stats-grid {
+.admin-welcome {
+    margin-bottom: 30px;
+}
+
+.admin-welcome h1 {
+    margin: 0 0 7px;
+
+    font-size: 30px;
+    line-height: 1.25;
+
+    font-weight: 700;
+    color: #111827;
+}
+
+.admin-welcome p {
+    margin: 0;
+
+    color: #64748b;
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.admin-stats {
     display: grid;
 
     grid-template-columns:
         repeat(5, minmax(0, 1fr));
 
-    gap: 18px;
+    gap: 20px;
 
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .admin-stat-card {
     background: #ffffff;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #e6eaf0;
 
-    border-radius: 12px;
+    border-radius: 14px;
 
-    padding: 22px;
+    padding: 23px;
+
+    min-height: 145px;
 
     box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.04);
+        0 5px 20px rgba(20, 30, 50, 0.05);
 
     transition: 0.25s ease;
 }
@@ -5590,32 +5565,48 @@ background:#004bcc;
     transform: translateY(-3px);
 
     box-shadow:
-        0 8px 22px rgba(0, 0, 0, 0.08);
+        0 10px 28px rgba(20, 30, 50, 0.09);
 }
 
-.admin-stat-card .stat-title {
-    margin-bottom: 10px;
+.admin-stat-icon {
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 18px;
+
+    margin-bottom: 15px;
+}
+
+.admin-stat-card h3 {
+    margin: 0 0 5px;
 
     font-size: 13px;
+
     font-weight: 600;
 
-    color: #6b7280;
+    color: #64748b;
 }
 
-.admin-stat-card .stat-value {
-    font-size: 30px;
+.admin-stat-card .stat-number {
+    margin: 0;
+
+    font-size: 28px;
+
+    line-height: 1;
 
     font-weight: 700;
 
     color: #111827;
-}
-
-.admin-stat-card .stat-description {
-    margin-top: 6px;
-
-    font-size: 12px;
-
-    color: #9ca3af;
 }
 
 
@@ -5626,27 +5617,26 @@ background:#004bcc;
 .admin-section {
     background: #ffffff;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #e5e9f0;
 
-    border-radius: 12px;
+    border-radius: 16px;
 
-    padding: 25px;
+    padding: 27px;
 
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 
     box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.04);
+        0 5px 20px rgba(20, 30, 50, 0.04);
 }
 
 .admin-section-header {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
-    gap: 15px;
+    gap: 20px;
 
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 .admin-section-header h2 {
@@ -5654,138 +5644,237 @@ background:#004bcc;
 
     font-size: 21px;
 
-    color: #1f2937;
+    color: #111827;
 }
 
 .admin-section-header p {
     margin: 5px 0 0;
 
-    color: #6b7280;
-
     font-size: 13px;
+
+    color: #64748b;
 }
 
 
 /* =========================================================
-   SEARCH
+   SEARCH + REFRESH
 ========================================================= */
 
-.admin-search {
-    width: 100%;
+.admin-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-    max-width: 380px;
+.admin-search {
+    width: 260px;
 
     padding: 11px 14px;
 
-    border: 1px solid #d1d5db;
+    border: 1px solid #dce2ea;
 
-    border-radius: 7px;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #172033;
 
     outline: none;
 
-    font-size: 14px;
+    font-size: 13px;
 
     transition: 0.2s ease;
 }
 
 .admin-search:focus {
-    border-color: #111827;
+    border-color: #2563eb;
 
     box-shadow:
-        0 0 0 3px rgba(17, 24, 39, 0.08);
+        0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.admin-refresh {
+    border: none;
+
+    padding: 11px 15px;
+
+    border-radius: 9px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.admin-refresh:hover {
+    background: #1d4ed8;
 }
 
 
 /* =========================================================
-   BOOKINGS GRID
+   BOOKING LIST
 ========================================================= */
 
 #bookingContainer {
     display: grid;
 
     grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+        repeat(2, minmax(0, 1fr));
 
-    gap: 18px;
+    gap: 20px;
 }
 
-
-/* Booking Card */
-
 .admin-booking-card {
-    border: 1px solid #e5e7eb;
+    background: #ffffff;
 
-    border-radius: 10px;
+    border: 1px solid #e3e8ef;
 
-    padding: 20px;
+    border-radius: 14px;
 
-    background: #fafafa;
+    padding: 22px;
 
     transition: 0.25s ease;
 }
 
 .admin-booking-card:hover {
-    background: #ffffff;
+    border-color: #cbd5e1;
 
     box-shadow:
-        0 6px 18px rgba(0, 0, 0, 0.06);
+        0 8px 22px rgba(20, 30, 50, 0.06);
+}
+
+.admin-booking-card h2 {
+    margin: 0 0 12px;
+
+    color: #172033;
+
+    font-size: 19px;
 }
 
 .admin-booking-card h3 {
-    margin: 0 0 15px;
+    margin: 18px 0 8px;
 
-    font-size: 18px;
+    color: #334155;
 
-    color: #111827;
+    font-size: 14px;
+}
+
+.admin-booking-card hr {
+    border: 0;
+
+    border-top: 1px solid #edf0f4;
+
+    margin: 15px 0;
 }
 
 .admin-booking-card p {
     margin: 8px 0;
 
+    color: #64748b;
+
     font-size: 13px;
 
-    color: #4b5563;
+    line-height: 1.6;
 }
 
-.admin-booking-card strong {
-    color: #1f2937;
+.admin-booking-card p strong {
+    color: #334155;
 }
 
 
-/* Status */
+/* =========================================================
+   BOOKING STATUS
+========================================================= */
 
-.statusSelect {
+.booking-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    background: #fff7ed;
+
+    color: #ea580c;
+}
+
+
+/* =========================================================
+   BOOKING FORM CONTROLS
+========================================================= */
+
+.admin-booking-card label {
+    display: block;
+
+    margin-top: 15px;
+    margin-bottom: 7px;
+
+    color: #334155;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+.admin-booking-card select {
     width: 100%;
 
-    padding: 10px;
+    padding: 11px 12px;
 
-    margin-top: 5px;
+    border: 1px solid #dce2ea;
 
-    border: 1px solid #d1d5db;
-
-    border-radius: 6px;
+    border-radius: 8px;
 
     background: #ffffff;
 
-    font-size: 13px;
+    color: #334155;
 
     outline: none;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.admin-booking-card select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
 
-/* Booking Buttons */
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 .admin-booking-card button {
     border: none;
 
-    padding: 9px 12px;
+    margin-top: 15px;
 
-    border-radius: 6px;
+    padding: 10px 15px;
 
-    margin-top: 12px;
-    margin-right: 6px;
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: #ffffff;
 
     font-size: 12px;
+
     font-weight: 600;
 
     cursor: pointer;
@@ -5793,27 +5882,13 @@ background:#004bcc;
     transition: 0.2s ease;
 }
 
-.saveStatus {
-    background: #111827;
-    color: #ffffff;
-}
-
-.saveStatus:hover {
-    background: #374151;
-}
-
-.deleteBooking {
-    background: #fee2e2;
-    color: #b91c1c;
-}
-
-.deleteBooking:hover {
-    background: #fecaca;
+.admin-booking-card button:hover {
+    background: #1d4ed8;
 }
 
 
 /* =========================================================
-   CUSTOMER / MECHANIC GRID
+   CUSTOMERS + MECHANICS
 ========================================================= */
 
 #customerContainer,
@@ -5826,36 +5901,31 @@ background:#004bcc;
     gap: 18px;
 }
 
-
-/* User Card */
-
 .admin-card {
-    background: #fafafa;
+    background: #ffffff;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #e4e9f0;
 
-    border-radius: 10px;
+    border-radius: 13px;
 
     padding: 20px;
 
-    transition: 0.25s ease;
+    transition: 0.2s ease;
 }
 
 .admin-card:hover {
-    background: #ffffff;
-
     transform: translateY(-2px);
 
     box-shadow:
-        0 6px 18px rgba(0, 0, 0, 0.06);
+        0 7px 20px rgba(20, 30, 50, 0.06);
 }
 
 .admin-card h3 {
-    margin: 0 0 14px;
+    margin: 0 0 15px;
 
     font-size: 17px;
 
-    color: #111827;
+    color: #172033;
 }
 
 .admin-card p {
@@ -5863,164 +5933,238 @@ background:#004bcc;
 
     font-size: 13px;
 
-    color: #4b5563;
+    color: #64748b;
+
+    line-height: 1.5;
 }
 
 .admin-card strong {
-    color: #1f2937;
+    color: #334155;
 }
 
 
 /* =========================================================
-   EMPTY / LOADING MESSAGE
+   EMPTY STATE
 ========================================================= */
 
 .admin-empty {
     grid-column: 1 / -1;
 
+    padding: 45px 20px;
+
     text-align: center;
 
-    padding: 35px 20px;
+    border: 1px dashed #cbd5e1;
 
-    color: #6b7280;
+    border-radius: 12px;
 
-    font-size: 14px;
+    color: #64748b;
+
+    background: #f8fafc;
 }
 
+.admin-empty h3 {
+    margin: 0 0 7px;
 
-/* =========================================================
-   ADMIN TABLE
-   Useful if the new dashboard uses tables
-========================================================= */
-
-.admin-table-wrapper {
-    width: 100%;
-
-    overflow-x: auto;
+    color: #334155;
 }
 
-.admin-table {
-    width: 100%;
-
-    border-collapse: collapse;
+.admin-empty p {
+    margin: 0;
 
     font-size: 13px;
 }
 
-.admin-table th {
-    text-align: left;
-
-    padding: 13px;
-
-    background: #f9fafb;
-
-    border-bottom: 1px solid #e5e7eb;
-
-    color: #374151;
-
-    font-weight: 600;
-}
-
-.admin-table td {
-    padding: 13px;
-
-    border-bottom: 1px solid #e5e7eb;
-
-    color: #4b5563;
-}
-
-.admin-table tr:hover td {
-    background: #fafafa;
-}
-
 
 /* =========================================================
-   STATUS BADGES
+   BOOKING MODAL
 ========================================================= */
 
-.status-badge {
-    display: inline-block;
+.admin-modal {
+    position: fixed;
 
-    padding: 5px 9px;
+    inset: 0;
 
-    border-radius: 20px;
+    z-index: 2000;
 
-    font-size: 11px;
+    display: none;
 
-    font-weight: 600;
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px;
+
+    background: rgba(15, 23, 42, 0.62);
+
+    backdrop-filter: blur(4px);
 }
 
-.status-pending {
-    background: #fef3c7;
-    color: #92400e;
+.admin-modal.active {
+    display: flex;
 }
 
-.status-confirmed {
-    background: #dbeafe;
-    color: #1d4ed8;
+.admin-modal-content {
+    width: min(700px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border-radius: 17px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.2);
+
+    position: relative;
 }
 
-.status-progress {
-    background: #ede9fe;
-    color: #6d28d9;
+.admin-modal-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
 }
 
-.status-completed {
-    background: #dcfce7;
-    color: #166534;
+.admin-modal-header h2 {
+    margin: 0;
+
+    font-size: 22px;
+
+    color: #111827;
 }
 
-.status-cancelled {
-    background: #fee2e2;
-    color: #b91c1c;
-}
+.admin-modal-close {
+    width: 35px;
+    height: 35px;
 
-
-/* =========================================================
-   ACTION BUTTONS
-========================================================= */
-
-.admin-action-btn {
     border: none;
 
-    padding: 9px 13px;
+    border-radius: 50%;
 
-    border-radius: 6px;
+    background: #f1f5f9;
+
+    color: #475569;
+
+    font-size: 20px;
 
     cursor: pointer;
+}
 
-    font-size: 12px;
+.admin-modal-close:hover {
+    background: #e2e8f0;
+}
+
+
+/* =========================================================
+   MODAL FORM
+========================================================= */
+
+.admin-form-group {
+    margin-bottom: 17px;
+}
+
+.admin-form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.admin-form-group input,
+.admin-form-group select,
+.admin-form-group textarea {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    border: 1px solid #dce2ea;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #172033;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.admin-form-group textarea {
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+.admin-form-group input:focus,
+.admin-form-group select:focus,
+.admin-form-group textarea:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+
+/* =========================================================
+   MODAL ACTIONS
+========================================================= */
+
+.admin-modal-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 25px;
+}
+
+.admin-modal-actions button {
+    border: none;
+
+    padding: 11px 18px;
+
+    border-radius: 8px;
+
+    font-size: 13px;
 
     font-weight: 600;
 
-    transition: 0.2s ease;
+    cursor: pointer;
 }
 
-.admin-primary-btn {
-    background: #111827;
+.admin-save-btn {
+    background: #2563eb;
+
     color: #ffffff;
 }
 
-.admin-primary-btn:hover {
-    background: #374151;
+.admin-save-btn:hover {
+    background: #1d4ed8;
 }
 
-.admin-danger-btn {
+.admin-delete-btn {
     background: #fee2e2;
-    color: #b91c1c;
+
+    color: #dc2626;
 }
 
-.admin-danger-btn:hover {
+.admin-delete-btn:hover {
     background: #fecaca;
-}
-
-.admin-success-btn {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.admin-success-btn:hover {
-    background: #bbf7d0;
 }
 
 
@@ -6035,17 +6179,42 @@ background:#004bcc;
 
     text-align: center;
 
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid #e5e9f0;
 
     background: #ffffff;
 
-    color: #6b7280;
+    color: #64748b;
 
     font-size: 12px;
+
+    line-height: 1.7;
 }
 
 .admin-footer p {
-    margin: 5px 0;
+    margin: 3px 0;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.admin-page ::-webkit-scrollbar {
+    width: 7px;
+}
+
+.admin-page ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.admin-page ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+
+    border-radius: 10px;
+}
+
+.admin-page ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
 
@@ -6055,12 +6224,11 @@ background:#004bcc;
 
 @media (max-width: 1200px) {
 
-    .admin-stats-grid {
+    .admin-stats {
         grid-template-columns:
             repeat(3, minmax(0, 1fr));
     }
 
-    #bookingContainer,
     #customerContainer,
     #mechanicContainer {
         grid-template-columns:
@@ -6072,27 +6240,37 @@ background:#004bcc;
 
 @media (max-width: 900px) {
 
-    .admin-navbar .container {
-        flex-wrap: wrap;
-
-        padding-top: 15px;
-        padding-bottom: 15px;
+    .admin-nav-container {
+        min-height: 70px;
     }
 
-    .admin-nav-links {
-        order: 3;
-
-        width: 100%;
-
-        justify-content: center;
-
-        overflow-x: auto;
+    .admin-main {
+        width: 92%;
     }
 
-    .admin-page-header {
-        flex-direction: column;
+    .admin-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
 
+    #bookingContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-section-header {
         align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .admin-controls {
+        width: 100%;
+    }
+
+    .admin-search {
+        flex: 1;
+
+        width: auto;
     }
 
 }
@@ -6100,22 +6278,42 @@ background:#004bcc;
 
 @media (max-width: 650px) {
 
+    .admin-nav-container {
+        width: 92%;
+
+        gap: 10px;
+    }
+
+    .admin-logo-text {
+        display: none;
+    }
+
+    .admin-label {
+        font-size: 10px;
+
+        padding: 6px 9px;
+    }
+
+    .admin-logout {
+        padding: 9px 13px;
+
+        font-size: 12px;
+    }
+
     .admin-main {
-        padding: 25px 15px 40px;
+        padding-top: 25px;
     }
 
-    .admin-navbar .container {
-        padding-left: 15px;
-        padding-right: 15px;
+    .admin-welcome h1 {
+        font-size: 24px;
     }
 
-    .admin-stats-grid {
-        grid-template-columns: 1fr 1fr;
+    .admin-stats {
+        grid-template-columns: 1fr;
 
-        gap: 12px;
+        gap: 14px;
     }
 
-    #bookingContainer,
     #customerContainer,
     #mechanicContainer {
         grid-template-columns: 1fr;
@@ -6125,617 +6323,51 @@ background:#004bcc;
         padding: 18px;
     }
 
-    .admin-section-header {
+    .admin-controls {
         flex-direction: column;
 
-        align-items: flex-start;
+        align-items: stretch;
     }
 
     .admin-search {
-        max-width: 100%;
+        width: 100%;
     }
 
-    .admin-page-header h1 {
-        font-size: 25px;
+    .admin-refresh {
+        width: 100%;
     }
 
-}
-
-
-@media (max-width: 450px) {
-
-    .admin-stats-grid {
-        grid-template-columns: 1fr;
+    .admin-modal {
+        padding: 12px;
     }
 
-    .admin-navbar .logo-text span {
-        display: none;
-    }
-
-    .admin-navbar .logo img {
-        width: 40px;
-        height: 40px;
-    }
-
-    .admin-nav-links {
-        justify-content: flex-start;
-    }
-
-    .admin-nav-links a {
-        white-space: nowrap;
-    }
-
-}
-
-/* =========================================
-   BOOKING MANAGEMENT
-========================================= */
-
-.booking-management {
-    margin-top: 10px;
-}
-
-
-.management-header {
-    background: #ffffff;
-
-    border: 1px solid #e2e8f0;
-
-    border-radius: 18px 18px 0 0;
-
-    padding: 30px 32px;
-
-    border-bottom: none;
-}
-
-
-.management-header h2 {
-    margin: 10px 0 7px;
-
-    color: #111827;
-
-    font-size: 27px;
-}
-
-
-.management-header p {
-    margin: 0;
-
-    color: #64748b;
-
-    font-size: 15px;
-}
-
-
-/* =========================================
-   BOOKING LIST
-========================================= */
-
-#bookingList {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 18px;
-
-    background: #f8fafc;
-}
-
-
-/* =========================================
-   ADMIN BOOKING CARD
-========================================= */
-
-.admin-booking-card {
-    background: #ffffff;
-
-    border: 1px solid #e2e8f0;
-
-    border-radius: 16px;
-
-    padding: 28px;
-
-    box-shadow:
-        0 8px 25px rgba(15, 23, 42, 0.05);
-}
-
-
-.booking-card-header {
-    display: flex;
-
-    align-items: flex-start;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    margin-bottom: 18px;
-}
-
-
-.booking-label {
-    display: block;
-
-    color: #2563eb;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.6px;
-
-    margin-bottom: 6px;
-}
-
-
-.booking-card-header h2 {
-    margin: 0;
-
-    color: #111827;
-
-    font-size: 22px;
-}
-
-
-/* =========================================
-   BOOKING STATUS
-========================================= */
-
-.booking-status {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 7px 13px;
-
-    border-radius: 20px;
-
-    background: #eff6ff;
-
-    color: #2563eb;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================
-   BOOKING CARD DIVIDER
-========================================= */
-
-.admin-booking-card hr {
-    border: 0;
-
-    border-top: 1px solid #e2e8f0;
-
-    margin: 20px 0;
-}
-
-
-/* =========================================
-   BOOKING CARD HEADINGS
-========================================= */
-
-.admin-booking-card h3 {
-    margin: 22px 0 10px;
-
-    color: #334155;
-
-    font-size: 16px;
-
-    font-weight: 700;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-}
-
-
-.admin-booking-card h3 i {
-    color: #2563eb;
-
-    font-size: 14px;
-}
-
-
-/* =========================================
-   BOOKING INFORMATION
-========================================= */
-
-.admin-booking-card p {
-    margin: 7px 0;
-
-    color: #64748b;
-
-    font-size: 14px;
-
-    line-height: 1.6;
-}
-
-
-.admin-booking-card p strong {
-    color: #334155;
-
-    font-weight: 600;
-}
-
-
-/* =========================================
-   ADMIN FORM GROUP
-========================================= */
-
-.admin-form-group {
-    margin-top: 22px;
-}
-
-
-.admin-form-group label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: #334155;
-
-    font-size: 14px;
-
-    font-weight: 600;
-}
-
-
-.admin-form-group select {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding: 12px 14px;
-
-    border: 1px solid #cbd5e1;
-
-    border-radius: 9px;
-
-    background: #ffffff;
-
-    color: #334155;
-
-    font-size: 14px;
-
-    outline: none;
-
-    cursor: pointer;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-
-.admin-form-group select:focus {
-    border-color: #2563eb;
-
-    box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-
-/* =========================================
-   SAVE BUTTON
-========================================= */
-
-.admin-save-btn {
-    width: 100%;
-
-    margin-top: 25px;
-
-    padding: 13px 20px;
-
-    border: none;
-
-    border-radius: 9px;
-
-    background: #2563eb;
-
-    color: #ffffff;
-
-    font-size: 14px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 8px;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.admin-save-btn:hover {
-    background: #1d4ed8;
-
-    transform: translateY(-1px);
-}
-
-
-.admin-save-btn:active {
-    transform: translateY(0);
-}
-
-
-/* =========================================
-   EMPTY STATE
-========================================= */
-
-.empty-state {
-    text-align: center;
-
-    padding: 45px 20px;
-}
-
-
-.empty-icon {
-    width: 60px;
-    height: 60px;
-
-    margin: 0 auto 15px;
-
-    border-radius: 50%;
-
-    background: #eff6ff;
-
-    color: #2563eb;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 23px;
-}
-
-
-.empty-state h3 {
-    display: block;
-
-    margin: 0 0 8px;
-
-    color: #111827;
-
-    font-size: 19px;
-}
-
-
-.empty-state p {
-    margin: 0;
-
-    color: #64748b;
-
-    font-size: 14px;
-}
-
-
-/* =========================================
-   ADMIN FOOTER
-========================================= */
-
-/*
-   Uses the common .footer styles already used
-   by the other Servora pages.
-
-   No separate footer styling is required here.
-*/
-
-
-/* =========================================
-   RESPONSIVE - TABLET
-========================================= */
-
-@media (max-width: 900px) {
-
-    .admin-cards {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-
-
-    .admin-cards .admin-card:last-child {
-        grid-column: 1 / -1;
-    }
-
-
-    .admin-info-grid {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-
-/* =========================================
-   RESPONSIVE - MOBILE
-========================================= */
-
-@media (max-width: 768px) {
-
-    .admin-section {
-        padding: 35px 15px 50px;
-    }
-
-
-    .admin-welcome {
-        padding: 25px 22px;
-    }
-
-
-    .admin-welcome h1 {
-        font-size: 28px;
-    }
-
-
-    .admin-welcome p {
-        font-size: 14px;
-    }
-
-
-    .admin-cards {
-        grid-template-columns: 1fr;
-
-        gap: 15px;
-    }
-
-
-    .admin-cards .admin-card:last-child {
-        grid-column: auto;
-    }
-
-
-    .admin-card {
+    .admin-modal-content {
         padding: 20px;
     }
 
-
-    .admin-card h2 {
-        font-size: 25px;
-    }
-
-
-    .admin-info-card {
-        padding: 20px;
-    }
-
-
-    .management-header {
-        padding: 24px 20px;
-    }
-
-
-    .management-header h2 {
-        font-size: 23px;
-    }
-
-
-    .admin-booking-card {
-        padding: 22px 18px;
-    }
-
-
-    .booking-card-header {
+    .admin-modal-actions {
         flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 12px;
     }
 
-
-    .booking-card-header h2 {
-        font-size: 20px;
-    }
-
-
-    .booking-status {
-        font-size: 11px;
+    .admin-modal-actions button {
+        width: 100%;
     }
 
 }
 
 
-/* =========================================
-   SMALL MOBILE
-========================================= */
+/* =========================================================
+   IMPORTANT:
+   PREVENT OLD FULL-SCREEN LOADER FROM COVERING ADMIN PAGE
+========================================================= */
 
-@media (max-width: 480px) {
-
-    .admin-section {
-        padding-left: 12px;
-        padding-right: 12px;
-    }
-
-
-    .admin-welcome {
-        padding: 22px 18px;
-
-        border-radius: 14px;
-    }
-
-
-    .admin-welcome h1 {
-        font-size: 25px;
-    }
-
-
-    .admin-card {
-        border-radius: 14px;
-
-        padding: 18px;
-    }
-
-
-    .admin-card-icon {
-        width: 48px;
-        height: 48px;
-
-        min-width: 48px;
-
-        font-size: 19px;
-    }
-
-
-    .admin-info-card {
-        border-radius: 14px;
-
-        padding: 18px;
-
-        gap: 13px;
-    }
-
-
-    .admin-info-icon {
-        width: 42px;
-        height: 42px;
-
-        min-width: 42px;
-    }
-
-
-    .management-header {
-        padding: 22px 17px;
-    }
-
-
-    .admin-booking-card {
-        padding: 20px 15px;
-
-        border-radius: 14px;
-    }
-
-
-    .admin-booking-card h3 {
-        font-size: 15px;
-    }
-
-
-    .admin-booking-card p {
-        font-size: 13px;
-    }
-
+.admin-page .preloader,
+.admin-page #preloader,
+.admin-page .loading-screen,
+.admin-page #loader,
+.admin-page .page-loader {
+    display: none !important;
 }
-
 
 
 
