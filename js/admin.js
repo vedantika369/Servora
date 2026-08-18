@@ -1,30 +1,14 @@
 /* =========================================================
-   SERVORA ADMIN.JS
-   SINGLE-PAGE ADMIN DASHBOARD
-   FIREBASE REALTIME DATABASE
+   SERVORA ADMIN DASHBOARD
+   admin.js
+   Firebase Realtime Database
+   Single Page Admin Panel
 ========================================================= */
-const loadingScreen =
-    document.getElementById("loadingScreen");
 
-function hideLoadingScreen() {
-
-    if (loadingScreen) {
-
-        loadingScreen.classList.add("hidden");
-
-        setTimeout(() => {
-
-            loadingScreen.style.display = "none";
-
-        }, 400);
-
-    }
-
-}
 import {
     auth,
     db
-} from "../js/firebase-config.js";
+} from "./firebase-config.js";
 
 import {
     onAuthStateChanged,
@@ -35,9 +19,7 @@ import {
     ref,
     get,
     update,
-    remove,
-    set,
-    push
+    remove
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
@@ -48,24 +30,30 @@ import {
 let currentAdmin = null;
 
 let allBookings = [];
-let allCustomers = [];
-let allMechanics = [];
 
-let currentBookingId = null;
+let allCustomers = [];
+
+let allMechanics = [];
 
 
 /* =========================================================
-   ELEMENTS
+   DOM ELEMENTS
 ========================================================= */
 
-const logoutBtn =
-    document.getElementById("logoutBtn");
+const totalBookings =
+    document.getElementById("totalBookings");
 
-const refreshBtn =
-    document.getElementById("refreshDashboard");
+const pendingBookings =
+    document.getElementById("pendingBookings");
 
-const searchBooking =
-    document.getElementById("searchBooking");
+const completedBookings =
+    document.getElementById("completedBookings");
+
+const totalCustomers =
+    document.getElementById("totalCustomers");
+
+const totalMechanics =
+    document.getElementById("totalMechanics");
 
 const bookingContainer =
     document.getElementById("bookingContainer");
@@ -76,10 +64,19 @@ const customerContainer =
 const mechanicContainer =
     document.getElementById("mechanicContainer");
 
+const searchBooking =
+    document.getElementById("searchBooking");
+
+const refreshDashboard =
+    document.getElementById("refreshDashboard");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
 
 /* =========================================================
-   SAFE HTML
-   Prevents database text from being inserted as HTML.
+   SAFE TEXT
+   Prevents database text from being interpreted as HTML.
 ========================================================= */
 
 function escapeHTML(value) {
@@ -98,76 +95,75 @@ function escapeHTML(value) {
 
 
 /* =========================================================
-   AUTHENTICATION
+   SHOW MESSAGE
+========================================================= */
+
+function showMessage(container, message) {
+
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="admin-empty">
+
+            <i class="fas fa-info-circle"></i>
+
+            <h3>${escapeHTML(message)}</h3>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   ADMIN AUTHENTICATION
 ========================================================= */
 
 onAuthStateChanged(auth, async (user) => {
 
-    if (!user) {
-
-        window.location.href = "../login.html";
-
-        return;
-    }
-
     try {
+
+        if (!user) {
+
+            window.location.href = "admin-login.html";
+
+            return;
+        }
+
 
         const userSnapshot =
             await get(
                 ref(db, "users/" + user.uid)
             );
 
+
         if (!userSnapshot.exists()) {
 
             await signOut(auth);
 
-            window.location.href = "../login.html";
+            window.location.href = "admin-login.html";
 
             return;
         }
 
+
         const userData =
             userSnapshot.val();
 
-        /*
-         * Admin access check
-         */
 
         if (userData.role !== "admin") {
 
             await signOut(auth);
 
-            window.location.href = "../login.html";
+            window.location.href = "admin-login.html";
 
             return;
         }
 
-        currentAdmin = {
-            uid: user.uid,
-            ...userData
-        };
+
+        currentAdmin = user;
 
 
-        /*
-         * Display admin name if element exists
-         */
-
-        const adminName =
-            document.getElementById("adminName");
-
-        if (adminName) {
-
-            adminName.textContent =
-                userData.name || "Administrator";
-
-        }
-
-
-        /*
-         * Load everything
-         */
-
-        await refreshAllData();
+        await loadAllData();
 
     }
 
@@ -178,76 +174,32 @@ onAuthStateChanged(auth, async (user) => {
             error
         );
 
+        alert(
+            "Unable to load admin dashboard."
+        );
+
     }
 
 });
 
 
 /* =========================================================
-   LOGOUT
+   LOAD ALL DATA
 ========================================================= */
 
-if (logoutBtn) {
+async function loadAllData() {
 
-    logoutBtn.addEventListener(
-        "click",
-        async () => {
+    await Promise.all([
 
-            try {
+        loadDashboardStats(),
 
-                await signOut(auth);
+        loadBookings(),
 
-                window.location.href =
-                    "../login.html";
+        loadCustomers(),
 
-            }
+        loadMechanics()
 
-            catch (error) {
-
-                console.error(error);
-
-                alert(
-                    "Unable to logout. Please try again."
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   REFRESH EVERYTHING
-========================================================= */
-
-async function refreshAllData() {
-
-    try {
-
-        await Promise.all([
-
-            loadDashboardStats(),
-
-            loadBookings(),
-
-            loadCustomers(),
-
-            loadMechanics()
-
-        ]);
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Dashboard refresh error:",
-            error
-        );
-
-    }
+    ]);
 
 }
 
@@ -258,181 +210,163 @@ async function refreshAllData() {
 
 async function loadDashboardStats() {
 
-    const bookingSnapshot =
-        await get(
-            ref(db, "bookings")
-        );
+    try {
 
-    const userSnapshot =
-        await get(
-            ref(db, "users")
-        );
+        const bookingSnapshot =
+            await get(
+                ref(db, "bookings")
+            );
 
 
-    let totalBookings = 0;
-
-    let pendingBookings = 0;
-
-    let confirmedBookings = 0;
-
-    let inProgressBookings = 0;
-
-    let completedBookings = 0;
-
-    let cancelledBookings = 0;
-
-    let totalCustomers = 0;
-
-    let totalMechanics = 0;
+        const userSnapshot =
+            await get(
+                ref(db, "users")
+            );
 
 
-    /*
-     * BOOKINGS
-     */
+        let total = 0;
 
-    if (bookingSnapshot.exists()) {
+        let pending = 0;
 
-        bookingSnapshot.forEach((child) => {
+        let completed = 0;
 
-            const booking =
-                child.val();
+        let customers = 0;
 
-            totalBookings++;
+        let mechanics = 0;
 
 
-            const status =
-                String(
-                    booking.status || "Pending"
-                ).toLowerCase();
+        /* -----------------------------------------
+           BOOKINGS
+        ----------------------------------------- */
+
+        if (bookingSnapshot.exists()) {
+
+            bookingSnapshot.forEach((child) => {
+
+                const booking =
+                    child.val() || {};
 
 
-            if (status === "pending") {
+                total++;
 
-                pendingBookings++;
 
-            }
+                const status =
+                    String(
+                        booking.status || ""
+                    ).trim();
 
-            else if (status === "confirmed") {
 
-                confirmedBookings++;
+                if (
+                    status.toLowerCase()
+                    === "pending"
+                ) {
 
-            }
+                    pending++;
 
-            else if (
-                status === "in progress" ||
-                status === "in-progress"
-            ) {
+                }
 
-                inProgressBookings++;
 
-            }
+                if (
+                    status.toLowerCase()
+                    === "completed"
+                ) {
 
-            else if (status === "completed") {
+                    completed++;
 
-                completedBookings++;
+                }
 
-            }
+            });
 
-            else if (status === "cancelled") {
+        }
 
-                cancelledBookings++;
 
-            }
+        /* -----------------------------------------
+           USERS
+        ----------------------------------------- */
 
-        });
+        if (userSnapshot.exists()) {
+
+            userSnapshot.forEach((child) => {
+
+                const user =
+                    child.val() || {};
+
+
+                const role =
+                    String(
+                        user.role || ""
+                    ).toLowerCase();
+
+
+                if (role === "customer") {
+
+                    customers++;
+
+                }
+
+
+                if (role === "mechanic") {
+
+                    mechanics++;
+
+                }
+
+            });
+
+        }
+
+
+        /* -----------------------------------------
+           UPDATE UI
+        ----------------------------------------- */
+
+        if (totalBookings) {
+
+            totalBookings.textContent =
+                total;
+
+        }
+
+
+        if (pendingBookings) {
+
+            pendingBookings.textContent =
+                pending;
+
+        }
+
+
+        if (completedBookings) {
+
+            completedBookings.textContent =
+                completed;
+
+        }
+
+
+        if (totalCustomers) {
+
+            totalCustomers.textContent =
+                customers;
+
+        }
+
+
+        if (totalMechanics) {
+
+            totalMechanics.textContent =
+                mechanics;
+
+        }
 
     }
 
+    catch (error) {
 
-    /*
-     * USERS
-     */
-
-    if (userSnapshot.exists()) {
-
-        userSnapshot.forEach((child) => {
-
-            const user =
-                child.val();
-
-
-            if (user.role === "customer") {
-
-                totalCustomers++;
-
-            }
-
-
-            if (user.role === "mechanic") {
-
-                totalMechanics++;
-
-            }
-
-        });
-
-    }
-
-
-    /*
-     * Update dashboard elements
-     */
-
-    setText(
-        "totalBookings",
-        totalBookings
-    );
-
-    setText(
-        "pendingBookings",
-        pendingBookings
-    );
-
-    setText(
-        "confirmedBookings",
-        confirmedBookings
-    );
-
-    setText(
-        "inProgressBookings",
-        inProgressBookings
-    );
-
-    setText(
-        "completedBookings",
-        completedBookings
-    );
-
-    setText(
-        "cancelledBookings",
-        cancelledBookings
-    );
-
-    setText(
-        "totalCustomers",
-        totalCustomers
-    );
-
-    setText(
-        "totalMechanics",
-        totalMechanics
-    );
-
-}
-
-
-/* =========================================================
-   SAFE TEXT UPDATE
-========================================================= */
-
-function setText(id, value) {
-
-    const element =
-        document.getElementById(id);
-
-    if (element) {
-
-        element.textContent = value;
+        console.error(
+            "Statistics error:",
+            error
+        );
 
     }
 
@@ -445,25 +379,18 @@ function setText(id, value) {
 
 async function loadBookings() {
 
-    if (!bookingContainer) {
-        return;
-    }
-
-
-    bookingContainer.innerHTML = `
-
-        <div class="admin-loading">
-
-            <div class="admin-spinner"></div>
-
-            Loading bookings...
-
-        </div>
-
-    `;
+    if (!bookingContainer) return;
 
 
     try {
+
+        bookingContainer.innerHTML = `
+            <div class="admin-loading">
+                <div class="admin-spinner"></div>
+                Loading bookings...
+            </div>
+        `;
+
 
         const snapshot =
             await get(
@@ -474,59 +401,69 @@ async function loadBookings() {
         allBookings = [];
 
 
-        if (snapshot.exists()) {
+        if (!snapshot.exists()) {
 
-            snapshot.forEach((child) => {
+            showMessage(
+                bookingContainer,
+                "No bookings found."
+            );
 
-                allBookings.push({
-
-                    id: child.key,
-
-                    ...child.val()
-
-                });
-
-            });
-
+            return;
         }
 
 
-        /*
-         * Latest bookings first
-         */
+        snapshot.forEach((child) => {
 
-        allBookings.sort(
-            (a, b) =>
-                getTimestamp(b) -
-                getTimestamp(a)
-        );
+            const booking =
+                child.val() || {};
 
 
-        renderBookings(
-            allBookings
-        );
+            allBookings.push({
+
+                id: child.key,
+
+                ...booking
+
+            });
+
+        });
+
+
+        /* Newest bookings first */
+
+        allBookings.sort((a, b) => {
+
+            const dateA =
+                Number(
+                    a.createdAt || 0
+                );
+
+            const dateB =
+                Number(
+                    b.createdAt || 0
+                );
+
+            return dateB - dateA;
+
+        });
+
+
+        renderBookings(allBookings);
 
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Bookings error:",
+            error
+        );
 
-        bookingContainer.innerHTML = `
 
-            <div class="admin-empty">
-
-                <i class="fas fa-triangle-exclamation"></i>
-
-                <h3>Unable to load bookings</h3>
-
-                <p>
-                    ${escapeHTML(error.message)}
-                </p>
-
-            </div>
-
-        `;
+        showMessage(
+            bookingContainer,
+            "Unable to load bookings."
+        );
 
     }
 
@@ -534,281 +471,282 @@ async function loadBookings() {
 
 
 /* =========================================================
-   BOOKING RENDER
+   RENDER BOOKINGS
 ========================================================= */
 
 function renderBookings(bookings) {
 
-    if (!bookingContainer) {
-        return;
-    }
+    if (!bookingContainer) return;
 
 
     if (!bookings.length) {
 
-        bookingContainer.innerHTML = `
-
-            <div class="admin-empty">
-
-                <i class="fas fa-calendar-xmark"></i>
-
-                <h3>No Bookings Found</h3>
-
-                <p>
-                    Customer bookings will appear here.
-                </p>
-
-            </div>
-
-        `;
+        showMessage(
+            bookingContainer,
+            "No matching bookings found."
+        );
 
         return;
     }
 
 
-    bookingContainer.innerHTML =
-        bookings.map(
-            booking => createBookingCard(booking)
-        ).join("");
+    bookingContainer.innerHTML = "";
 
 
-    attachBookingEvents();
+    bookings.forEach((booking) => {
 
-}
-
-
-/* =========================================================
-   CREATE BOOKING CARD
-========================================================= */
-
-function createBookingCard(booking) {
-
-    const vehicle =
-        [
-            booking.vehicleBrand,
-            booking.vehicleModel
-        ]
-        .filter(Boolean)
-        .join(" ");
+        const id =
+            escapeHTML(
+                booking.id
+            );
 
 
-    const status =
-        booking.status || "Pending";
+        const vehicle =
+            [
+
+                booking.vehicleBrand,
+
+                booking.vehicleModel
+
+            ]
+
+            .filter(Boolean)
+
+            .join(" ");
 
 
-    const statusClass =
-        getStatusClass(status);
+        const customer =
+            booking.customerName
+            || "Customer";
 
 
-    const amount =
-        booking.finalAmount ??
-        booking.estimatedCost ??
-        booking.amount ??
-        0;
+        const vehicleNumber =
+            booking.vehicleNumber
+            || "-";
 
 
-    return `
+        const service =
+            booking.serviceType
+            || "-";
 
-        <div
-            class="admin-booking-card"
-            data-booking-id="${escapeHTML(booking.id)}"
-        >
 
-            <div class="admin-booking-top">
+        const bookingDate =
+            booking.bookingDate
+            || "-";
 
-                <div>
 
-                    <h3>
+        const bookingTime =
+            booking.bookingTime
+            || "-";
 
-                        ${escapeHTML(
-                            vehicle ||
-                            booking.vehicleName ||
-                            "Vehicle"
-                        )}
 
-                    </h3>
+        const mechanic =
+            booking.mechanicName
+            || "Not Assigned";
+
+
+        const amount =
+            booking.finalAmount
+            || booking.estimatedCost
+            || "0";
+
+
+        const status =
+            booking.status
+            || "Pending";
+
+
+        const statusClass =
+            getStatusClass(status);
+
+
+        bookingContainer.innerHTML += `
+
+            <div
+                class="admin-booking-card"
+                data-booking-id="${id}"
+            >
+
+                <div class="admin-booking-top">
+
+                    <div>
+
+                        <h3>
+                            ${escapeHTML(
+                                vehicle || "Vehicle"
+                            )}
+                        </h3>
+
+                        <p>
+                            Booking ID:
+                            <strong>
+                                ${id}
+                            </strong>
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        class="admin-status ${statusClass}"
+                    >
+                        ${escapeHTML(status)}
+                    </span>
+
+                </div>
+
+
+                <div class="admin-booking-details">
 
                     <p>
-
-                        Booking ID:
                         <strong>
-                            ${escapeHTML(booking.id)}
+                            Customer:
                         </strong>
 
+                        ${escapeHTML(customer)}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Vehicle Number:
+                        </strong>
+
+                        ${escapeHTML(vehicleNumber)}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Service:
+                        </strong>
+
+                        ${escapeHTML(service)}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Mechanic:
+                        </strong>
+
+                        ${escapeHTML(mechanic)}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Date:
+                        </strong>
+
+                        ${escapeHTML(bookingDate)}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Time:
+                        </strong>
+
+                        ${escapeHTML(bookingTime)}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Amount:
+                        </strong>
+
+                        ₹${escapeHTML(amount)}
                     </p>
 
                 </div>
 
 
-                <span class="admin-status ${statusClass}">
+                <div class="admin-booking-actions">
 
-                    ${escapeHTML(status)}
+                    <select
+                        class="statusSelect"
+                        data-id="${id}"
+                    >
 
-                </span>
-
-            </div>
-
-
-            <div class="admin-booking-details">
-
-                <p>
-
-                    <strong>Customer:</strong>
-
-                    ${escapeHTML(
-                        booking.customerName ||
-                        "Not Available"
-                    )}
-
-                </p>
+                        <option
+                            value="Pending"
+                            ${status === "Pending"
+                                ? "selected"
+                                : ""}
+                        >
+                            Pending
+                        </option>
 
 
-                <p>
-
-                    <strong>Email:</strong>
-
-                    ${escapeHTML(
-                        booking.customerEmail ||
-                        "-"
-                    )}
-
-                </p>
+                        <option
+                            value="Confirmed"
+                            ${status === "Confirmed"
+                                ? "selected"
+                                : ""}
+                        >
+                            Confirmed
+                        </option>
 
 
-                <p>
-
-                    <strong>Vehicle Number:</strong>
-
-                    ${escapeHTML(
-                        booking.vehicleNumber ||
-                        "-"
-                    )}
-
-                </p>
+                        <option
+                            value="In Progress"
+                            ${status === "In Progress"
+                                ? "selected"
+                                : ""}
+                        >
+                            In Progress
+                        </option>
 
 
-                <p>
-
-                    <strong>Service:</strong>
-
-                    ${escapeHTML(
-                        booking.serviceType ||
-                        "-"
-                    )}
-
-                </p>
+                        <option
+                            value="Completed"
+                            ${status === "Completed"
+                                ? "selected"
+                                : ""}
+                        >
+                            Completed
+                        </option>
 
 
-                <p>
+                        <option
+                            value="Cancelled"
+                            ${status === "Cancelled"
+                                ? "selected"
+                                : ""}
+                        >
+                            Cancelled
+                        </option>
 
-                    <strong>Booking Date:</strong>
-
-                    ${escapeHTML(
-                        booking.bookingDate ||
-                        "-"
-                    )}
-
-                </p>
-
-
-                <p>
-
-                    <strong>Booking Time:</strong>
-
-                    ${escapeHTML(
-                        booking.bookingTime ||
-                        "-"
-                    )}
-
-                </p>
+                    </select>
 
 
-                <p>
-
-                    <strong>Mechanic:</strong>
-
-                    ${escapeHTML(
-                        booking.mechanicName ||
-                        "Not Assigned"
-                    )}
-
-                </p>
+                    <button
+                        class="saveStatus"
+                        data-id="${id}"
+                    >
+                        Update Status
+                    </button>
 
 
-                <p>
+                    <button
+                        class="deleteBooking"
+                        data-id="${id}"
+                    >
+                        Delete Booking
+                    </button>
 
-                    <strong>Amount:</strong>
-
-                    ₹${escapeHTML(amount)}
-
-                </p>
+                </div>
 
             </div>
 
+        `;
 
-            <div class="admin-booking-actions">
-
-                <select
-                    class="statusSelect"
-                    data-id="${escapeHTML(booking.id)}"
-                >
-
-                    <option value="Pending"
-                        ${status === "Pending" ? "selected" : ""}>
-                        Pending
-                    </option>
-
-                    <option value="Confirmed"
-                        ${status === "Confirmed" ? "selected" : ""}>
-                        Confirmed
-                    </option>
-
-                    <option value="In Progress"
-                        ${status === "In Progress" ? "selected" : ""}>
-                        In Progress
-                    </option>
-
-                    <option value="Completed"
-                        ${status === "Completed" ? "selected" : ""}>
-                        Completed
-                    </option>
-
-                    <option value="Cancelled"
-                        ${status === "Cancelled" ? "selected" : ""}>
-                        Cancelled
-                    </option>
-
-                </select>
+    });
 
 
-                <button
-                    class="saveStatus"
-                    data-id="${escapeHTML(booking.id)}"
-                >
-
-                    <i class="fas fa-save"></i>
-
-                    Update Status
-
-                </button>
-
-
-                <button
-                    class="deleteBooking"
-                    data-id="${escapeHTML(booking.id)}"
-                >
-
-                    <i class="fas fa-trash"></i>
-
-                    Delete
-
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
+    attachBookingEvents();
 
 }
 
@@ -819,27 +757,51 @@ function createBookingCard(booking) {
 
 function getStatusClass(status) {
 
-    switch (
-        String(status).toLowerCase()
-    ) {
+    const value =
+        String(status)
+        .toLowerCase();
 
-        case "confirmed":
-            return "status-confirmed";
 
-        case "in progress":
-        case "in-progress":
-            return "status-progress";
+    if (value === "pending") {
 
-        case "completed":
-            return "status-completed";
-
-        case "cancelled":
-            return "status-cancelled";
-
-        default:
-            return "status-pending";
+        return "status-pending";
 
     }
+
+
+    if (value === "confirmed") {
+
+        return "status-confirmed";
+
+    }
+
+
+    if (
+        value === "in progress"
+        ||
+        value === "in-progress"
+    ) {
+
+        return "status-progress";
+
+    }
+
+
+    if (value === "completed") {
+
+        return "status-completed";
+
+    }
+
+
+    if (value === "cancelled") {
+
+        return "status-cancelled";
+
+    }
+
+
+    return "status-pending";
 
 }
 
@@ -851,13 +813,13 @@ function getStatusClass(status) {
 function attachBookingEvents() {
 
 
-    /*
-     * UPDATE STATUS
-     */
+    /* -----------------------------------------
+       UPDATE STATUS
+    ----------------------------------------- */
 
     document
         .querySelectorAll(".saveStatus")
-        .forEach(button => {
+        .forEach((button) => {
 
             button.addEventListener(
                 "click",
@@ -869,13 +831,11 @@ function attachBookingEvents() {
 
                     const select =
                         document.querySelector(
-                            `.statusSelect[data-id="${CSS.escape(id)}"]`
+                            `.statusSelect[data-id="${id}"]`
                         );
 
 
-                    if (!select) {
-                        return;
-                    }
+                    if (!select) return;
 
 
                     const newStatus =
@@ -886,32 +846,30 @@ function attachBookingEvents() {
 
                         button.disabled = true;
 
-                        button.innerHTML =
+                        button.textContent =
                             "Updating...";
 
 
                         await update(
+
                             ref(
                                 db,
                                 "bookings/" + id
                             ),
+
                             {
-                                status: newStatus,
-
-                                updatedAt:
-                                    Date.now()
+                                status: newStatus
                             }
+
                         );
 
 
-                        showNotification(
-                            "Success",
-                            "Booking status updated successfully.",
-                            "success"
+                        alert(
+                            "Booking status updated successfully."
                         );
 
 
-                        await refreshAllData();
+                        await loadAllData();
 
                     }
 
@@ -919,16 +877,18 @@ function attachBookingEvents() {
 
                         console.error(error);
 
-                        showNotification(
-                            "Error",
-                            "Unable to update booking status.",
-                            "error"
+                        alert(
+                            "Unable to update booking status."
                         );
+
+                    }
+
+                    finally {
 
                         button.disabled = false;
 
-                        button.innerHTML =
-                            '<i class="fas fa-save"></i> Update Status';
+                        button.textContent =
+                            "Update Status";
 
                     }
 
@@ -938,13 +898,13 @@ function attachBookingEvents() {
         });
 
 
-    /*
-     * DELETE BOOKING
-     */
+    /* -----------------------------------------
+       DELETE BOOKING
+    ----------------------------------------- */
 
     document
         .querySelectorAll(".deleteBooking")
-        .forEach(button => {
+        .forEach((button) => {
 
             button.addEventListener(
                 "click",
@@ -960,35 +920,33 @@ function attachBookingEvents() {
                         );
 
 
-                    if (!confirmed) {
-                        return;
-                    }
+                    if (!confirmed) return;
 
 
                     try {
 
                         button.disabled = true;
 
-                        button.innerHTML =
+                        button.textContent =
                             "Deleting...";
 
 
                         await remove(
+
                             ref(
                                 db,
                                 "bookings/" + id
                             )
+
                         );
 
 
-                        showNotification(
-                            "Success",
-                            "Booking deleted successfully.",
-                            "success"
+                        alert(
+                            "Booking deleted successfully."
                         );
 
 
-                        await refreshAllData();
+                        await loadAllData();
 
                     }
 
@@ -996,16 +954,9 @@ function attachBookingEvents() {
 
                         console.error(error);
 
-                        showNotification(
-                            "Error",
-                            "Unable to delete booking.",
-                            "error"
+                        alert(
+                            "Unable to delete booking."
                         );
-
-                        button.disabled = false;
-
-                        button.innerHTML =
-                            '<i class="fas fa-trash"></i> Delete';
 
                     }
 
@@ -1023,25 +974,18 @@ function attachBookingEvents() {
 
 async function loadCustomers() {
 
-    if (!customerContainer) {
-        return;
-    }
-
-
-    customerContainer.innerHTML = `
-
-        <div class="admin-loading">
-
-            <div class="admin-spinner"></div>
-
-            Loading customers...
-
-        </div>
-
-    `;
+    if (!customerContainer) return;
 
 
     try {
+
+        customerContainer.innerHTML = `
+            <div class="admin-loading">
+                <div class="admin-spinner"></div>
+                Loading customers...
+            </div>
+        `;
+
 
         const snapshot =
             await get(
@@ -1057,49 +1001,49 @@ async function loadCustomers() {
             snapshot.forEach((child) => {
 
                 const user =
-                    child.val();
+                    child.val() || {};
 
 
                 if (
-                    user.role === "customer"
+                    String(user.role || "")
+                    .toLowerCase()
+                    !== "customer"
                 ) {
 
-                    allCustomers.push({
-
-                        id: child.key,
-
-                        ...user
-
-                    });
+                    return;
 
                 }
+
+
+                allCustomers.push({
+
+                    id: child.key,
+
+                    ...user
+
+                });
 
             });
 
         }
 
 
-        renderCustomers(
-            allCustomers
-        );
+        renderCustomers();
 
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Customers error:",
+            error
+        );
 
-        customerContainer.innerHTML = `
 
-            <div class="admin-empty">
-
-                <h3>
-                    Unable to load customers
-                </h3>
-
-            </div>
-
-        `;
+        showMessage(
+            customerContainer,
+            "Unable to load customers."
+        );
 
     }
 
@@ -1110,89 +1054,79 @@ async function loadCustomers() {
    RENDER CUSTOMERS
 ========================================================= */
 
-function renderCustomers(customers) {
+function renderCustomers() {
 
-    if (!customerContainer) {
+    if (!customerContainer) return;
+
+
+    if (!allCustomers.length) {
+
+        showMessage(
+            customerContainer,
+            "No customers found."
+        );
+
         return;
     }
 
 
-    if (!customers.length) {
+    customerContainer.innerHTML = "";
 
-        customerContainer.innerHTML = `
 
-            <div class="admin-empty">
+    allCustomers.forEach((user) => {
 
-                <i class="fas fa-users"></i>
+        customerContainer.innerHTML += `
+
+            <div class="admin-card">
 
                 <h3>
-                    No Customers Found
+                    ${escapeHTML(
+                        user.name || "Customer"
+                    )}
                 </h3>
 
+
                 <p>
-                    Registered customers will appear here.
+
+                    <strong>
+                        Email:
+                    </strong>
+
+                    ${escapeHTML(
+                        user.email || "-"
+                    )}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Phone:
+                    </strong>
+
+                    ${escapeHTML(
+                        user.phone || "-"
+                    )}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Role:
+                    </strong>
+
+                    Customer
+
                 </p>
 
             </div>
 
         `;
 
-        return;
-    }
-
-
-    customerContainer.innerHTML =
-        customers.map(
-            customer => `
-
-                <div class="admin-card">
-
-                    <h3>
-
-                        ${escapeHTML(
-                            customer.name ||
-                            "Customer"
-                        )}
-
-                    </h3>
-
-
-                    <p>
-
-                        <strong>Email:</strong>
-
-                        ${escapeHTML(
-                            customer.email ||
-                            "-"
-                        )}
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>Phone:</strong>
-
-                        ${escapeHTML(
-                            customer.phone ||
-                            "-"
-                        )}
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>Role:</strong>
-
-                        Customer
-
-                    </p>
-
-                </div>
-
-            `
-        ).join("");
+    });
 
 }
 
@@ -1203,25 +1137,18 @@ function renderCustomers(customers) {
 
 async function loadMechanics() {
 
-    if (!mechanicContainer) {
-        return;
-    }
-
-
-    mechanicContainer.innerHTML = `
-
-        <div class="admin-loading">
-
-            <div class="admin-spinner"></div>
-
-            Loading mechanics...
-
-        </div>
-
-    `;
+    if (!mechanicContainer) return;
 
 
     try {
+
+        mechanicContainer.innerHTML = `
+            <div class="admin-loading">
+                <div class="admin-spinner"></div>
+                Loading mechanics...
+            </div>
+        `;
+
 
         const snapshot =
             await get(
@@ -1237,49 +1164,49 @@ async function loadMechanics() {
             snapshot.forEach((child) => {
 
                 const user =
-                    child.val();
+                    child.val() || {};
 
 
                 if (
-                    user.role === "mechanic"
+                    String(user.role || "")
+                    .toLowerCase()
+                    !== "mechanic"
                 ) {
 
-                    allMechanics.push({
-
-                        id: child.key,
-
-                        ...user
-
-                    });
+                    return;
 
                 }
+
+
+                allMechanics.push({
+
+                    id: child.key,
+
+                    ...user
+
+                });
 
             });
 
         }
 
 
-        renderMechanics(
-            allMechanics
-        );
+        renderMechanics();
 
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Mechanics error:",
+            error
+        );
 
-        mechanicContainer.innerHTML = `
 
-            <div class="admin-empty">
-
-                <h3>
-                    Unable to load mechanics
-                </h3>
-
-            </div>
-
-        `;
+        showMessage(
+            mechanicContainer,
+            "Unable to load mechanics."
+        );
 
     }
 
@@ -1290,102 +1217,95 @@ async function loadMechanics() {
    RENDER MECHANICS
 ========================================================= */
 
-function renderMechanics(mechanics) {
+function renderMechanics() {
 
-    if (!mechanicContainer) {
+    if (!mechanicContainer) return;
+
+
+    if (!allMechanics.length) {
+
+        showMessage(
+            mechanicContainer,
+            "No mechanics found."
+        );
+
         return;
     }
 
 
-    if (!mechanics.length) {
+    mechanicContainer.innerHTML = "";
 
-        mechanicContainer.innerHTML = `
 
-            <div class="admin-empty">
+    allMechanics.forEach((mechanic) => {
 
-                <i class="fas fa-user-gear"></i>
+        mechanicContainer.innerHTML += `
+
+            <div class="admin-card">
 
                 <h3>
-                    No Mechanics Found
+                    ${escapeHTML(
+                        mechanic.name
+                        || "Mechanic"
+                    )}
                 </h3>
 
+
                 <p>
-                    Mechanics managed by the admin
-                    will appear here.
+
+                    <strong>
+                        Email:
+                    </strong>
+
+                    ${escapeHTML(
+                        mechanic.email || "-"
+                    )}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Phone:
+                    </strong>
+
+                    ${escapeHTML(
+                        mechanic.phone || "-"
+                    )}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Experience:
+                    </strong>
+
+                    ${escapeHTML(
+                        mechanic.experience || "-"
+                    )}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Specialization:
+                    </strong>
+
+                    ${escapeHTML(
+                        mechanic.specialization || "-"
+                    )}
+
                 </p>
 
             </div>
 
         `;
 
-        return;
-    }
-
-
-    mechanicContainer.innerHTML =
-        mechanics.map(
-            mechanic => `
-
-                <div class="admin-card">
-
-                    <h3>
-
-                        ${escapeHTML(
-                            mechanic.name ||
-                            "Mechanic"
-                        )}
-
-                    </h3>
-
-
-                    <p>
-
-                        <strong>Email:</strong>
-
-                        ${escapeHTML(
-                            mechanic.email ||
-                            "-"
-                        )}
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>Phone:</strong>
-
-                        ${escapeHTML(
-                            mechanic.phone ||
-                            "-"
-                        )}
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>Experience:</strong>
-
-                        ${escapeHTML(
-                            mechanic.experience ||
-                            "-"
-                        )}
-
-                    </p>
-
-
-                    <p>
-
-                        <strong>Role:</strong>
-
-                        Mechanic
-
-                    </p>
-
-                </div>
-
-            `
-        ).join("");
+    });
 
 }
 
@@ -1400,13 +1320,13 @@ if (searchBooking) {
         "input",
         () => {
 
-            const searchValue =
+            const value =
                 searchBooking.value
-                    .trim()
-                    .toLowerCase();
+                .trim()
+                .toLowerCase();
 
 
-            if (!searchValue) {
+            if (!value) {
 
                 renderBookings(
                     allBookings
@@ -1419,7 +1339,7 @@ if (searchBooking) {
 
             const filtered =
                 allBookings.filter(
-                    booking => {
+                    (booking) => {
 
                         const searchableText = [
 
@@ -1444,13 +1364,16 @@ if (searchBooking) {
                             booking.bookingDate
 
                         ]
+
                         .filter(Boolean)
+
                         .join(" ")
+
                         .toLowerCase();
 
 
                         return searchableText
-                            .includes(searchValue);
+                            .includes(value);
 
                     }
                 );
@@ -1467,31 +1390,26 @@ if (searchBooking) {
 
 
 /* =========================================================
-   REFRESH BUTTON
+   REFRESH DASHBOARD
 ========================================================= */
 
-if (refreshBtn) {
+if (refreshDashboard) {
 
-    refreshBtn.addEventListener(
+    refreshDashboard.addEventListener(
         "click",
         async () => {
 
             try {
 
-                refreshBtn.disabled = true;
-
-                refreshBtn.innerHTML =
-                    '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+                refreshDashboard.disabled =
+                    true;
 
 
-                await refreshAllData();
+                refreshDashboard.textContent =
+                    "Refreshing...";
 
 
-                showNotification(
-                    "Dashboard Updated",
-                    "Latest data has been loaded.",
-                    "success"
-                );
+                await loadAllData();
 
             }
 
@@ -1503,10 +1421,12 @@ if (refreshBtn) {
 
             finally {
 
-                refreshBtn.disabled = false;
+                refreshDashboard.disabled =
+                    false;
 
-                refreshBtn.innerHTML =
-                    '<i class="fas fa-refresh"></i> Refresh';
+
+                refreshDashboard.textContent =
+                    "Refresh";
 
             }
 
@@ -1517,154 +1437,56 @@ if (refreshBtn) {
 
 
 /* =========================================================
-   NOTIFICATION
+   LOGOUT
 ========================================================= */
 
-function showNotification(
-    title,
-    message,
-    type = "success"
-) {
+if (logoutBtn) {
 
-    let notification =
-        document.getElementById(
-            "adminNotification"
-        );
+    logoutBtn.addEventListener(
+        "click",
+        async () => {
 
+            try {
 
-    /*
-     * Create notification automatically
-     * if it does not exist in HTML.
-     */
+                await signOut(auth);
 
-    if (!notification) {
+                window.location.href =
+                    "admin-login.html";
 
-        notification =
-            document.createElement("div");
+            }
 
-        notification.id =
-            "adminNotification";
+            catch (error) {
 
-        notification.className =
-            "admin-notification";
+                console.error(
+                    "Logout error:",
+                    error
+                );
 
-        document.body.appendChild(
-            notification
-        );
+                alert(
+                    "Logout failed."
+                );
 
-    }
-
-
-    notification.className =
-        "admin-notification show " +
-        type;
-
-
-    notification.innerHTML = `
-
-        <h4>
-            ${escapeHTML(title)}
-        </h4>
-
-        <p>
-            ${escapeHTML(message)}
-        </p>
-
-    `;
-
-
-    setTimeout(() => {
-
-        notification.classList.remove(
-            "show"
-        );
-
-    }, 3500);
-
-}
-
-
-/* =========================================================
-   TIMESTAMP HELPER
-========================================================= */
-
-function getTimestamp(item) {
-
-    if (!item) {
-        return 0;
-    }
-
-
-    /*
-     * Firebase timestamp
-     */
-
-    if (
-        typeof item.createdAt ===
-        "number"
-    ) {
-
-        return item.createdAt;
-
-    }
-
-
-    if (
-        typeof item.updatedAt ===
-        "number"
-    ) {
-
-        return item.updatedAt;
-
-    }
-
-
-    /*
-     * Date string fallback
-     */
-
-    if (item.bookingDate) {
-
-        const date =
-            new Date(
-                item.bookingDate
-            ).getTime();
-
-
-        if (!isNaN(date)) {
-
-            return date;
+            }
 
         }
-
-    }
-
-
-    return 0;
+    );
 
 }
 
 
 /* =========================================================
    AUTO REFRESH
+   Refresh data every 30 seconds.
 ========================================================= */
 
 setInterval(
     async () => {
 
-        /*
-         * Only refresh if the admin
-         * is authenticated.
-         */
-
-        if (!currentAdmin) {
-            return;
-        }
-
+        if (!currentAdmin) return;
 
         try {
 
-            await refreshAllData();
+            await loadAllData();
 
         }
 
@@ -1691,24 +1513,7 @@ document.addEventListener(
     () => {
 
         console.log(
-            "====================================="
-        );
-
-        console.log(
-            "SERVORA ADMIN DASHBOARD"
-        );
-
-        console.log(
-            "Single Page Admin Panel"
-        );
-
-        console.log(
-            "Realtime Database Connected"
-        );
-
-        console.log(
-            "====================================="
-
+            "Servora Admin Dashboard initialized."
         );
 
     }
@@ -1718,3 +1523,23 @@ document.addEventListener(
 /* =========================================================
    END OF ADMIN.JS
 ========================================================= */
+
+console.log(
+    "====================================="
+);
+
+console.log(
+    "SERVORA ADMIN MODULE"
+);
+
+console.log(
+    "Realtime Database Connected"
+);
+
+console.log(
+    "Single Page Admin Dashboard Ready"
+);
+
+console.log(
+    "====================================="
+);
