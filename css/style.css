@@ -6369,7 +6369,333 @@ background:#004bcc;
     display: none !important;
 }
 
+/* =========================================================
+   ADMIN DASHBOARD - FINAL FIX
+========================================================= */
 
+/* Only when admin dashboard exists */
+body:has(.admin-navbar) {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #f5f7fb !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
+}
+
+/* Kill old global header rules */
+body:has(.admin-navbar) header {
+    position: sticky !important;
+    top: 0 !important;
+    left: auto !important;
+    right: auto !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    transform: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Admin navbar */
+body:has(.admin-navbar) .admin-navbar {
+    display: block !important;
+
+    width: 100% !important;
+    min-height: 78px !important;
+
+    background: #ffffff !important;
+
+    border-bottom: 1px solid #e5e7eb !important;
+
+    box-shadow: 0 3px 15px rgba(0,0,0,0.06) !important;
+
+    position: sticky !important;
+    top: 0 !important;
+
+    z-index: 9999 !important;
+}
+
+/* Navbar container */
+body:has(.admin-navbar) .admin-nav-container {
+    width: min(1400px, 94%) !important;
+
+    min-height: 78px !important;
+
+    margin: 0 auto !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    background: transparent !important;
+}
+
+/* =========================================================
+   ADMIN LOGO
+========================================================= */
+
+body:has(.admin-navbar) .admin-logo {
+    display: flex !important;
+
+    align-items: center !important;
+
+    gap: 12px !important;
+
+    width: auto !important;
+    height: auto !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    position: static !important;
+
+    transform: none !important;
+}
+
+/* THIS IS THE IMPORTANT PART */
+body:has(.admin-navbar) .admin-logo img {
+    display: block !important;
+
+    width: 52px !important;
+    height: 52px !important;
+
+    max-width: 52px !important;
+    max-height: 52px !important;
+
+    min-width: 52px !important;
+    min-height: 52px !important;
+
+    object-fit: contain !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    position: static !important;
+
+    transform: none !important;
+}
+
+/* Logo text */
+body:has(.admin-navbar) .admin-logo h2 {
+    margin: 0 !important;
+
+    font-size: 23px !important;
+
+    line-height: 1.2 !important;
+
+    color: #111827 !important;
+}
+
+body:has(.admin-navbar) .admin-logo span {
+    display: block !important;
+
+    margin: 2px 0 0 !important;
+
+    font-size: 10px !important;
+
+    color: #64748b !important;
+}
+
+
+/* =========================================================
+   ADMIN NAVIGATION
+========================================================= */
+
+body:has(.admin-navbar) .admin-nav-links {
+    display: flex !important;
+
+    align-items: center !important;
+
+    gap: 8px !important;
+
+    width: auto !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body:has(.admin-navbar) .admin-nav-links a {
+    display: inline-flex !important;
+
+    align-items: center !important;
+
+    gap: 7px !important;
+
+    width: auto !important;
+    height: auto !important;
+
+    margin: 0 !important;
+
+    padding: 10px 13px !important;
+
+    color: #475569 !important;
+
+    background: transparent !important;
+
+    border-radius: 8px !important;
+
+    font-size: 13px !important;
+
+    text-decoration: none !important;
+
+    position: static !important;
+
+    transform: none !important;
+}
+
+body:has(.admin-navbar) .admin-nav-links a:hover {
+    background: #eff6ff !important;
+
+    color: #2563eb !important;
+}
+
+
+/* Logout */
+
+body:has(.admin-navbar) #logoutBtn {
+    width: auto !important;
+    height: auto !important;
+
+    margin: 0 !important;
+
+    padding: 10px 17px !important;
+
+    border: none !important;
+
+    border-radius: 8px !important;
+
+    background: #ef4444 !important;
+
+    color: #ffffff !important;
+
+    font-size: 13px !important;
+
+    cursor: pointer !important;
+}
+
+
+/* =========================================================
+   MAIN DASHBOARD
+========================================================= */
+
+body:has(.admin-navbar) .admin-main {
+    display: block !important;
+
+    width: min(1400px, 94%) !important;
+
+    margin: 0 auto !important;
+
+    padding: 40px 0 60px !important;
+
+    background: transparent !important;
+
+    position: static !important;
+
+    transform: none !important;
+}
+
+
+/* =========================================================
+   STAT CARDS
+========================================================= */
+
+body:has(.admin-navbar) .admin-stats {
+    display: grid !important;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr)) !important;
+
+    gap: 20px !important;
+
+    width: 100% !important;
+
+    margin: 0 0 30px !important;
+}
+
+body:has(.admin-navbar) .admin-stat-card {
+    display: flex !important;
+
+    align-items: center !important;
+
+    gap: 15px !important;
+
+    width: auto !important;
+
+    min-height: 125px !important;
+
+    margin: 0 !important;
+
+    padding: 22px !important;
+
+    background: #ffffff !important;
+
+    border: 1px solid #e5e7eb !important;
+
+    border-radius: 14px !important;
+
+    box-shadow: 0 5px 20px rgba(15,23,42,0.05) !important;
+
+    transform: none !important;
+}
+
+
+/* =========================================================
+   REMOVE ANY OLD FULL-SCREEN LOGO / LOADER
+========================================================= */
+
+body:has(.admin-navbar) > img,
+body:has(.admin-navbar) > .logo,
+body:has(.admin-navbar) > .loader,
+body:has(.admin-navbar) > .preloader,
+body:has(.admin-navbar) > .loading-screen,
+body:has(.admin-navbar) > #loader,
+body:has(.admin-navbar) > #preloader {
+    display: none !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    body:has(.admin-navbar) .admin-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    body:has(.admin-navbar) .admin-nav-links a {
+        padding: 8px !important;
+        font-size: 12px !important;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    body:has(.admin-navbar) .admin-nav-container {
+        width: 92% !important;
+    }
+
+    body:has(.admin-navbar) .admin-logo > div {
+        display: none !important;
+    }
+
+    body:has(.admin-navbar) .admin-nav-links a {
+        font-size: 0 !important;
+    }
+
+    body:has(.admin-navbar) .admin-nav-links a i {
+        font-size: 15px !important;
+    }
+
+    body:has(.admin-navbar) .admin-stats {
+        grid-template-columns: 1fr !important;
+    }
+}
 
 /* SERVICE STATUS */
 
