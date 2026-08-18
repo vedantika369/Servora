@@ -2150,171 +2150,1083 @@
 </footer>
 
     <script type="module">
-        import { auth, db } from "../js/firebase-config.js";
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-        let currentUserUID = "";
-        let userVehicles = [];
+/* =========================================================
+   SERVORA - BOOK SERVICE
+   Firebase Realtime Database
+   ========================================================= */
 
-        // Check user login and load vehicles
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUserUID = user.uid;
-                loadVehicles();
-            } else {
-                window.location.href = "login.html";
+import {
+    auth,
+    db
+} from "../js/firebase-config.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    ref,
+    get,
+    push,
+    set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+let currentUser = null;
+let currentUserUID = "";
+let userVehicles = [];
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
+
+const vehicleList =
+    document.getElementById("vehicleList");
+
+const noVehicleMessage =
+    document.getElementById("noVehicleMessage");
+
+const dateInput =
+    document.getElementById("date");
+
+const timeInput =
+    document.getElementById("time");
+
+const summaryVehicle =
+    document.getElementById("summaryVehicle");
+
+const summaryService =
+    document.getElementById("summaryService");
+
+const summaryPrice =
+    document.getElementById("summaryPrice");
+
+const summaryDate =
+    document.getElementById("summaryDate");
+
+const summaryTime =
+    document.getElementById("summaryTime");
+
+
+/* =========================================================
+   AUTHENTICATION
+   ========================================================= */
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+        window.location.href = "../login.html";
+
+        return;
+    }
+
+    currentUser = user;
+    currentUserUID = user.uid;
+
+    await loadVehicles();
+
+});
+
+
+/* =========================================================
+   LOAD USER VEHICLES
+   ========================================================= */
+
+async function loadVehicles() {
+
+    try {
+
+        const vehiclesRef =
+            ref(db, "vehicles");
+
+        const snapshot =
+            await get(vehiclesRef);
+
+
+        vehicleList.innerHTML = "";
+
+        userVehicles = [];
+
+
+        if (!snapshot.exists()) {
+
+            noVehicleMessage.classList.remove("hidden");
+
+            return;
+        }
+
+
+        const vehicles =
+            snapshot.val();
+
+        let found = false;
+
+
+        Object.keys(vehicles).forEach((vehicleId) => {
+
+            const vehicle =
+                vehicles[vehicleId];
+
+
+            if (vehicle.userId !== currentUserUID) {
+                return;
             }
+
+
+            found = true;
+
+
+            const vehicleData = {
+
+                id: vehicleId,
+
+                name:
+                    vehicle.vehicleName ||
+                    vehicle.vehicleBrand ||
+                    "Vehicle",
+
+                number:
+                    vehicle.vehicleNumber ||
+                    "Not Available",
+
+                model:
+                    vehicle.model ||
+                    "",
+
+                year:
+                    vehicle.year ||
+                    "",
+
+                type:
+                    getVehicleType(vehicle),
+
+                icon:
+                    getVehicleIcon(vehicle)
+
+            };
+
+
+            userVehicles.push(vehicleData);
+
+
+            const label =
+                document.createElement("label");
+
+            label.className =
+                "vehicle-option";
+
+
+            label.innerHTML = `
+
+                <input
+                    type="radio"
+                    name="vehicle"
+                    value="${vehicleId}"
+                >
+
+                <div class="vehicle-icon">
+                    ${vehicleData.icon}
+                </div>
+
+                <p class="vehicle-name">
+                    ${vehicleData.name}
+                </p>
+
+                <p class="vehicle-number">
+                    ${vehicleData.number}
+                </p>
+
+            `;
+
+
+            label
+                .querySelector("input")
+                .addEventListener(
+                    "change",
+                    updateSummary
+                );
+
+
+            vehicleList.appendChild(label);
+
         });
 
-        // Load vehicles from Firebase
-        async function loadVehicles() {
-            try {
-                const vehiclesRef = ref(db, "vehicles");
-                const snapshot = await get(vehiclesRef);
 
-                const vehicleList = document.getElementById('vehicleList');
-                const noVehicleMessage = document.getElementById('noVehicleMessage');
+        if (found) {
 
-                vehicleList.innerHTML = '';
-                userVehicles = [];
+            noVehicleMessage
+                .classList
+                .add("hidden");
 
-                if (!snapshot.exists()) {
-                    noVehicleMessage.classList.remove('hidden');
-                    return;
+        } else {
+
+            noVehicleMessage
+                .classList
+                .remove("hidden");
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Vehicle loading error:",
+            error
+        );
+
+        noVehicleMessage
+            .classList
+            .remove("hidden");
+
+    }
+
+}
+
+
+/* =========================================================
+   DETERMINE VEHICLE TYPE
+   ========================================================= */
+
+function getVehicleType(vehicle) {
+
+    const value = (
+
+        (vehicle.vehicleType || "") +
+        " " +
+        (vehicle.type || "") +
+        " " +
+        (vehicle.category || "") +
+        " " +
+        (vehicle.vehicleName || "") +
+        " " +
+        (vehicle.vehicleBrand || "") +
+        " " +
+        (vehicle.model || "")
+
+    ).toLowerCase();
+
+
+    if (
+        value.includes("bike") ||
+        value.includes("motorcycle") ||
+        value.includes("scooter") ||
+        value.includes("two wheeler") ||
+        value.includes("2 wheeler")
+    ) {
+
+        return "bike";
+    }
+
+
+    return "car";
+
+}
+
+
+/* =========================================================
+   VEHICLE ICON
+   ========================================================= */
+
+function getVehicleIcon(vehicle) {
+
+    const type =
+        getVehicleType(vehicle);
+
+
+    if (type === "bike") {
+
+        return "🏍️";
+
+    }
+
+
+    const value = (
+
+        (vehicle.model || "") +
+        " " +
+        (vehicle.vehicleName || "")
+
+    ).toLowerCase();
+
+
+    if (
+        value.includes("suv") ||
+        value.includes("xuv")
+    ) {
+
+        return "🚙";
+
+    }
+
+
+    return "🚗";
+
+}
+
+
+/* =========================================================
+   SERVICE PRICING
+   =========================================================
+   
+   These are STARTING / ESTIMATED prices.
+
+   Final price can change after vehicle inspection
+   if additional repairs or parts are required.
+   ========================================================= */
+
+const servicePrices = {
+
+    general: {
+
+        car: 1999,
+        bike: 999
+
+    },
+
+    engine: {
+
+        car: 999,
+        bike: 599
+
+    },
+
+    "oil-change": {
+
+        car: 999,
+        bike: 699
+
+    },
+
+    cleaning: {
+
+        car: 499,
+        bike: 299
+
+    },
+
+    emergency: {
+
+        car: null,
+        bike: null
+
+    },
+
+    battery: {
+
+        car: 799,
+        bike: 599
+
+    },
+
+    brake: {
+
+        car: 1299,
+        bike: 699
+
+    },
+
+    alignment: {
+
+        car: 699,
+        bike: null
+
+    },
+
+    diagnostics: {
+
+        car: 699,
+        bike: 499
+
+    }
+
+};
+
+
+/* =========================================================
+   GET SERVICE NAME
+   ========================================================= */
+
+function getServiceName(serviceInput) {
+
+    if (!serviceInput) {
+
+        return "";
+
+    }
+
+
+    const label =
+        serviceInput
+            .closest(".service-option")
+            ?.querySelector("h4");
+
+
+    if (!label) {
+
+        return serviceInput.value;
+
+    }
+
+
+    return label
+        .textContent
+        .replace(/^[^\w]+/, "")
+        .trim();
+
+}
+
+
+/* =========================================================
+   GET SELECTED SERVICE
+   ========================================================= */
+
+function getSelectedService() {
+
+    return document
+        .querySelector(
+            'input[name="service"]:checked'
+        );
+
+}
+
+
+/* =========================================================
+   GET ESTIMATED PRICE
+   ========================================================= */
+
+function getEstimatedPrice(
+    serviceValue,
+    vehicleType
+) {
+
+    if (
+        !servicePrices[serviceValue]
+    ) {
+
+        return null;
+
+    }
+
+
+    return servicePrices[
+        serviceValue
+    ][vehicleType];
+
+}
+
+
+/* =========================================================
+   FORMAT PRICE
+   ========================================================= */
+
+function formatPrice(price) {
+
+    if (
+        price === null ||
+        price === undefined
+    ) {
+
+        return "Inspection required";
+
+    }
+
+
+    return "Starting from ₹" +
+        price.toLocaleString("en-IN");
+
+}
+
+
+/* =========================================================
+   UPDATE BOOKING SUMMARY
+   ========================================================= */
+
+function updateSummary() {
+
+
+    /* ---------------- VEHICLE ---------------- */
+
+    const selectedVehicle =
+        document.querySelector(
+            'input[name="vehicle"]:checked'
+        );
+
+
+    if (selectedVehicle) {
+
+        const vehicle =
+            userVehicles.find(
+                item =>
+                    item.id ===
+                    selectedVehicle.value
+            );
+
+
+        if (vehicle) {
+
+            summaryVehicle.textContent =
+                `${vehicle.name} (${vehicle.number})`;
+
+        }
+
+    }
+
+
+    /* ---------------- SERVICE ---------------- */
+
+    const selectedService =
+        getSelectedService();
+
+
+    if (
+        selectedService
+    ) {
+
+        const vehicleInput =
+            document.querySelector(
+                'input[name="vehicle"]:checked'
+            );
+
+
+        let vehicleType =
+            "car";
+
+
+        if (vehicleInput) {
+
+            const vehicle =
+                userVehicles.find(
+                    item =>
+                        item.id ===
+                        vehicleInput.value
+                );
+
+
+            if (vehicle) {
+
+                vehicleType =
+                    vehicle.type;
+
+            }
+
+        }
+
+
+        const serviceName =
+            getServiceName(
+                selectedService
+            );
+
+
+        const estimatedPrice =
+            getEstimatedPrice(
+                selectedService.value,
+                vehicleType
+            );
+
+
+        summaryService.textContent =
+            serviceName;
+
+
+        summaryPrice.textContent =
+            formatPrice(
+                estimatedPrice
+            );
+
+    }
+
+
+    /* ---------------- DATE ---------------- */
+
+    if (
+        dateInput &&
+        dateInput.value
+    ) {
+
+        const date =
+            new Date(
+                dateInput.value +
+                "T00:00:00"
+            );
+
+
+        summaryDate.textContent =
+            date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
                 }
+            );
 
-                const vehicles = snapshot.val();
-                let found = false;
+    }
 
-                Object.keys(vehicles).forEach((vehicleId) => {
-                    const vehicle = vehicles[vehicleId];
-                    
-                    // Only show vehicles for current user
-                    if (vehicle.userId === currentUserUID) {
-                        found = true;
-                        
-                        // Store vehicle data
-                        userVehicles.push({
-                            id: vehicleId,
-                            name: vehicle.vehicleName,
-                            number: vehicle.vehicleNumber,
-                            model: vehicle.model,
-                            year: vehicle.year,
-                            icon: getVehicleIcon(vehicle.model)
-                        });
 
-                        // Create vehicle option element
-                        const label = document.createElement('label');
-                        label.className = 'vehicle-option';
-                        label.innerHTML = `
-                            <input type="radio" name="vehicle" value="${vehicleId}">
-                            <div class="vehicle-icon">${getVehicleIcon(vehicle.model)}</div>
-                            <p class="vehicle-name">${vehicle.vehicleName}</p>
-                            <p class="vehicle-number">${vehicle.vehicleNumber}</p>
-                        `;
-                        label.addEventListener('change', updateSummary);
-                        vehicleList.appendChild(label);
-                    }
-                });
+    /* ---------------- TIME ---------------- */
 
-                if (found) {
-                    noVehicleMessage.classList.add('hidden');
-                } else {
-                    noVehicleMessage.classList.remove('hidden');
-                }
+    if (
+        timeInput &&
+        timeInput.value
+    ) {
 
-            } catch (error) {
-                console.error("Error loading vehicles:", error);
-                document.getElementById('noVehicleMessage').classList.remove('hidden');
-            }
+        summaryTime.textContent =
+            timeInput.value;
+
+    }
+
+}
+
+
+/* =========================================================
+   VALIDATE BOOKING
+   ========================================================= */
+
+function validateBooking() {
+
+    const vehicle =
+        document.querySelector(
+            'input[name="vehicle"]:checked'
+        );
+
+
+    const service =
+        getSelectedService();
+
+
+    const date =
+        dateInput?.value;
+
+
+    const time =
+        timeInput?.value;
+
+
+    if (!vehicle) {
+
+        alert(
+            "Please select a vehicle."
+        );
+
+        return false;
+
+    }
+
+
+    if (!service) {
+
+        alert(
+            "Please select a service."
+        );
+
+        return false;
+
+    }
+
+
+    if (!date) {
+
+        alert(
+            "Please select a service date."
+        );
+
+        return false;
+
+    }
+
+
+    if (!time) {
+
+        alert(
+            "Please select a preferred time."
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   BOOK SERVICE
+   ========================================================= */
+
+async function bookService() {
+
+
+    if (!currentUser) {
+
+        alert(
+            "Please login before booking a service."
+        );
+
+        return;
+
+    }
+
+
+    if (!validateBooking()) {
+
+        return;
+
+    }
+
+
+    const vehicleInput =
+        document.querySelector(
+            'input[name="vehicle"]:checked'
+        );
+
+
+    const serviceInput =
+        getSelectedService();
+
+
+    const vehicle =
+        userVehicles.find(
+            item =>
+                item.id ===
+                vehicleInput.value
+        );
+
+
+    if (!vehicle) {
+
+        alert(
+            "Selected vehicle could not be found."
+        );
+
+        return;
+
+    }
+
+
+    const serviceName =
+        getServiceName(
+            serviceInput
+        );
+
+
+    const estimatedPrice =
+        getEstimatedPrice(
+            serviceInput.value,
+            vehicle.type
+        );
+
+
+    try {
+
+
+        /* ==========================================
+           GET CUSTOMER DATA
+        ========================================== */
+
+        let customerName =
+            currentUser.displayName ||
+            "";
+
+
+        let customerPhone =
+            "";
+
+
+        const userSnapshot =
+            await get(
+                ref(
+                    db,
+                    "users/" +
+                    currentUserUID
+                )
+            );
+
+
+        if (
+            userSnapshot.exists()
+        ) {
+
+            const userData =
+                userSnapshot.val();
+
+
+            customerName =
+                userData.name ||
+                customerName ||
+                "Customer";
+
+
+            customerPhone =
+                userData.phone ||
+                "";
+
         }
 
-        // Get appropriate icon based on vehicle model
-        function getVehicleIcon(model) {
-            const modelLower = model.toLowerCase();
-            if (modelLower.includes('suv') || modelLower.includes('xuv')) return '🚙';
-            if (modelLower.includes('sedan')) return '🚗';
-            if (modelLower.includes('truck')) return '🚚';
-            if (modelLower.includes('van')) return '🚐';
-            return '🚗'; // default
+
+        /* ==========================================
+           CREATE BOOKING REFERENCE
+        ========================================== */
+
+        const bookingsRef =
+            ref(
+                db,
+                "bookings"
+            );
+
+
+        const newBookingRef =
+            push(
+                bookingsRef
+            );
+
+
+        const bookingId =
+            newBookingRef.key;
+
+
+        /* ==========================================
+           BOOKING DATA
+        ========================================== */
+
+        const bookingData = {
+
+            bookingId:
+
+                bookingId,
+
+            customerId:
+
+                currentUserUID,
+
+            customerName:
+
+                customerName,
+
+            customerEmail:
+
+                currentUser.email ||
+                "",
+
+            customerPhone:
+
+                customerPhone,
+
+
+            vehicleId:
+
+                vehicle.id,
+
+            vehicleName:
+
+                vehicle.name,
+
+            vehicleNumber:
+
+                vehicle.number,
+
+            vehicleModel:
+
+                vehicle.model,
+
+            vehicleYear:
+
+                vehicle.year,
+
+            vehicleType:
+
+                vehicle.type,
+
+
+            service:
+
+                serviceInput.value,
+
+            serviceType:
+
+                serviceName,
+
+
+            estimatedCost:
+
+                estimatedPrice,
+
+            finalAmount:
+
+                null,
+
+
+            bookingDate:
+
+                dateInput.value,
+
+            bookingTime:
+
+                timeInput.value,
+
+
+            status:
+
+                "Pending",
+
+            paymentStatus:
+
+                "Pending",
+
+
+            mechanicId:
+
+                "",
+
+            mechanicName:
+
+                "",
+
+
+            mechanicNote:
+
+                "",
+
+
+            additionalCharges:
+
+                0,
+
+
+            customerApprovedAdditional:
+
+                false,
+
+
+            createdAt:
+
+                Date.now(),
+
+            updatedAt:
+
+                Date.now()
+
+        };
+
+
+        /* ==========================================
+           SAVE TO REALTIME DATABASE
+        ========================================== */
+
+        await set(
+            newBookingRef,
+            bookingData
+        );
+
+
+        /* ==========================================
+           SUCCESS
+        ========================================== */
+
+        alert(
+            "Service booked successfully!\n\n" +
+            "Your booking is now pending confirmation."
+        );
+
+
+        window.location.href =
+            "bookings.html";
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Booking Error:",
+            error
+        );
+
+
+        alert(
+            "Unable to create booking.\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MAKE FUNCTION AVAILABLE TO HTML
+   ========================================================= */
+
+window.bookService =
+    bookService;
+
+
+/* =========================================================
+   EVENT LISTENERS
+   ========================================================= */
+
+if (dateInput) {
+
+    dateInput.addEventListener(
+        "change",
+        updateSummary
+    );
+
+}
+
+
+if (timeInput) {
+
+    timeInput.addEventListener(
+        "change",
+        updateSummary
+    );
+
+}
+
+
+document
+    .querySelectorAll(
+        'input[name="service"]'
+    )
+    .forEach(
+        input => {
+
+            input.addEventListener(
+                "change",
+                updateSummary
+            );
+
         }
+    );
 
-        // Update booking summary
-        function updateSummary() {
-            // Get selected vehicle
-            const selectedVehicleInput = document.querySelector('input[name="vehicle"]:checked');
-            if (selectedVehicleInput) {
-                const vehicleId = selectedVehicleInput.value;
-                const vehicle = userVehicles.find(v => v.id === vehicleId);
-                if (vehicle) {
-                    document.getElementById('summaryVehicle').textContent = `${vehicle.name} (${vehicle.number})`;
-                }
-            }
 
-            // Get selected service
-            const selectedService = document.querySelector('input[name="service"]:checked');
-            if (selectedService) {
-                const serviceLabel = selectedService.closest('.service-option').querySelector('h4').textContent;
-                const servicePrice = selectedService.closest('.service-option').querySelector('.service-price').textContent;
-                document.getElementById('summaryService').textContent = serviceLabel.replace(/[^a-zA-Z\s]/g, '').trim();
-                document.getElementById('summaryPrice').textContent = servicePrice;
-            }
+/* =========================================================
+   INITIAL SUMMARY
+   ========================================================= */
 
-            // Get selected date
-            const date = document.getElementById('date').value;
-            if (date) {
-                const dateObj = new Date(date);
-                document.getElementById('summaryDate').textContent = dateObj.toLocaleDateString('en-IN');
-            }
+updateSummary();
 
-            // Get selected time
-            const time = document.getElementById('time').value;
-            if (time) {
-                document.getElementById('summaryTime').textContent = time;
-            }
-        }
 
-        // Book service function
-        function bookService() {
-            const vehicleSelect = document.querySelector('input[name="vehicle"]:checked');
-            const serviceSelect = document.querySelector('input[name="service"]:checked');
-            const date = document.getElementById('date').value;
-            const time = document.getElementById('time').value;
+console.log(
+    "✅ Servora Book Service loaded"
+);
 
-            if (!vehicleSelect) {
-                alert('Please select a vehicle');
-                return;
-            }
+console.log(
+    "✅ Firebase Realtime Database connected"
+);
 
-            if (!serviceSelect) {
-                alert('Please select a service');
-                return;
-            }
-
-            if (!date) {
-                alert('Please select a date');
-                return;
-            }
-
-            if (!time) {
-                alert('Please select a time');
-                return;
-            }
-
-            alert('Thank you for booking with Servora! Your service has been scheduled.');
-        }
-
-        // Make bookService accessible globally
-        window.bookService = bookService;
-
-        // Add event listeners to form inputs
-        document.getElementById('date').addEventListener('change', updateSummary);
-        document.getElementById('time').addEventListener('change', updateSummary);
-        document.querySelectorAll('input[name="service"]').forEach(input => {
-            input.addEventListener('change', updateSummary);
-        });
-    </script>
+</script>
 <script>
 (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="O5ymNa39oG-QvX7znz3HC";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
 </script>
