@@ -491,7 +491,297 @@
 
     </div>
 
+    <!-- =====================================================
+     ADD MECHANIC
+===================================================== -->
 
+<section class="admin-section add-mechanic-section">
+
+    <div class="admin-section-header">
+
+        <div>
+            <span class="admin-section-tag">
+                <i class="fas fa-user-plus"></i>
+                Mechanic Management
+            </span>
+
+            <h2>Add New Mechanic</h2>
+
+            <p>
+                Add a mechanic to your Servora workshop team.
+                The mechanic can then be assigned to customer bookings.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="add-mechanic-card">
+
+        <form id="addMechanicForm">
+
+            <div class="form-grid">
+
+                <!-- Name -->
+
+                <div class="form-group">
+
+                    <label for="mechanicName">
+                        Mechanic Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="mechanicName"
+                        placeholder="Enter mechanic name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="form-group">
+
+                    <label for="mechanicEmail">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="mechanicEmail"
+                        placeholder="mechanic@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Phone -->
+
+                <div class="form-group">
+
+                    <label for="mechanicPhone">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="mechanicPhone"
+                        placeholder="Enter phone number"
+                        maxlength="10"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Experience -->
+
+                <div class="form-group">
+
+                    <label for="mechanicExperience">
+                        Experience
+                    </label>
+
+                    <select id="mechanicExperience" required>
+
+                        <option value="">
+                            Select Experience
+                        </option>
+
+                        <option value="0-1 Years">
+                            0–1 Years
+                        </option>
+
+                        <option value="1-3 Years">
+                            1–3 Years
+                        </option>
+
+                        <option value="3-5 Years">
+                            3–5 Years
+                        </option>
+
+                        <option value="5-10 Years">
+                            5–10 Years
+                        </option>
+
+                        <option value="10+ Years">
+                            10+ Years
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Specialization -->
+
+                <div class="form-group">
+
+                    <label for="mechanicSpecialization">
+                        Specialization
+                    </label>
+
+                    <select
+                        id="mechanicSpecialization"
+                        required
+                    >
+
+                        <option value="">
+                            Select Specialization
+                        </option>
+
+                        <option value="General Service">
+                            General Service
+                        </option>
+
+                        <option value="Engine">
+                            Engine & Diagnostics
+                        </option>
+
+                        <option value="Electrical">
+                            Electrical & Battery
+                        </option>
+
+                        <option value="Brakes">
+                            Brake & Suspension
+                        </option>
+
+                        <option value="AC">
+                            AC & Cooling
+                        </option>
+
+                        <option value="Two Wheeler">
+                            Two-Wheeler Specialist
+                        </option>
+
+                        <option value="Multi-Brand">
+                            Multi-Brand Technician
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <label for="mechanicPassword">
+                        Temporary Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="mechanicPassword"
+                        placeholder="Create temporary password"
+                        minlength="6"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="mechanic-form-footer">
+
+                <p class="form-note">
+
+                    <i class="fas fa-info-circle"></i>
+
+                    The mechanic will use these login credentials
+                    to access the mechanic dashboard.
+
+                </p>
+
+                <button
+                    type="submit"
+                    class="btn-primary"
+                    id="addMechanicBtn"
+                >
+
+                    <i class="fas fa-user-plus"></i>
+
+                    Add Mechanic
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MECHANICS LIST
+===================================================== -->
+
+<section class="admin-section mechanics-section">
+
+    <div class="admin-section-header">
+
+        <div>
+
+            <span class="admin-section-tag">
+
+                <i class="fas fa-users-cog"></i>
+
+                Workshop Team
+
+            </span>
+
+            <h2>Mechanics</h2>
+
+            <p>
+                View and manage mechanics registered with Servora.
+            </p>
+
+        </div>
+
+        <div class="mechanic-count">
+
+            <strong id="mechanicCount">
+                0
+            </strong>
+
+            <span>
+                Mechanics
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="mechanicList"
+        class="mechanic-list"
+    >
+
+        <!-- Mechanics will be loaded here by admin.js -->
+
+        <div class="empty-state">
+
+            <i class="fas fa-user-cog"></i>
+
+            <h3>No Mechanics Added</h3>
+
+            <p>
+                Add your first mechanic using the form above.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
     <div
         id="mechanicContainer"
         class="admin-people-grid">
