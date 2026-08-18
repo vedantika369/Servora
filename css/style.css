@@ -388,13 +388,14 @@ header.sticky{
     display:flex;
     align-items:center;
     gap:12px;
-
+    max-width: 100%;
     text-decoration:none;
 }
 
 .logo img{
     width:45px;
     height:45px;
+    max-height: 50px;
 }
 
 .logo-text h2{
@@ -464,7 +465,8 @@ header.sticky{
     display:flex;
 
     align-items:center;
-
+    max-width: 100%;
+  height: auto;
     gap:12px;
 
 }
@@ -472,7 +474,8 @@ header.sticky{
 .logo img{
 
     width:58px;
-
+    max-height: 50px; /* Adjust according to your navbar height */
+     width: auto;
     height:58px;
 
     object-fit:contain;
