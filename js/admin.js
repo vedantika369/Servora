@@ -3,7 +3,24 @@
    SINGLE-PAGE ADMIN DASHBOARD
    FIREBASE REALTIME DATABASE
 ========================================================= */
+const loadingScreen =
+    document.getElementById("loadingScreen");
 
+function hideLoadingScreen() {
+
+    if (loadingScreen) {
+
+        loadingScreen.classList.add("hidden");
+
+        setTimeout(() => {
+
+            loadingScreen.style.display = "none";
+
+        }, 400);
+
+    }
+
+}
 import {
     auth,
     db
